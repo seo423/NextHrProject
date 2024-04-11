@@ -1,6 +1,6 @@
 import { all, fork } from 'redux-saga/effects';
 import baseSalarySaga from './hr/salary/BaseSalarySaga';
-import positionSaga from './hr/base/position';
+import positionSaga from 'store/redux-saga/saga/base/positionSaga';
 import HolidaySaga from './hr/base/holiday';
 import attdSaga from 'store/redux-saga/saga/attendance/attendanceSaga';
 import dailyAttendSaga from 'store/redux-saga/saga/attendance/DailyAttendSaga';

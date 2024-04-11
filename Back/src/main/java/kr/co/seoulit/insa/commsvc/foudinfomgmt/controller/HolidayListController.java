@@ -34,7 +34,7 @@ public class HolidayListController {
 			map.put("errorCode", 0);
 			
 		} catch (Exception dae) {
-			map.clear();
+			map.clear(); 
 			map.put("errorCode", -1);
 			map.put("errorMsg", dae.getMessage());
 		}

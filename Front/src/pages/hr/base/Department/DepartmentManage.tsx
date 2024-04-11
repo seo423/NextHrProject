@@ -32,7 +32,7 @@ export const deptListGrid: ColumnProps[] = [
 
 function DepartmentManageCopy() {
   const [deptList, setDeptList] = useState<DepTO[]>([]);
-  const [selRow, setSelRow] = useState(null);
+  const [selRow, setSelRow] = useState<DepTO>({});
 
   const [newRow, setNewRow] = useState<DepTO>({
     deptCode: '',
@@ -70,9 +70,12 @@ function DepartmentManageCopy() {
   }, []);
 
   const newDeptCode1 = () => {
-    const lastDeptCode = deptList[deptList.length - 1].deptCode;
-    const lastNumber = parseInt(lastDeptCode.slice(3), 10);
-    const newNumber = lastNumber + 1;
+    const lastDeptCode: string | undefined | null = deptList[deptList.length - 1].deptCode;
+    let newNumber = 0;
+    if (lastDeptCode !== undefined && lastDeptCode !== null) {
+      const lastNumber: number = parseInt(lastDeptCode.slice(3), 10);
+      newNumber = lastNumber + 1;
+  }    
     return `DEP${newNumber.toString().padStart(3, '0')}`;
   };
 
@@ -165,7 +168,7 @@ function DepartmentManageCopy() {
               console.error('데이터를 백엔드로 보내는 중에 오류 발생: ', error);
             });
           // 선택한 행 초기화
-          setSelRow(null);
+          setSelRow({});
         }
       }
     } else {
@@ -200,7 +203,7 @@ function DepartmentManageCopy() {
                 console.error('데이터를 백엔드로 보내는 중에 오류 발생: ', error);
               });
             // 선택한 행 초기화
-            setSelRow(null);
+            setSelRow({});
           }
         }
       }
@@ -212,8 +215,8 @@ function DepartmentManageCopy() {
     }
   };
 
-  const handleCellChange = (event: any, index: any, field: any) => {
-    const updatedData = [...deptList];
+  const handleCellChange = (event: any, index: number, field: string) => {
+    const updatedData: any = [...deptList];
     updatedData[index][field] = event.target.value;
     setDeptList(updatedData);
   };

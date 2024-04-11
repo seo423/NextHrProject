@@ -31,11 +31,11 @@ export interface WorkTimeTO {
 }
 
 export interface DepTO {
-  deptCode?: string;
-  deptName?: string;
-  deptTel?: string;
-  status?: string;
-  id?: string;
+  deptCode?: string | null;
+  deptName?: string | null;
+  deptTel?: string | null;
+  status?: string | null;
+  id?: string | null;
 }
 
 export interface PositionTO {
@@ -46,9 +46,9 @@ export interface PositionTO {
   error?: string;
   status?: string;
 }
-// export interface NewRow{
-//     applyDay:string;
-//     holidayName:string;
-//     note?:string;
-//     status?:string;
-// }
+
+export interface HobongTO {
+  HobongLevel?: string;
+  ?: string;
+  basesalary?: string;
+}

@@ -17,7 +17,7 @@ import kanbanReducer from './slices/kanban';
 import menuReducer from './slices/menu';
 import InsureReducer from './slices/hr/salary/Insure';
 import baseSalaryReducer from './slices/hr/salary/BaseSalary';
-import positionReducer from './slices/hr/base/position';
+import positionReducer from 'store/redux-saga/reducer/base/positionReducer';
 import holidayReducer from './slices/hr/base/holiday';
 import empManagementReducer from '../pages/hr/empManagement/slices/index';
 import attdReducer from './redux-saga/reducer/attendance/attendanceReducer';
@@ -25,6 +25,7 @@ import DailyAttendReducer from './redux-saga/reducer/attendance/DailyAttendReduc
 import commonReducer from './redux-saga/reducer/common/commonReducer';
 import baseReducer from './redux-saga/reducer/base/baseReducer';
 import salReducer from './redux-saga/reducer/salary/salaryReducer';
+
 
 // ==============================|| COMBINE REDUCER ||============================== //
 
@@ -60,3 +61,6 @@ const reducer = combineReducers({
 });
 
 export default reducer;
+
+export type RootState = ReturnType<typeof reducer>;
+

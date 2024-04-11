@@ -57,7 +57,14 @@ const hr: NavItemType = {
           title: <FormattedMessage id="baseWorkTimeManagement" />,
           type: 'item',
           url: '/hr/base/BaseWorkTime/WorkTimePage'
+        },
+        {
+          id: 'HobongRegister',
+          title: <FormattedMessage id="HobongRegister" />,
+          type: 'item',
+          url: '/hr/base/Hobong/HobongTable'
         }
+        
       ]
     },
     {
