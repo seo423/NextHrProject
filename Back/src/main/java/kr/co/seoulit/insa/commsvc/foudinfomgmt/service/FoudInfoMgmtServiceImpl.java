@@ -2,19 +2,12 @@ package kr.co.seoulit.insa.commsvc.foudinfomgmt.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
+import kr.co.seoulit.insa.commsvc.foudinfomgmt.mapper.*;
+import kr.co.seoulit.insa.commsvc.foudinfomgmt.to.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.co.seoulit.insa.commsvc.foudinfomgmt.mapper.BaseWorkTimeMapper;
-import kr.co.seoulit.insa.commsvc.foudinfomgmt.mapper.DeptMapper;
-import kr.co.seoulit.insa.commsvc.foudinfomgmt.mapper.HolidayMapper;
-import kr.co.seoulit.insa.commsvc.foudinfomgmt.mapper.PositionMapper;
-import kr.co.seoulit.insa.commsvc.foudinfomgmt.to.BaseWorkTimeTO;
-import kr.co.seoulit.insa.commsvc.foudinfomgmt.to.DeptTO;
-import kr.co.seoulit.insa.commsvc.foudinfomgmt.to.HolidayTO;
-import kr.co.seoulit.insa.commsvc.foudinfomgmt.to.PositionTO;
 import kr.co.seoulit.insa.commsvc.systemmgmt.mapper.DetailCodeMapper;
 import kr.co.seoulit.insa.commsvc.systemmgmt.to.DetailCodeTO;
 
@@ -32,6 +25,10 @@ public class FoudInfoMgmtServiceImpl implements FoudInfoMgmtService {
 	private DetailCodeMapper detailCodeMapper;
 	@Autowired
 	private PositionMapper positionMapper;
+
+	@Autowired
+	private HobongMapper hobongMapper;
+
 
 
 	@Override
@@ -187,7 +184,6 @@ public class FoudInfoMgmtServiceImpl implements FoudInfoMgmtService {
 	@Override
 	public void batchTimeProcess(BaseWorkTimeTO sendData) {
 //		for (BaseWorkTimeTO baseWorkTimeTO : sendData) {
-////for문사용해서 여러객체?를 받아올때 사용함 여러개가 아니라면 쓰지마삼 왜냐면 그럼 TO를 List에 넣어줘야함
 //			baseWorkTimeMapper.insertTime(baseWorkTimeTO);
 //		}
 		baseWorkTimeMapper.insertTime(sendData);
@@ -200,31 +196,39 @@ public class FoudInfoMgmtServiceImpl implements FoudInfoMgmtService {
 //		}
 //	}
 		baseWorkTimeMapper.deleteTime(timeList);
-}}
+}
+	@Override
+	public ArrayList<HobongTO> findHobongList(String positionCode) {
+        System.out.println("서비스에서 받은 positionCode: " + positionCode);
+		ArrayList<HobongTO> hobongList = null;
+		hobongList = hobongMapper.selectHobongList(positionCode);
+		for(HobongTO bean: hobongList){
+			System.out.println("호봉: " + bean.getHobongLevel());
+		}
+		return hobongList;
 
-//	public void batchTimeProcess(ArrayList<BaseWorkTimeTO> timeList) {
-//
-//		for (BaseWorkTimeTO baseWorkTimeTO : timeList) {
-//
-//			baseWorkTimeMapper.updateTime(baseWorkTimeTO);
-//
-//		}
-//	}
-//		for (BaseWorkTimeTO baseWorkTimeTO : timeList) {
-//			switch (baseWorkTimeTO.getStatus()) {
-//
-//			case "update":
-//				baseWorkTimeMapper.updateTime(baseWorkTimeTO);
-//				break;
-//
-//			case "insert":
-//				baseWorkTimeMapper.insertTime(baseWorkTimeTO);
-//				break;
-//
-//			case "delete":
-//				baseWorkTimeMapper.deleteTime(baseWorkTimeTO);
-//				break;
-//			}
-//		}
+	}
+
+	@Override
+	public void insertHobongList(HobongReqTO hobongReqTO) {
+		System.out.println("서비스에서 받은 hobongReqTO: " + hobongReqTO);
+		hobongMapper.insertHobongList(hobongReqTO);
+	}
+
+	@Override
+	public void updateHobongByPercentage(HobongPercentageTO hobongPercentageTO) {
+		System.out.println("서비스에서 받은 hobongPercentageTO: " + hobongPercentageTO);
+		hobongMapper.updateHobongByPercentage(hobongPercentageTO);
+	}
+	@Override
+	public void updateHobongByFixed(HobongFixedTO hobongFixedTO) {
+		System.out.println("서비스에서 받은 hobongFixedTO: " + hobongFixedTO);
+		hobongMapper.updateHobongByFixed(hobongFixedTO);
+	}
+}
+
+
+
+
 
 

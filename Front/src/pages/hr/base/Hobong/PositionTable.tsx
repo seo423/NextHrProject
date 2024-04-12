@@ -16,10 +16,17 @@ import { gridSpacing } from 'store/constant';
 import { RootState } from 'store/reducer';
 import { PositionTO } from '../types/types';
 import { positionAction } from 'store/redux-saga/reducer/base/positionReducer';
+import styles from 'styles/Home.module.css';
+import { hobongAction } from 'store/redux-saga/reducer/base/hobongReducer';
 
 
-function PositionTable() {
+type OnRowClickHandler = (positionCode: string) => void;
+
+function PositionTable({ onRowClick }: { onRowClick: OnRowClickHandler }) {
+
   const dispatch = useDispatch();
+
+  const [selectedRowIndex, setSelectedRowIndex] = useState<number | null>(null);
 
   const positionList = useSelector((state: RootState) => state.positionList.positionList);
 
@@ -28,6 +35,12 @@ function PositionTable() {
     console.log('dispatch호출됨');
     dispatch(positionAction.POSITION_LIST_SEARCH_FETCH_REQUESTED(''));
   }, []);
+
+  const handleRowClick = (positionCode: string | undefined) => {
+    if (positionCode != undefined) {
+      onRowClick(positionCode);
+    }
+  };
 
 
   return (
@@ -57,8 +70,16 @@ function PositionTable() {
                   </TableHead>
                   <TableBody>
                   {positionList.length !== 0 ? (
-                    positionList.map((position: PositionTO) => (
-                      <TableRow hover key={position.positionCode}>
+                    positionList.map((position: PositionTO, index: number) => (
+                      <TableRow hover 
+                      key={position.positionCode}
+                      className={selectedRowIndex === index ? styles['selected-row'] : ''}
+                      onClick={() => {
+                        setSelectedRowIndex(index); // 선택된 행의 인덱스를 상태에 저장
+                        handleRowClick(position.positionCode); 
+                        dispatch(hobongAction.HOBONG_LIST_SEARCH_FETCH_REQUESTED(position.positionCode));
+                      }}
+                      >
                         <TableCell>{position.positionCode}</TableCell>
                         <TableCell>{position.position}</TableCell>
                       </TableRow>
@@ -82,4 +103,4 @@ PositionTable.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>;
 };
 
-export default PositionTable;
+export default React.memo(PositionTable); 

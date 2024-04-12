@@ -62,7 +62,7 @@ const hr: NavItemType = {
           id: 'HobongRegister',
           title: <FormattedMessage id="HobongRegister" />,
           type: 'item',
-          url: '/hr/base/Hobong/HobongTable'
+          url: '/hr/base/Hobong/HobongRegisterMainPage'
         }
         
       ]

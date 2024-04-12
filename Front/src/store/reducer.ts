@@ -18,6 +18,7 @@ import menuReducer from './slices/menu';
 import InsureReducer from './slices/hr/salary/Insure';
 import baseSalaryReducer from './slices/hr/salary/BaseSalary';
 import positionReducer from 'store/redux-saga/reducer/base/positionReducer';
+import hobongReducer from 'store/redux-saga/reducer/base/hobongReducer';
 import holidayReducer from './slices/hr/base/holiday';
 import empManagementReducer from '../pages/hr/empManagement/slices/index';
 import attdReducer from './redux-saga/reducer/attendance/attendanceReducer';
@@ -51,6 +52,7 @@ const reducer = combineReducers({
   Insure: InsureReducer, //리듀서 등록
   baseSalary: baseSalaryReducer,
   positionList: positionReducer,
+  hobong: hobongReducer,
   holidayList: holidayReducer,
   empManagement: empManagementReducer,
   attdReducer: attdReducer, // 근태리듀서

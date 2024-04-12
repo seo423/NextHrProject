@@ -1,12 +1,8 @@
 package kr.co.seoulit.insa.commsvc.foudinfomgmt.service;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import kr.co.seoulit.insa.commsvc.foudinfomgmt.to.BaseWorkTimeTO;
-import kr.co.seoulit.insa.commsvc.foudinfomgmt.to.DeptTO;
-import kr.co.seoulit.insa.commsvc.foudinfomgmt.to.HolidayTO;
-import kr.co.seoulit.insa.commsvc.foudinfomgmt.to.PositionTO;
+import kr.co.seoulit.insa.commsvc.foudinfomgmt.to.*;
 
 public interface FoudInfoMgmtService {
 
@@ -28,4 +24,14 @@ public interface FoudInfoMgmtService {
   public void batchTimeProcess(BaseWorkTimeTO timeTO);
   public void deleteTimeProcess(BaseWorkTimeTO timeTO);
 
+  //호봉테이블 관리
+  public ArrayList<HobongTO> findHobongList(String positionCode);
+  //호봉테이블 등록
+  public void insertHobongList(HobongReqTO hobongReqTO);
+
+  //호봉 정률 인상
+  public void updateHobongByPercentage(HobongPercentageTO hobongPercentageTO);
+
+  //호봉 정액 인상
+  public void updateHobongByFixed(HobongFixedTO hobongFixedTO);
 }

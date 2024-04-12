@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, useEffect } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Grid,
@@ -15,28 +15,27 @@ import MainCard from 'ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
 import { RootState } from 'store/reducer';
 import { HobongTO } from '../types/types';
-import { positionAction } from 'store/redux-saga/reducer/base/positionReducer';
+import { hobongAction } from 'store/redux-saga/reducer/base/hobongReducer';
 
 
-function HobongTable() {
+function HobongTable(props: { positionCode: string;}) {
   const dispatch = useDispatch();
 
-  const positionList = useSelector((state: RootState) => state.positionList.positionList);
-
+  const hobongList = useSelector((state: RootState) => state.hobong.hobongList);
 
   useEffect(() => {
     console.log('dispatch호출됨');
-    dispatch(positionAction.POSITION_LIST_SEARCH_FETCH_REQUESTED(''));
+    dispatch(hobongAction.HOBONG_LIST_SEARCH_FETCH_REQUESTED(props.positionCode));
   }, []);
 
 
   return (
-    <Page title="호봉테이블">
+    <Page title="호봉등록테이블">
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12}>
             <MainCard
               content={false}
-              title="호봉테이블"
+              title="호봉등록테이블"
               >
               {/* 아래의 코드도 리펙터링을 하자 */}
               {/* table */}
@@ -53,15 +52,20 @@ function HobongTable() {
                     >
                       <TableCell>호봉</TableCell>
                       <TableCell>기본급</TableCell>
+                      <TableCell>직책수당</TableCell>
+                      <TableCell>근속수당</TableCell>
                       <TableCell>합계</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                  {positionList.length !== 0 ? (
-                    positionList.map((hobong: HobongTO) => (
-                      <TableRow hover key={hobong.positionCode}>
-                        <TableCell>{hobong.positionCode}</TableCell>
-                        <TableCell>{hobong.position}</TableCell>
+                  {hobongList.length !== 0 ? (
+                    hobongList.map((hobong: HobongTO) => (
+                      <TableRow hover key={hobong.hobongLevel}>
+                        <TableCell>{hobong.hobongLevel}</TableCell>
+                        <TableCell>{hobong.baseSalary}</TableCell>
+                        <TableCell>{hobong.positionAllowance}</TableCell>
+                        <TableCell>{hobong.longevityBonus}</TableCell>
+                        <TableCell>{hobong.totalHobong}</TableCell>
                       </TableRow>
                     ))
                   ) : (

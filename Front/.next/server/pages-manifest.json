@@ -2,6 +2,5 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/hr/base/Hobong/HobongTable": "pages/hr/base/Hobong/HobongTable.js",
-  "/login": "pages/login.js"
+  "/hr/base/Hobong/HobongRegisterMainPage": "pages/hr/base/Hobong/HobongRegisterMainPage.js"
 }

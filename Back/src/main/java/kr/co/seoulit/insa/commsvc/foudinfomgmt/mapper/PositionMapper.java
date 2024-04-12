@@ -1,6 +1,8 @@
 package kr.co.seoulit.insa.commsvc.foudinfomgmt.mapper;
 
 import java.util.ArrayList;
+
+import kr.co.seoulit.insa.commsvc.foudinfomgmt.to.HobongTO;
 import org.apache.ibatis.annotations.Mapper;
 import kr.co.seoulit.insa.commsvc.foudinfomgmt.to.PositionTO;
 

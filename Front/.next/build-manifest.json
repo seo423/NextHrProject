@@ -25,15 +25,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/hr/base/Hobong/HobongTable": [
+    "/hr/base/Hobong/HobongRegisterMainPage": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/hr/base/Hobong/HobongTable.js"
-    ],
-    "/login": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/login.js"
+      "static/chunks/pages/hr/base/Hobong/HobongRegisterMainPage.js"
     ]
   },
   "ampFirstPages": []

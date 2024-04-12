@@ -9,11 +9,12 @@ const positionSlice = createSlice({
   name: 'position',
   initialState,
   reducers: {
+    // 직급 조회
     POSITION_LIST_SEARCH_FETCH_REQUESTED(state, action) {
       console.log("This is Reducer!! POSITION_LIST_SEARCH_FETCH_REQUESTED called!!!");
     },
 
-    // GET POSITION
+    // 직급리스트 업데이트
     POSITION_LIST_SEARCH_FETCH_STATUS(state, action) {
       console.log("This is Reducer!! POSITION_LIST_SEARCH_FETCH_STATUS called!!!");
       state.positionList = action.payload;

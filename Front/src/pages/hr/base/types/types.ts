@@ -48,7 +48,9 @@ export interface PositionTO {
 }
 
 export interface HobongTO {
-  HobongLevel?: string;
-  ?: string;
-  basesalary?: string;
+  hobongLevel?: string;
+  baseSalary?: number;
+  positionAllowance?:number;
+  longevityBonus?:number;
+  totalHobong?:number;
 }
