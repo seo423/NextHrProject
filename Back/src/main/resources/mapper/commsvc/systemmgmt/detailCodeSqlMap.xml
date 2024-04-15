@@ -27,7 +27,7 @@
 		<![CDATA[                
    		UPDATE DETAIL_CODE SET
    		CODE_NUMBER = #{codeNumber}, DETAIL_CODE_NAME = #{detailCodeName}
-   		, DETAIL_CODE_NAMEUSING = #{DetailCodeNameusing}
+   		, DETAIL_CODE_NAMEUSING = #{detailCodeNameusing}
    		WHERE DETAIL_CODE_NUMBER = #{detailCodeNumber} ]]>
     </update>
     
