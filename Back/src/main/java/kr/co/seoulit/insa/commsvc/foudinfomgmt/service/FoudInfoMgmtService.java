@@ -34,4 +34,6 @@ public interface FoudInfoMgmtService {
 
   //호봉 정액 인상
   public void updateHobongByFixed(HobongFixedTO hobongFixedTO);
+
+  public ArrayList<CertificateIssuanceResTO> searchEmpDeatilInfo(String empCode);
 }

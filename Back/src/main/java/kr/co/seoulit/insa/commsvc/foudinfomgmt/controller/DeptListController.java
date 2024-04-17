@@ -5,7 +5,9 @@ import com.google.gson.reflect.TypeToken;
 import kr.co.seoulit.insa.commsvc.foudinfomgmt.service.FoudInfoMgmtService;
 import kr.co.seoulit.insa.commsvc.foudinfomgmt.to.DeptTO;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,4 +60,5 @@ public class DeptListController {
 		}
 		return map;
 	}
+
 }

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.co.seoulit.insa.attdsvc.attdmgmt.to.*;
+import kr.co.seoulit.insa.commsvc.foudinfomgmt.to.DeptTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -129,4 +130,6 @@ public class DailyAttendanceController {
 		}
 		return map;
 	}
+
+
 }

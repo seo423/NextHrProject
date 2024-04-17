@@ -18,6 +18,7 @@ import menuReducer from './slices/menu';
 import InsureReducer from './slices/hr/salary/Insure';
 import baseSalaryReducer from './slices/hr/salary/BaseSalary';
 import positionReducer from 'store/redux-saga/reducer/base/positionReducer';
+import positionReducer2 from 'store/slices/hr/base/position';
 import hobongReducer from 'store/redux-saga/reducer/base/hobongReducer';
 import holidayReducer from './slices/hr/base/holiday';
 import empManagementReducer from '../pages/hr/empManagement/slices/index';
@@ -26,6 +27,8 @@ import DailyAttendReducer from './redux-saga/reducer/attendance/DailyAttendReduc
 import commonReducer from './redux-saga/reducer/common/commonReducer';
 import baseReducer from './redux-saga/reducer/base/baseReducer';
 import salReducer from './redux-saga/reducer/salary/salaryReducer';
+import certificateIssuanceReducer from 'store/redux-saga/reducer/base/certificateIssuanceReducer';
+
 
 
 // ==============================|| COMBINE REDUCER ||============================== //
@@ -52,6 +55,7 @@ const reducer = combineReducers({
   Insure: InsureReducer, //리듀서 등록
   baseSalary: baseSalaryReducer,
   positionList: positionReducer,
+  positionList2: positionReducer2,
   hobong: hobongReducer,
   holidayList: holidayReducer,
   empManagement: empManagementReducer,
@@ -59,7 +63,8 @@ const reducer = combineReducers({
   dailyAttend: DailyAttendReducer, // 일근태등록리듀서
   baseReducer: baseReducer, // 권한리듀서
   commonReducer: commonReducer, // 로그인리듀서
-  salReducer: salReducer // 급여리듀서
+  salReducer: salReducer, // 급여리듀서
+  certificateIssuanceReducer: certificateIssuanceReducer //증명서 리듀서
 });
 
 export default reducer;

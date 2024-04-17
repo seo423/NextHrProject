@@ -9,6 +9,10 @@
 		<result property="deptName" column="DEPT_NAME"/>
 		<result property="deptTel" column="DEPT_TEL"/>
 	</resultMap>
+
+	<resultMap type="kr.co.seoulit.insa.commsvc.foudinfomgmt.to.DeptTO" id="deptNamesResult">
+		<result property="deptName" column="DEPT_NAME"/>
+	</resultMap>
 	
 	
 	<select id="selectDeptList" resultMap="deptResult">
@@ -17,6 +21,12 @@
 	  , DEPT_TEL
 	  FROM DEPT
 	  ORDER BY DEPT_CODE
+	</select>
+
+	<select id="selectDeptNames" resultMap="deptNamesResult">
+		SELECT DEPT_NAME
+		FROM DEPT
+		ORDER BY DEPT_CODE
 	</select>
 	
 	

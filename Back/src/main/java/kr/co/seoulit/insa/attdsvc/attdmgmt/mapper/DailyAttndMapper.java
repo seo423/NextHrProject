@@ -29,4 +29,6 @@ public interface DailyAttndMapper {
 	public void deleteDayAttd(DayAttdTO dayAttd);
 
 	public void updateFinalizeStatus(DailyAttdSearchResTO dailyAttdSearchResTO);
+
+	public void searchDeptNames();
 }

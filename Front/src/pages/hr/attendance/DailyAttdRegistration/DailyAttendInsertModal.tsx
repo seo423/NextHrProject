@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { gridSpacing } from 'store/constant';
 import {
   Box,
@@ -41,6 +41,7 @@ export default function DailyAttendModal(props: { toggle: () => void }) {
   const nightWorkHourRef = useRef<HTMLInputElement>(null);
 
   const empList = useSelector((state: any) => (state.dailyAttend.empList !== undefined ? state.dailyAttend.empList : []));
+  const deptList = useSelector((state: any) => (state.dailyAttend.deptlist !== undefined ? state.dailyAttend.deptlist : []));
 
   const theme = useTheme();
 
@@ -64,6 +65,11 @@ export default function DailyAttendModal(props: { toggle: () => void }) {
   const [empCode, setEmpCode] = useState<number | string>(-1);
   const [deptCode, setDeptCode] = useState<number | string>(-1);
   const [latenessStatus, setLatenessStatus] = useState<number | string>(-1);
+  
+  useEffect(() => {
+    console.log('dispatch호출됨');
+    dispatch(dailyAttendAction.DEPT_LIST_SEARCH_FETCH_REQUESTED(''));
+  }, []);
 
   //부서 선택함
   const deptChangeHandler = (value: string) => {
@@ -83,6 +89,8 @@ export default function DailyAttendModal(props: { toggle: () => void }) {
     setLatenessStatus(value);
     console.log(value);
   };
+
+  
 
   //추가 버튼 누름
   const handleSave = () => {
@@ -161,6 +169,14 @@ export default function DailyAttendModal(props: { toggle: () => void }) {
       );
   });
 
+  const deptLists = deptList.map((item: any) => {
+    return (
+      <MenuItem value={item.deptCode} key={item.deptCode}>
+        {item.deptName}
+      </MenuItem>
+    );
+});
+
   return (
     <div>
       <Dialog
@@ -179,19 +195,16 @@ export default function DailyAttendModal(props: { toggle: () => void }) {
                 <Grid container spacing="auto" item xs>
                   <Grid container spacing={gridSpacing}>
                     <Grid item xs={12} sm={6}>
-                      <InputLabel>부서</InputLabel>
+                     <InputLabel>부서</InputLabel>
                       <FormControl fullWidth>
                         <Select
                           defaultValue="-1"
+                          ref={selectRef}
                           onChange={(e) => {
-                            deptChangeHandler(e.target.value);
+                            deptChangeHandler(String(e.target.value));
                           }}
                         >
-                          <MenuItem value={'DEP000'}>회계팀</MenuItem>
-                          <MenuItem value={'DEP001'}>인사팀</MenuItem>
-                          <MenuItem value={'DEP002'}>전산팀</MenuItem>
-                          <MenuItem value={'DEP003'}>보안팀</MenuItem>
-                          <MenuItem value={'DEP004'}>개발팀</MenuItem>
+                          {deptLists}
                         </Select>
                       </FormControl>
                     </Grid>
