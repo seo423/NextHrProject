@@ -17,6 +17,6 @@ function* watchGetPosition() {
   yield takeLatest(PositionAction.getPosition1, handlePosition);
 }
 
-export default function* positionSaga() {
+export default function* positionSaga1() {
   yield fork(watchGetPosition);
 }

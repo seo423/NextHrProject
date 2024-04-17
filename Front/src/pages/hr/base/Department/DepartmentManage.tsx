@@ -272,11 +272,8 @@ function DepartmentManageCopy() {
                   {deptList.map((row: any, index: any) => (
                     <TableRow 
                       hover 
-                      onDoubleClick={() => selectRow(row)} 
-                      key={index} 
-                      className={row === selRow ? 'selected' : ''}
-                      // onClick={()=>{selectRow(selRow)}}
-                      >
+                      onDoubleClick={() => selectRow(row)} key={index} 
+                      className={row === selRow ? 'selected' : ''}>
                       {selRow == row ? (
                         <>
                           <TableCell style={{ textAlign: 'center' }}>{row.deptCode}</TableCell>

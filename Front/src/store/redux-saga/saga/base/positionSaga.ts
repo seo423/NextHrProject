@@ -15,7 +15,7 @@ function* searchPositionSaga() {
 }
 
 function* onPositionSaga() {
-  //console.log('일단 사가로 옴');
+  console.log('일단 사가로 옴');
   yield takeLatest(positionAction.POSITION_LIST_SEARCH_FETCH_REQUESTED, searchPositionSaga);
 }
 

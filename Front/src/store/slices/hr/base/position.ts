@@ -28,6 +28,7 @@ const slice = createSlice({
 
     // GET POSITION
     getPositionSuccess(state, action) {
+      console.log('getPositionSuccess호출됨');
       state.isLoading = false;
       state.positionList = action.payload;
       state.isDone = true;

@@ -1,4 +1,4 @@
-import { ReactElement, useEffect } from 'react';
+import { ReactElement, useEffect, useMemo } from 'react';
 import { Grid, InputLabel, TextField, FormControl, Select, MenuItem, Avatar, Button, Stack, Typography } from '@mui/material';
 import SubCard from 'ui-component/cards/SubCard';
 import AnimateButton from 'ui-component/extended/AnimateButton';
@@ -115,6 +115,7 @@ function RegisterEmp() {
   // 등록 버튼을 클릭하면은 유효성 검사를 진행한뒤 값들이 유효하면은 백엔드로 데이터를 전송
   // ---> 유효성 검사는 입력된 모든 값들에 진행되는것이 아닌 특정 값들에 대해서만
   //      유효성 검사를 합니다(DB의 제약조건과 비교해 보세요).
+
   const onClickHandler = () => {
     const bool = confirm('등록하시겠습니까?');
     if (!bool) return;
@@ -356,6 +357,14 @@ function RegisterEmp() {
                               <MenuItem value={1}>계약직</MenuItem>
                             </Select>
                           </FormControl>
+                        </Grid>
+                        <Grid item md={6} xs={12}>
+                          <InputLabel>학력</InputLabel>
+                          <TextField id="outlined-basic7" inputRef={detailAddressRef} fullWidth />
+                        </Grid>
+                        <Grid item md={6} xs={12}>
+                          <InputLabel>머시기</InputLabel>
+                          <TextField id="outlined-basic7" inputRef={detailAddressRef} fullWidth />
                         </Grid>
 
                         <Grid item xs={12}>

@@ -70,7 +70,12 @@ function PositionPage() {
                 <TableHead>
                   <TableRow>
                     {positionGrid.map((column: any) => (
-                      <TableCell sx={{ py: 3 }} key={column.id} style={{ minWidth: column.minWidth }}>
+                      <TableCell sx={{
+                        borderTop: '1px solid black',
+                        borderBottom: '3px solid black',
+                        marginBottom: '3px',
+                        backgroundColor: '#E8D9FF'
+                      }} key={column.id} style={{ minWidth: column.minWidth }}>
                         <div style={{ textAlign: 'center', fontWeight: 'bold' }}>{column.label}</div>
                       </TableCell>
                     ))}
