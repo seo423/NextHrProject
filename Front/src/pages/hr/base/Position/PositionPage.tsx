@@ -38,7 +38,7 @@ export const positionGrid: ColumnProps[] = [
 function PositionPage() {
   const dispatch = useDispatch();
   const [selRow, setSelRow] = useState(null);
-  const { positionList } = useSelector((state: any) => state.positionList.positionList);
+  const { positionList } = useSelector((state: any) => state.positionList2.positionList);
 
   const selectRow = (rowData: any) => {
     setSelRow(rowData); // 선택한 행의 데이터를 상태에 저장
@@ -46,6 +46,7 @@ function PositionPage() {
   };
 
   const selectData = () => {
+    console.log('getpdsaf');
     dispatch(getPosition1());
   };
 
@@ -69,7 +70,12 @@ function PositionPage() {
                 <TableHead>
                   <TableRow>
                     {positionGrid.map((column: any) => (
-                      <TableCell sx={{ py: 3 }} key={column.id} style={{ minWidth: column.minWidth }}>
+                      <TableCell sx={{
+                        borderTop: '1px solid black',
+                        borderBottom: '3px solid black',
+                        marginBottom: '3px',
+                        backgroundColor: '#E8D9FF'
+                      }} key={column.id} style={{ minWidth: column.minWidth }}>
                         <div style={{ textAlign: 'center', fontWeight: 'bold' }}>{column.label}</div>
                       </TableCell>
                     ))}

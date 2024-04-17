@@ -8,6 +8,7 @@ function* handlePosition() {
     const { positionList } = yield call(getPosition);
     console.log('사가사가', positionList);
     yield put(getPositionSuccess({ positionList }));
+    console.log('됬나?');
   } catch (error) {
     console.log('쉬발');
   }
@@ -17,6 +18,6 @@ function* watchGetPosition() {
   yield takeLatest(getPosition1, handlePosition);
 }
 
-export default function* positionSaga() {
+export default function* positionSaga1() {
   yield fork(watchGetPosition);
 }

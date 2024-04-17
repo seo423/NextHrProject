@@ -9,11 +9,13 @@ import commonSaga from 'store/redux-saga/saga/common/commonSaga';
 import baseSaga from 'store/redux-saga/saga/base/baseSaga';
 import empManagementRootSaga from '../../pages/hr/empManagement/saga/index';
 import salSaga from 'store/redux-saga/saga/salary/salarySaga';
+import positionSaga2 from './hr/base/position';
 
 function* rootSaga() {
   yield all([
     fork(baseSalarySaga),
     fork(positionSaga),
+    fork(positionSaga2),
     fork(hobongSaga),
     fork(HolidaySaga), // 다른 Saga들도 추가
     fork(empManagementRootSaga),

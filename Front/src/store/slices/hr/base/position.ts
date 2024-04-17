@@ -23,11 +23,13 @@ const slice = createSlice({
     },
 
     getPosition1(state) {
+      console.log('getPosition1호출됨');
       state.isLoading = true;
     },
 
     // GET POSITION
     getPositionSuccess(state, action) {
+      console.log('getPositionSuccess호출됨');
       state.isLoading = false;
       state.positionList = action.payload;
       state.isDone = true;

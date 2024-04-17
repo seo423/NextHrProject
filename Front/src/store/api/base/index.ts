@@ -82,6 +82,7 @@ export const deptMember = (action: any) => {
 
 // 직급정보 조회
 export const getPosition = async () => {
+  console.log('오잉');
   let url = 'http://localhost:9101/hr/foudinfomgmt/positionlist';
   const response = await axios.get(url, {
     params: {
