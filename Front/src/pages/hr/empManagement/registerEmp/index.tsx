@@ -31,6 +31,7 @@ function RegisterEmp() {
   const [salaryStep, setSalaryStep] = useState<number | string>(-1);
   const [occupation, setOccupation] = useState<number | string>(-1);
   const [employment, setEmployment] = useState<number | string>(-1);
+  const [fileList, setFileList] = useState();
 
   const Avatar1 = '/assets/images/users/emp_img_1.avif';
 
@@ -208,6 +209,10 @@ function RegisterEmp() {
     console.log(dept, gender, lastSchool, position, salaryStep, occupation, employment);
   };
 
+  const onFileChanges = (event: React.ChangeEvent<HTMLInputElement>) =>{
+    console.log(event.target.files);
+  };
+
   return (
     <Page title="사원 등록">
       {authCheck ? (
@@ -221,12 +226,11 @@ function RegisterEmp() {
                       <Grid item xs={10} md={16}>
                         <Avatar alt="User 1" src={Avatar1} sx={{ width: 100, height: 100, margin: 'auto' }} />
                       </Grid>
-
                       <Grid item xs={12} width={30}>
                         <AnimateButton>
-                          <Button sx={{ width: '120px' }} variant="contained" size="small">
-                            사진등록
-                          </Button>
+                        <form>
+                          <input type="file" accept="image/png, image/jpeg, image/jpg" onChange={(event) => onFileChanges(event)}/>
+                        </form>
                         </AnimateButton>
                       </Grid>
                     </Grid>
