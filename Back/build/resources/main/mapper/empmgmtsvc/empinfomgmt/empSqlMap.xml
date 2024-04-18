@@ -104,7 +104,7 @@
         <parameter property="employment" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
     </parameterMap>
 
-    <select id="registEmployee" parameterType="map">
+    <select id="registEmployee" parameterType="EmpTO">
           <![CDATA[
             INSERT INTO EMP
             (
@@ -122,6 +122,8 @@
                 , DEPT_CODE
                 , POSITION_CODE
                 , AUTHORITY
+                , HOBONG_CODE
+                , RESIDENT_ID
             ) VALUES
                 (
                       #{empCode}
@@ -138,6 +140,8 @@
                     , #{deptCode, jdbcType=NULL}
                     , #{position, jdbcType=NULL}
                     , #{authority, jdbcType=NULL}
+                    , #{hobong, jdbcType=NULL}
+                    , #{residentId, jdbcType=NULL}
                 )
           ]]>
     </select>

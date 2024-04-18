@@ -26,13 +26,12 @@ public class EmpTO extends BaseTO {
     private String email;
     private String lastSchool;
     private String position;
+    private String residentId;
 
     @Transient
     private String imgExtend;
     @Transient
     private String hobong;
-    @Transient
-    private String occupation;
     @Transient
     private String employment;
     @Transient
@@ -54,14 +53,5 @@ public class EmpTO extends BaseTO {
     ArrayList<LicenseInfoTO> licenseInfoList;
     @Transient
     ArrayList<WorkInfoTO> workInfo;
-
-
-    public String getImgExtend() {
-        return "jpg";
-    }
-
-    public void setWorkInfo(ArrayList<WorkInfoTO> workInfo) {
-        this.workInfo = workInfo;
-    }
 
 }

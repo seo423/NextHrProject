@@ -1,7 +1,7 @@
 package kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.service;
 
 import kr.co.seoulit.insa.commsvc.foudinfomgmt.mapper.DeptMapper;
-import kr.co.seoulit.insa.commsvc.foudinfomgmt.to.DeptTO;
+import kr.co.seoulit.insa.commsvc.foudinfomgmt.mapper.HobongMapper;
 import kr.co.seoulit.insa.commsvc.systemmgmt.mapper.DetailCodeMapper;
 import kr.co.seoulit.insa.commsvc.systemmgmt.to.DetailCodeTO;
 import kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.entity.EmpDetailEntity;
@@ -22,6 +22,8 @@ public class EmpInfoServiceImpl implements EmpInfoService {
     private DeptMapper deptMapper;
     @Autowired
     private EmpMapper empMapper;
+    @Autowired
+    private HobongMapper hobongMapper;
     @Autowired
     private DetailCodeMapper detailCodeMapper;
     @Autowired
@@ -109,26 +111,10 @@ public class EmpInfoServiceImpl implements EmpInfoService {
         System.out.println("<<<< emp_code = " + empCode);
         //새로 생성된 empCode를 넘겨받은 객체의 empCode로 할당
         emp.setEmpCode(empCode);
+        String hobongCode = hobongMapper.selectHobongCodeByHobongLevel(emp.getHobong());
+        emp.setHobong(hobongCode);
 
-        HashMap<String, String> map = new HashMap<>();
-        map.put("empCode", emp.getEmpCode());
-        map.put("empName", emp.getEmpName());
-        map.put("birthDate", emp.getBirthDate());
-        map.put("gender", emp.getGender());
-        map.put("mobileNumber", emp.getMobileNumber());
-        map.put("address", emp.getAddress());
-        map.put("detailAddress", emp.getDetailAddress());
-        map.put("postNumber", emp.getPostNumber());
-        map.put("email", emp.getEmail());
-        map.put("lastSchool", emp.getLastSchool());
-        map.put("imgExtend", emp.getImgExtend());
-        map.put("deptCode", emp.getDeptCode());
-        map.put("position", emp.getPosition());
-//        map.put("hobong", emp.getHobong());
-//        map.put("occupation", emp.getOccupation());
-//        map.put("employment", emp.getEmployment());
-        System.out.println("<<<<<<<<<<<<<< map = " + map);
-        empMapper.registEmployee(map);
+        empMapper.registEmployee(emp);
 
         DetailCodeTO detailCodeto = new DetailCodeTO();
         detailCodeto.setDetailCodeNumber(emp.getEmpCode());

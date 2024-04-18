@@ -2,14 +2,35 @@ import { Grid, InputLabel, TextField, FormControl, Select, MenuItem, Button, Sta
 import SubCard from 'ui-component/cards/SubCard';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 import { gridSpacing } from 'store/constant';
-import React, { useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { registerEmpAction } from '../slices/registerEmpReducer';
-import { sendData } from '../types/empManagementTypes';
+import React, { useState, useRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { dailyAttendAction } from 'store/redux-saga/reducer/attendance/DailyAttendReducer';
+import { positionAction } from 'store/redux-saga/reducer/base/positionReducer';
+import { RootState } from 'store/reducer';
 
+interface StateSetters {
+  setEmpName: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setDate: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setMobileNumber: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setAddress: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setDetailAddress: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setPostNumber: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setEmail: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setResidentId: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setDept: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setGender: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setLastSchool: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setPosition: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setSalaryStep: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setEmployment: React.Dispatch<React.SetStateAction<string | undefined>>;
 
-function EmpRegister(){
+}
 
+interface EmpRegisterProps {
+  stateSetters: StateSetters;
+}
+
+const EmpRegister: React.FC<EmpRegisterProps> = ({ stateSetters }) => {
     const dispatch = useDispatch();
 
     const empNameRef = useRef<HTMLInputElement>(null);
@@ -19,171 +40,147 @@ function EmpRegister(){
     const detailAddressRef = useRef<HTMLInputElement>(null);
     const postNumberRef = useRef<HTMLInputElement>(null);
     const emailRef = useRef<HTMLInputElement>(null);
-
+    const residentIdRef = useRef<HTMLInputElement>(null);
+    
     const [dept, setDept] = useState<number | string>(-1);
     const [gender, setGender] = useState<number | string>(-1);
     const [lastSchool, setLastSchool] = useState<number | string>(-1);
     const [position, setPosition] = useState<number | string>(-1);
     const [salaryStep, setSalaryStep] = useState<number | string>(-1);
-    const [occupation, setOccupation] = useState<number | string>(-1);
     const [employment, setEmployment] = useState<number | string>(-1);
     
+    const deptList = useSelector((state: any) => (state.dailyAttend.deptlist !== undefined ? state.dailyAttend.deptlist : []));
+    const positionList = useSelector((state: RootState) => state.positionList.positionList);
 
+    useEffect(() => {
+      console.log('dispatch호출됨');
+      dispatch(dailyAttendAction.DEPT_LIST_SEARCH_FETCH_REQUESTED(''));
+      dispatch(positionAction.POSITION_LIST_SEARCH_FETCH_REQUESTED(''));
+    }, []);
+
+    //화면에 보일 부서 선택 리스트 생성
+    const deptLists = deptList.map((item: any) => {
+      return (
+        <MenuItem value={item.deptCode} key={item.deptCode}>
+          {item.deptName}
+        </MenuItem>
+      );
+  });
+
+    //화면에 보일 직급 선택 리스트 생성
+    const positionLists = positionList.map((item: any) => {
+      return (
+        <MenuItem value={item.positionCode} key={item.positionCode}>
+          {item.position}
+        </MenuItem>
+      );
+  });
+    
+    //화면에 보일 호봉 선택 리스트 생성
+    const hobongs = Array.from({ length: 10 }, (_, index) => `${index + 1}호봉`);
+
+    const hobongMenuItems = hobongs.map((hobong) => (
+      <MenuItem key={hobong} value={hobong}>
+        {hobong}
+      </MenuItem>
+    ));
+    
     const deptChangeHandler = (value: string) => {
         setDept(value);
+        stateSetters.setDept(value);
         console.log(value);
       };
     
-      const genderChangeHandler = (value: string | number) => {
+      const genderChangeHandler = (value: string) => {
         setGender(value);
+        stateSetters.setGender(value);
         console.log(value);
       };
     
-      const lastSchoolChangeHandler = (value: string | number) => {
+      const lastSchoolChangeHandler = (value: string) => {
         setLastSchool(value);
+        stateSetters.setLastSchool(value);
         console.log(value);
       };
     
-      const positionChangeHandler = (value: string | number) => {
+      const positionChangeHandler = (value: string) => {
         setPosition(value);
+        stateSetters.setPosition(value);
         console.log(value);
       };
     
-      const salaryStepChangeHandler = (value: string | number) => {
+      const salaryStepChangeHandler = (value: string) => {
         setSalaryStep(value);
+        stateSetters.setSalaryStep(value);
         console.log(value);
       };
     
-      const occupationChangeHandler = (value: string | number) => {
-        setOccupation(value);
-        console.log(value);
-      };
-    
-      const employmentChangeHandler = (value: string | number) => {
+      const employmentChangeHandler = (value: string) => {
         setEmployment(value);
+        stateSetters.setEmployment(value);
         console.log(value);
       };
 
-      
-  // 백엔드에 보낼 데이터를
-  const sendEmpData = async (value: sendData) => {
-    //넘겨받은 값들을 아래에 할당
 
-    const data = {
-      empName: empNameRef.current?.value,
-      deptCode: dept,
-      birthDate: DateRef.current?.value,
-      gender: value.gender, // value로 넘겨받은 값을 사용
-      mobileNumber: mobileNumberRef.current?.value,
-      address: addressRef.current?.value,
-      detailAddress: detailAddressRef.current?.value,
-      postNumber: postNumberRef.current?.value,
-      email: emailRef.current?.value,
-      lastSchool: value.lastSchool, // value로 넘겨받은 값을 사용
-      position: position,
-      hobong: salaryStep,
-      occupation: value.occupation, // value로 넘겨받은 값을 사용
-      employment: value.employment // value로 넘겨받은 값을 사용
-    };
+  const onSaveHandler = () => {
+ 
+      const empNameref = empNameRef.current?.value;
+      const Dateref = DateRef.current?.value;
+      const residentId = residentIdRef.current?.value;
+      const mobileNumberref = mobileNumberRef.current?.value;
+      const addressref = addressRef.current?.value;
+      const detailAddressref = detailAddressRef.current?.value;
+      const postNumberref = postNumberRef.current?.value;
+      const emailref = emailRef.current?.value;
 
-    console.log('data : ', data);
 
-    dispatch(registerEmpAction.REGISTER_EMP_REQUSTED(data));
-    // router.reload();
-  };
+      if (empNameref?.trim().length === 0 || empNameref === null) {
+        alert('사원명을 입력해 주세요.');
+        return;
+      } else if (residentId?.trim().length === 0 || residentIdRef === null) {
+        alert('주민등록번호를 입력해주세요.');
+        return;
+      } else if (mobileNumberref?.trim().length === 0 || mobileNumberref === null) {
+        alert('전화번호를 입력해주세요.');
+        return;
+      } else if (Number(dept) === -1) {
+        alert('부서를 선택해 주세요.');
+        return;
+      } else if (Number(gender) === -1) {
+        alert('성별을 선택해 주세요.');
+        return;
+      } else if (Number(lastSchool) === -1) {
+        alert('최종학력을 선택해 주세요.');
+        return;
+      } else if (Number(position) === -1) {
+        alert('직급을 선택해 주세요.');
+        return;
+      } else if (emailref?.trim().length === 0 || !emailref?.includes('@') || emailref === null) {
+        alert('올바른 이메일을 입력해 주세요.');
+        return;
+      } else if (Number(salaryStep) === -1) {
+        alert('호봉을 선택해 주세요.');
+        return;
+      } else if (Number(employment) === -1) {
+        alert('고용형태를 선택해 주세요.');
+        return;
+      } 
 
-  const onClickHandler = () => {
-    const bool = confirm('등록하시겠습니까?');
-    if (!bool) return;
-    console.log('dept is :', dept);
-    const empNameref = empNameRef.current?.value;
-    const Dateref = DateRef.current?.value;
-    const mobileNumberref = mobileNumberRef.current?.value;
-    const addressref = addressRef.current?.value;
-    const detailAddressref = detailAddressRef.current?.value;
-    const postNumberref = postNumberRef.current?.value;
-    const emailref = emailRef.current?.value;
+      // 여기서 select에서 선택된 값에 따라 state에 값을 할당
+      // ---> 여기서 할당된 값을 아래에서 호출하는 함수에 넘겨준다.
+    
+      console.log(empNameref, Dateref, mobileNumberref, addressref, detailAddressref, postNumberref, emailref);
+      console.log(dept, gender, lastSchool, position, salaryStep, employment);
 
-    if (empNameref?.trim().length === 0 || empNameref === null) {
-      alert('사원명을 입력해 주세요.');
-      return;
-    } else if (Number(dept) === -1) {
-      alert('부서를 선택해 주세요.');
-      return;
-    } else if (Number(gender) === -1) {
-      alert('성별을 선택해 주세요.');
-      return;
-    } else if (Number(lastSchool) === -1) {
-      alert('최종학력을 선택해 주세요.');
-      return;
-    } else if (Number(position) === -1) {
-      alert('직급을 선택해 주세요.');
-      return;
-    } else if (emailref?.trim().length === 0 || !emailref?.includes('@') || emailref === null) {
-      alert('올바른 이메일을 입력해 주세요.');
-      return;
-    } else if (Number(salaryStep) === -1) {
-      alert('호봉을 선택해 주세요.');
-      return;
-    } else if (Number(occupation) === -1) {
-      alert('직종을 선택해 주세요.');
-      return;
-    } else if (Number(employment) === -1) {
-      alert('고용형태를 선택해 주세요.');
-      return;
-    }
-
-    // 여기서 select에서 선택된 값에 따라 state에 값을 할당
-    // ---> 여기서 할당된 값을 아래에서 호출하는 함수에 넘겨준다.
-    const sendData = {
-      gender: '',
-      lastSchool: '',
-      occupation: '',
-      employment: ''
-    };
-
-    if (Number(gender) === 0) {
-      sendData.gender = '남';
-    } else {
-      sendData.gender = '여';
-    }
-
-    console.log('sendData.gender', sendData.gender);
-
-    if (Number(lastSchool) === 0) {
-      sendData.lastSchool = '대학미졸업';
-    } else if (Number(lastSchool) === 1) {
-      sendData.lastSchool = '전문대';
-    } else if (Number(lastSchool) === 2) {
-      sendData.lastSchool = '학사';
-    } else if (Number(lastSchool) === 3) {
-      sendData.lastSchool = '석사';
-    } else if (Number(lastSchool) === 4) {
-      sendData.lastSchool = '박사';
-    }
-
-    console.log('lastSchool', lastSchool);
-
-    if (Number(occupation) === 0) {
-      sendData.occupation = '생산직';
-    } else if (Number(occupation) === 1) {
-      sendData.occupation = '사무직';
-    }
-
-    console.log('occupation : ', occupation);
-
-    if (Number(employment) === 0) {
-      sendData.employment = '정규직';
-    } else if (Number(employment) === 1) {
-      sendData.employment = '계약직';
-    }
-
-    console.log('sendData : ', sendData);
-
-    sendEmpData(sendData);
-
-    console.log(empNameref, Dateref, mobileNumberref, addressref, detailAddressref, postNumberref, emailref);
-    console.log(dept, gender, lastSchool, position, salaryStep, occupation, employment);
+      stateSetters.setEmail(emailRef.current?.value);
+      stateSetters.setEmpName(empNameRef.current?.value);
+      stateSetters.setDate(DateRef.current?.value);
+      stateSetters.setMobileNumber(mobileNumberRef.current?.value);
+      stateSetters.setDetailAddress(detailAddressRef.current?.value);
+      stateSetters.setPostNumber(postNumberRef.current?.value);
+      stateSetters.setAddress(addressRef.current?.value);
+      stateSetters.setResidentId(residentIdRef.current?.value);
+  
   };
 
     return (
@@ -203,11 +200,7 @@ function EmpRegister(){
                                 deptChangeHandler(e.target.value);
                               }}
                             >
-                              <MenuItem value={'DEP000'}>회계팀</MenuItem>
-                              <MenuItem value={'DEP001'}>인사팀</MenuItem>
-                              <MenuItem value={'DEP002'}>전산팀</MenuItem>
-                              <MenuItem value={'DEP003'}>보안팀</MenuItem>
-                              <MenuItem value={'DEP004'}>개발팀</MenuItem>
+                              {deptLists}
                             </Select>
                           </FormControl>
                         </Grid>
@@ -215,18 +208,22 @@ function EmpRegister(){
                           <InputLabel>생일</InputLabel>
                           <TextField id="outlined-basic14" inputRef={DateRef} fullWidth type="date" style={{width: '200px'}} />
                         </Grid>
+                        <Grid item md={6} xs={12}>
+                          <InputLabel>주민등록번호</InputLabel>
+                          <TextField id="outlined-basic5" inputRef={residentIdRef} fullWidth placeholder="xxxxxx-xxxxxx" style={{width: '200px'}} />
+                        </Grid>
                         <Grid item xs={12} sm={6}>
                           <InputLabel>성별</InputLabel>
                           <FormControl fullWidth style={{width: '200px'}}>
                             <Select defaultValue="-1" onChange={(e) => genderChangeHandler(e.target.value)}>
-                              <MenuItem value={0}>남</MenuItem>
-                              <MenuItem value={1}>여</MenuItem>
+                              <MenuItem value={'남자'}>남</MenuItem>
+                              <MenuItem value={'여자'}>여</MenuItem>
                             </Select>
                           </FormControl>
                         </Grid>
                         <Grid item md={6} xs={12}>
                           <InputLabel>휴대폰 번호</InputLabel>
-                          <TextField id="outlined-basic5" inputRef={mobileNumberRef} fullWidth defaultValue="010-1234-1234" style={{width: '200px'}} />
+                          <TextField id="outlined-basic5" inputRef={mobileNumberRef} fullWidth placeholder="010-1234-1234" style={{width: '200px'}} />
                         </Grid>
                         <Grid item md={6} xs={12}>
                           <InputLabel>주소</InputLabel>
@@ -242,17 +239,17 @@ function EmpRegister(){
                         </Grid>
                         <Grid item md={6} xs={12}>
                           <InputLabel>이메일</InputLabel>
-                          <TextField id="outlined-basic9" inputRef={emailRef} fullWidth defaultValue="aaa@aaa.com" type="email" style={{width: '200px'}} />
+                          <TextField id="outlined-basic9" inputRef={emailRef} fullWidth placeholder="aaa@aaa.com" type="email" style={{width: '200px'}} />
                         </Grid>
                         <Grid item xs={12} sm={6}>
                           <InputLabel>최종학력</InputLabel>
                           <FormControl fullWidth style={{width: '200px'}}>
                             <Select defaultValue="-1" onChange={(e) => lastSchoolChangeHandler(e.target.value)}>
-                              <MenuItem value={0}>대학 미졸업</MenuItem>
-                              <MenuItem value={1}>전문대</MenuItem>
-                              <MenuItem value={2}>학사</MenuItem>
-                              <MenuItem value={3}>석사</MenuItem>
-                              <MenuItem value={4}>박사</MenuItem>
+                              <MenuItem value={'대학 미졸업'}>대학 미졸업</MenuItem>
+                              <MenuItem value={'전문대'}>전문대</MenuItem>
+                              <MenuItem value={'학사'}>학사</MenuItem>
+                              <MenuItem value={'석사'}>석사</MenuItem>
+                              <MenuItem value={'박사'}>박사</MenuItem>
                             </Select>
                           </FormControl>
                         </Grid>
@@ -261,13 +258,7 @@ function EmpRegister(){
                           <InputLabel>직급</InputLabel>
                           <FormControl fullWidth style={{width: '200px'}}>
                             <Select defaultValue="-1" onChange={(e) => positionChangeHandler(e.target.value)}>
-                              <MenuItem value={'POS000'}>인턴</MenuItem>
-                              <MenuItem value={'POS001'}>사원</MenuItem>
-                              <MenuItem value={'POS002'}>대리</MenuItem>
-                              <MenuItem value={'POS003'}>팀장</MenuItem>
-                              <MenuItem value={'POS004'}>부장</MenuItem>
-                              <MenuItem value={'POS005'}>상무</MenuItem>
-                              <MenuItem value={'POS006'}>대표이사</MenuItem>
+                             {positionLists}
                             </Select>
                           </FormControl>
                         </Grid>
@@ -276,26 +267,7 @@ function EmpRegister(){
                           <InputLabel>호봉</InputLabel>
                           <FormControl fullWidth style={{width: '200px'}}>
                             <Select defaultValue="-1" onChange={(e) => salaryStepChangeHandler(e.target.value)}>
-                              <MenuItem value={3}>3호봉</MenuItem>
-                              <MenuItem value={4}>4호봉</MenuItem>
-                              <MenuItem value={5}>5호봉</MenuItem>
-                              <MenuItem value={6}>6호봉</MenuItem>
-                              <MenuItem value={7}>7호봉</MenuItem>
-                              <MenuItem value={8}>8호봉</MenuItem>
-                              <MenuItem value={9}>9호봉</MenuItem>
-                              <MenuItem value={10}>10호봉</MenuItem>
-                              <MenuItem value={11}>11호봉</MenuItem>
-                              <MenuItem value={12}>12호봉</MenuItem>
-                              <MenuItem value={13}>12호봉 이상</MenuItem>
-                            </Select>
-                          </FormControl>
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                          <InputLabel>직종</InputLabel>
-                          <FormControl fullWidth style={{width: '200px'}}>
-                            <Select defaultValue="-1" onChange={(e) => occupationChangeHandler(e.target.value)}>
-                              <MenuItem value={0}>생산직</MenuItem>
-                              <MenuItem value={1}>사무직</MenuItem>
+                              {hobongMenuItems}
                             </Select>
                           </FormControl>
                         </Grid>
@@ -315,11 +287,11 @@ function EmpRegister(){
                               <Button
                                 sx={{ width: '100px' }}
                                 onClick={() => {
-                                  onClickHandler();
+                                  onSaveHandler();
                                 }}
                                 variant="contained"
                               >
-                                등록
+                                저장
                               </Button>
                             </AnimateButton>
                           </Stack>

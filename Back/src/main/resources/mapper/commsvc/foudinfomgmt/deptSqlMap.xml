@@ -23,6 +23,12 @@
 	  ORDER BY DEPT_CODE
 	</select>
 
+	<select id="selectDeptCodeByDeptName" parameterType="String" resultType="java.lang.String">
+		SELECT DEPT_CODE
+		FROM HOBONG
+		WHERE DEPT_NAME = #{deptName}
+	</select>
+
 	<select id="selectDeptNames" resultMap="deptNamesResult">
 		SELECT DEPT_NAME
 		FROM DEPT

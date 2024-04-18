@@ -1,5 +1,4 @@
-import { ReactElement, useEffect} from 'react';
-import { Grid, Avatar, Box, Tab, Tabs  } from '@mui/material';
+import { ReactElement, useEffect, useRef} from 'react';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 import { gridSpacing } from 'store/constant';
 import React, { useState } from 'react';
@@ -15,7 +14,9 @@ import FamilyInfo from './FamilyInfo';
 import WorkExper from './WorkExper';
 import Certification from './Certification';
 import LanguageSkills from './LanguageSkills';
-
+import {Grid, Avatar, Box, Tab, Tabs, Button, Stack } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import {registerEmpAction} from '../slices/registerEmpReducer';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -44,12 +45,45 @@ function a11yProps(index:number) {
 }
 
 function RegisterEmp() {
-
-
-
-  const Avatar1 = '/assets/images/users/emp_img_1.avif';
+  const dispatch = useDispatch();
 
   const [authCheck, setAuthCheck] = useState(false); // 페이지 접근 권한체크
+  const [Image, setImage] = useState<string>('/assets/images/users/emp_img_1.avif');
+  const fileInput = useRef<HTMLInputElement>(null);
+  const [file, setFile] = useState<File | null>();
+
+  //EmpRegister에 넘겨줄 useState의 훅함수들
+  const [empName, setEmpName] = useState<string| undefined>('');
+  const [date, setDate] = useState<string| undefined>('');
+  const [mobileNumber, setMobileNumber] = useState<string| undefined>('');
+  const [address, setAddress] = useState<string| undefined>('');
+  const [detailAddress, setDetailAddress] = useState<string| undefined>('');
+  const [postNumber, setPostNumber] = useState<string| undefined>('');
+  const [email, setEmail] = useState<string| undefined>('');
+  const [residentId, setResidentId] = useState<string| undefined>('');
+  const [dept, setDept] = useState<string| undefined>('');
+  const [gender, setGender] = useState<string| undefined>('');
+  const [lastSchool, setLastSchool] = useState<string| undefined>('');
+  const [position, setPosition] = useState<string| undefined>('');
+  const [salaryStep, setSalaryStep] = useState<string| undefined>('');
+  const [employment, setEmployment] = useState<string| undefined>('');
+
+  const stateSetters = {
+    setEmpName,
+    setDate,
+    setMobileNumber,
+    setAddress,
+    setDetailAddress,
+    setPostNumber,
+    setEmail,
+    setResidentId,
+    setDept,
+    setGender,
+    setLastSchool,
+    setPosition,
+    setSalaryStep,
+    setEmployment
+};
 
   useEffect(() => {
     const level = localStorage.getItem('authLevel') as string;
@@ -71,11 +105,6 @@ function RegisterEmp() {
     setValue(newValue);
   };
 
-
-
-
-
-
   // 백엔드에 보낼 데이터를
 
   // 등록 버튼을 클릭하면은 유효성 검사를 진행한뒤 값들이 유효하면은 백엔드로 데이터를 전송
@@ -87,6 +116,43 @@ function RegisterEmp() {
     console.log(event.target.files);
   };
 
+  const handleClick = () => {
+    if(fileInput.current)
+      fileInput.current.click();
+  };
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+      const file = e.target.files[0];
+    if (file) {
+      let image = window.URL.createObjectURL(file);
+      setImage(image);
+      setFile(file);
+    }
+  }
+  const onRegisterHandler = () => {
+    const data = {
+      empName: empName,
+      birthDate: date,
+      mobileNumber: mobileNumber,
+      address: address,
+      detailAddress: detailAddress,
+      postNumber: postNumber,
+      email: email,
+      residentId: residentId,
+      deptCode: dept,
+      gender: gender,
+      lastSchool: lastSchool,
+      position: position,
+      hobong: salaryStep,
+      employment: employment
+  };
+
+  dispatch(registerEmpAction.REGISTER_EMP_REQUSTED(data));
+  }
+
+
+
   return (
     <Page title="사원 등록">
       {authCheck ? (
@@ -97,15 +163,24 @@ function RegisterEmp() {
                 <Grid container spacing={gridSpacing}>
                   <Grid item xs={6} pr={1} md={1.5}>
                     <Grid container xs={8} spacing={2} md={18}>
-                      <Grid item xs={10} md={16}>
-                        <Avatar alt="User 1" src={Avatar1} sx={{ width: 100, height: 100, margin: 'auto' }} />
-                      </Grid>
-                      <Grid item xs={12} width={30}>
-                        <AnimateButton>
-                        <form>
-                          <input type="file" accept="image/png, image/jpeg, image/jpg" onChange={(event) => onFileChanges(event)}/>
-                        </form>
-                        </AnimateButton>
+                    <Grid item xs={10} md={16}>
+                      <div style={{ width: '200px', height: '200px', overflow: 'hidden' }}>
+                      <Avatar 
+                        src={Image} 
+                        alt="employee"
+                        sx={{ width: 150, height: 150, margin: 'auto' }}
+                        />
+                      </div>
+                      <button onClick={handleClick}>
+                        사진 등록
+                        <input 
+                            type='file' 
+                          accept='image/jpg,impge/png,image/jpeg' 
+                          onChange={onChange}
+                          ref={fileInput}
+                          style={{ display: 'none' }}
+                          />
+                      </button>
                       </Grid>
                     </Grid>
                   </Grid>
@@ -147,7 +222,7 @@ function RegisterEmp() {
                     </Tabs>
 
                     <TabPanel value={value} index={0}>
-                      <EmpRegister />
+                      <EmpRegister stateSetters={stateSetters}/>
                     </TabPanel>
 
                     <TabPanel value={value} index={1}>
@@ -170,6 +245,21 @@ function RegisterEmp() {
                       <LanguageSkills />
                     </TabPanel>
                   </MainCard>
+                  <Grid item xs={12}>
+                          <Stack direction="row">
+                            <AnimateButton>
+                              <Button
+                                sx={{ width: '100px' }}
+                                onClick={() => {
+                                  onRegisterHandler();
+                                }}
+                                variant="contained"
+                              >
+                                등록
+                              </Button>
+                            </AnimateButton>
+                          </Stack>
+                        </Grid>
                 </Grid>
               </Grid>
             </MainCard>
