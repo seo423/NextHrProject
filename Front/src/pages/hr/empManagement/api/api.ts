@@ -50,6 +50,28 @@ const registerEmp = async (action: any) => {
   }
 };
 
+//사원 사진 등록
+const registerEmpPicture = async (action: any) => {
+  console.log('log from regiserEmp', action.payload);
+  const url = new URL('http://localhost:9101/empinfomgmt/employee');
+  url.searchParams.append('token', localStorage.getItem('access') as string);
+
+  const obj = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(action.payload)
+  };
+
+  const response = await fetch(url, obj).catch((err) => err);
+  try {
+    const data = response.json();
+    console.log(data);
+    return data;
+  } catch (err) {
+    return { errorMsg: 'success', errorCode: 0 };
+  }
+};
+
 //사원정보 수정
 const updateEmpInfo = async (action: typeAction) => {
   console.log('updateEmpInfo api called!!!', action.payload);
@@ -413,6 +435,7 @@ const getAppointmentResult = async () => {
 export {
   getEmpList,
   registerEmp,
+  registerEmpPicture,
   updateEmpInfo,
   deleteEmpInfo,
   getEmpEvalResult,

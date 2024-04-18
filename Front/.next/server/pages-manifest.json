@@ -1,7 +1,5 @@
 {
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
-  "/_document": "pages/_document.js",
-  "/hr/base/Certification/CertificationPage": "pages/hr/base/Certification/CertificationPage.js",
-  "/hr/empManagement/registerEmp": "pages/hr/empManagement/registerEmp.js"
+  "/_document": "pages/_document.js"
 }

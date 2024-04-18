@@ -13,10 +13,17 @@ export function* registerEmpActionSaga(action: typeAction) {
   const data: empEvalRequest = yield call(api.registerEmp, action);
   console.log('data from empEvalResultActionSaga:', data);
 }
+export function* registerEmpPicActionSaga(action: typeAction) {
+  yield console.log('registerEmpPicActionSaga called!!! ', action.payload);
+
+  const data: empEvalRequest = yield call(api.registerEmpPicture, action);
+  console.log('data from empEvalResultActionSaga:', data);
+}
 
 // action과 api 요청을 보내주는 함수를 호출하는 saga를 연결해주는 saga
 export function* onRegisterEmpSaga() {
   yield takeEvery(registerEmpAction.REGISTER_EMP_REQUSTED, registerEmpActionSaga);
+  yield takeEvery(registerEmpAction.REGISTER_EMP_PiC_REQUSTED, registerEmpPicActionSaga);
 }
 
 export function* registerEmpSaga() {

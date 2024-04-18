@@ -14,7 +14,8 @@ const registerEmpSlice = createSlice({
       console.log('action.payload from registerEmp', errorCode, errorMsg);
       state.errorCode = errorCode;
       state.errorMsg = errorMsg;
-    }
+    },
+    REGISTER_EMP_PiC_REQUSTED(state, action) {}
   }
 });
 
