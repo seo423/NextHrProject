@@ -173,6 +173,10 @@ function RegisterEmp() {
     console.log("hireDate값: " , hireDate);
   }, [hireDate]);
 
+  useEffect(() => {
+    console.log("empName값<!DOCTYPE html>: " , empName);
+  }, [empName]);
+
 
   const [value, setValue] = useState<number>(0);
   type TabChangeHandler = (event: React.SyntheticEvent, newValue: number) => void;
@@ -180,22 +184,6 @@ function RegisterEmp() {
   const handleChange: TabChangeHandler = (event, newValue) => {
     setValue(newValue);
   };
-
-  // 백엔드에 보낼 데이터를
-
-  // 등록 버튼을 클릭하면은 유효성 검사를 진행한뒤 값들이 유효하면은 백엔드로 데이터를 전송
-  // ---> 유효성 검사는 입력된 모든 값들에 진행되는것이 아닌 특정 값들에 대해서만
-  //      유효성 검사를 합니다(DB의 제약조건과 비교해 보세요).
-
-
-  // const onFileChanges = (event: React.ChangeEvent<HTMLInputElement>) =>{
-  //   console.log(event.target.files);
-  // };
-
-  // const handleClick = () => {
-  //   if(fileInput.current)
-  //     fileInput.current.click();
-  // };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
@@ -206,9 +194,16 @@ function RegisterEmp() {
       setFile(file);
     }
   }
-  const onRegisterHandler = () => {
-    console.log('등록버튼 누름');
 
+  const upload = async(e:any) => {
+    e.preventDefault();
+    const formData = new FormData();
+    if(file)
+      formData.append('file', file);
+    
+    console.log("occupation:" ,occupation);
+    console.log("hireDate:" ,hireDate);
+    console.log("employment:" ,employment);
     const languageSkillsData = {
       testSubject : testSubject,
       subject : subject,
@@ -242,39 +237,6 @@ function RegisterEmp() {
       entranceDate : entranceDate,
       graduateDate : graduateDate
     }
-
-    const data = {
-      empName: empName,
-      birthDate: birthDate,
-      mobileNumber: mobileNumber,
-      address: address,
-      detailAddress: detailAddress,
-      postNumber: postNumber,
-      email: email,
-      residentId: residentId,
-      deptCode: dept,
-      gender: gender,
-      lastSchool: lastSchool,
-      position: position,
-      hobong: salaryStep,
-      employment: employment
-  };
-
-  dispatch(registerEmpAction.REGISTER_EMP_REQUSTED(data));
-  dispatch(registerEmpAction.REGISTER_EMP_PiC_REQUSTED(file));
-
-  }
- 
-  const upload = async(e:any) => {
-    e.preventDefault();
-    const formData = new FormData();
-    if(file)
-      formData.append('file', file);
-    
-    console.log("occupation:" ,occupation);
-    console.log("hireDate:" ,hireDate);
-    console.log("employment:" ,employment);
-
     const data = {
       empName: empName,
       birthDate: birthDate,
@@ -292,9 +254,14 @@ function RegisterEmp() {
       employment: employment,
       occupation: occupation,
       hiredate: hireDate,
-      formData: formData
+      formData: formData,
+      educationInfoData : educationInfoData,
+      familyInfo : familyInfoData,
+      workExperData : workExperData,
+      certificationData : certificationData,
+      languageSkillsData : languageSkillsData
     };
-
+ 
     dispatch(registerEmpAction.REGISTER_EMP_REQUSTED(data));
   };
 

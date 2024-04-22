@@ -35,7 +35,7 @@ const EmpRegister: React.FC<EmpRegisterProps> = ({ stateSetters }) => {
     const dispatch = useDispatch();
 
     const empNameRef = useRef<HTMLInputElement>(null);
-    const DateRef = useRef<HTMLInputElement>(null);
+    const birthDateRef = useRef<HTMLInputElement>(null);
     const hireDateRef = useRef<HTMLInputElement>(null);
     const mobileNumberRef = useRef<HTMLInputElement>(null);
     const addressRef = useRef<HTMLInputElement>(null);
@@ -143,7 +143,7 @@ const EmpRegister: React.FC<EmpRegisterProps> = ({ stateSetters }) => {
   const onSaveHandler = () => {
  
       const empNameref = empNameRef.current?.value;
-      const birthDateref = DateRef.current?.value;
+      const birthDateref = birthDateRef.current?.value;
       const residentId = residentIdRef.current?.value;
       const mobileNumberref = mobileNumberRef.current?.value;
       const addressref = addressRef.current?.value;
@@ -194,12 +194,12 @@ const EmpRegister: React.FC<EmpRegisterProps> = ({ stateSetters }) => {
       // 여기서 select에서 선택된 값에 따라 state에 값을 할당
       // ---> 여기서 할당된 값을 아래에서 호출하는 함수에 넘겨준다.
     
-      console.log(empNameref, DateRef, hireDateRef, mobileNumberref, addressref, detailAddressref, postNumberref, emailref);
+      console.log(empNameref, birthDateRef, hireDateRef, mobileNumberref, addressref, detailAddressref, postNumberref, emailref);
       console.log(dept, gender, lastSchool, position, salaryStep, employment);
 
       stateSetters.setEmail(emailRef.current?.value);
       stateSetters.setEmpName(empNameRef.current?.value);
-      stateSetters.setBirthDate(DateRef.current?.value);
+      stateSetters.setBirthDate(birthDateRef.current?.value);
       stateSetters.setMobileNumber(mobileNumberRef.current?.value);
       stateSetters.setDetailAddress(detailAddressRef.current?.value);
       stateSetters.setPostNumber(postNumberRef.current?.value);
