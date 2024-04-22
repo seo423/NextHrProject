@@ -103,7 +103,7 @@ const HobongRegisterMainPage = () => {
       </div>
 
       <div style={{ display: 'flex' }}>
-        <div style={{ flex: 1, }}>
+        <div style={{ flex: 1 }}>
           <div className={styles['page-wrapper']}>
             <Page2 onRowClick={handleRowClick} />
           </div>

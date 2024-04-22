@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import kr.co.seoulit.insa.attdsvc.attdmgmt.to.*;
+import kr.co.seoulit.insa.commsvc.foudinfomgmt.to.DeptTO;
 import kr.co.seoulit.insa.commsvc.systemmgmt.to.ResultTO;
 import org.springframework.ui.ModelMap;
 
@@ -20,5 +21,4 @@ public interface AttdMgmtService {
 	   public void removeRestAttdList(ArrayList<RestAttdTO> restAttdList);
 	   public void modifyDailyAttd(DailyAttdModifyTO dailyAttdModifyTO);
 	   public void finalizeDailyAttd(List<DailyAttdSearchResTO> selectedAttdList);
-	   
 }

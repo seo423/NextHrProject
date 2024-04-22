@@ -11,17 +11,20 @@ type empRequest = { empList: []; message: '' };
 type typeAction = { payload: any; type: string };
 
 export function* empInfoActionSaga(action: typeAction) {
-  yield console.log('empEvalResultActionSaga called!!! ', action.payload);
+  yield console.log('empInfoActionSaga called!!! ', action.payload);
 
   const data: empRequest = yield call(api.getEmpList, action);
   yield put(empInfoAction.EMP_FETCH_STATUS(data));
   console.log('data from empInfoActionSaga:', data);
 }
 
-export function* empUpdateActionSaga(action: typeAction) {
-  const data: empRequest = yield call(api.updateEmpInfo, action);
-  yield put(empInfoAction.EMP_UPDATE_STATUS(data));
-}
+// export function* empUpdateActionSaga(action: typeAction) {
+//   console.log('empUpdateActionSaga called!!! ', action.payload);
+
+//   const data: empRequest = yield call(api.updateEmpInfo, action);
+//   yield put(empInfoAction.EMP_UPDATE_STATUS(data));
+//   console.log('data from empUpdateActionSaga:', data);
+// }
 
 export function* empDeleteActionSaga(action: typeAction) {
   const data: empRequest = yield call(api.deleteEmpInfo, action);
@@ -31,7 +34,7 @@ export function* empDeleteActionSaga(action: typeAction) {
 // action과 api 요청을 보내주는 함수를 호출하는 saga를 연결해주는 saga
 export function* onEmpInfoSaga() {
   yield takeEvery(empInfoAction.EMP_FETCH_REQUESTED, empInfoActionSaga);
-  yield takeEvery(empInfoAction.EMP_UPDATE_REQUESTED, empUpdateActionSaga);
+  // yield takeEvery(empInfoAction.EMP_UPDATE_REQUESTED, empUpdateActionSaga);
   yield takeEvery(empInfoAction.EMP_DELETE_REQUESTED, empDeleteActionSaga);
 }
 

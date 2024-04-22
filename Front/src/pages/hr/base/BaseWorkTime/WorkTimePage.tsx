@@ -170,7 +170,12 @@ function WorkTimePage() {
                 <TableHead>
                   <TableRow>
                     {workTimeGrid.map((column: any) => (
-                      <TableCell sx={{ py: 3 }} key={column.id} style={{ minWidth: column.minWidth }}>
+                      <TableCell sx={{
+                        borderTop: '1px solid black',
+                        borderBottom: '3px solid black',
+                        marginBottom: '3px',
+                        backgroundColor: '#E8D9FF'
+                      }} key={column.id} style={{ minWidth: column.minWidth }}>
                         <div style={{ fontWeight: 'bold', textAlign: 'center' }}>{column.label}</div>
                       </TableCell>
                     ))}

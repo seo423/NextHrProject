@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Grid,
@@ -30,10 +30,12 @@ function DailyAttendRegist() {
   const [insertModal, setInsertModal] = useState<boolean>(false);
   const [modifyModal, setModifyModal] = useState<boolean>(false);
   const [selectedEmp, setSelectedEmp] = useState<dailyAttdEntity[]>([]);
+  const selectRef = useRef<HTMLSelectElement>(null);
 
   const dispatch = useDispatch();
 
   const dayAttdlist = useSelector((state: any) => (state.dailyAttend.dayAttdlist !== undefined ? state.dailyAttend.dayAttdlist : []));
+  const deptList = useSelector((state: any) => (state.dailyAttend.deptlist !== undefined ? state.dailyAttend.deptlist : []));
 
   const [authCheck, setAuthCheck] = useState(false); // 페이지 접근 권한체크
 
@@ -75,6 +77,10 @@ function DailyAttendRegist() {
       return;
     }
   };
+    //부서 선택함
+  const deptChangeHandler = (value: string) => {
+    setDeptCode(value);
+  };
 
   const onSearchClickHandler = () => {
     if (authCheck) {
@@ -96,6 +102,20 @@ function DailyAttendRegist() {
     }
   };
 
+  
+  const deptLists = deptList.map((item: any) => {
+    return (
+      <MenuItem value={item.deptCode} key={item.deptCode}>
+        {item.deptName}
+      </MenuItem>
+    );
+});
+
+useEffect(() => {
+  console.log('dispatch호출됨');
+  dispatch(dailyAttendAction.DEPT_LIST_SEARCH_FETCH_REQUESTED(''));
+}, []);
+
   return (
     <Page title="일근태 등록">
       <Grid container spacing={gridSpacing}>
@@ -110,33 +130,18 @@ function DailyAttendRegist() {
                   전체 선택
                   </Button> */}
                   <Box sx={{ minWidth: 120, marginBottom: 1 }}>
-                    <FormControl fullWidth>
-                      <InputLabel id="demo-simple-select-label">조회부서</InputLabel>
-                      <Select
-                        value={deptName}
-                        label="조회부서"
-                        onChange={(event: any) => {
-                          setDeptName(event.target.value);
-                          if (event.target.value === '회계팀') {
-                            setDeptCode('DEP000');
-                          } else if (event.target.value === '인사팀') {
-                            setDeptCode('DEP001');
-                          } else if (event.target.value === '전산팀') {
-                            setDeptCode('DEP002');
-                          } else if (event.target.value === '보안팀') {
-                            setDeptCode('DEP003');
-                          } else if (event.target.value === '개발팀') {
-                            setDeptCode('DEP004');
-                          }
-                        }}
-                      >
-                        <MenuItem value={'회계팀'}>회계팀</MenuItem>
-                        <MenuItem value={'인사팀'}>인사팀</MenuItem>
-                        <MenuItem value={'전산팀'}>전산팀</MenuItem>
-                        <MenuItem value={'보안팀'}>보안팀</MenuItem>
-                        <MenuItem value={'개발팀'}>개발팀</MenuItem>
-                      </Select>
-                    </FormControl>
+                  <InputLabel>부서</InputLabel>
+                      <FormControl fullWidth>
+                        <Select
+                          defaultValue="-1"
+                          ref={selectRef}
+                          onChange={(e) => {
+                            deptChangeHandler(String(e.target.value));
+                          }}
+                        >
+                          {deptLists}
+                        </Select>
+                      </FormControl>
                   </Box>
                 </Grid>
                 <Grid item xs={12} md={4}>
@@ -234,7 +239,7 @@ function DailyAttendRegist() {
                     ))
                   ) : (
                     <TableCell colSpan={11} align="center">
-                      <p>사원 정보가 없습니다.</p>
+                      <p>일근태 정보가 없습니다.</p>
                     </TableCell>
                   )}
                 </TableBody>

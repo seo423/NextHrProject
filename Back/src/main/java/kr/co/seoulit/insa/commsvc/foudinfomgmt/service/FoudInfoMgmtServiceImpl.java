@@ -25,7 +25,8 @@ public class FoudInfoMgmtServiceImpl implements FoudInfoMgmtService {
 	private DetailCodeMapper detailCodeMapper;
 	@Autowired
 	private PositionMapper positionMapper;
-
+	@Autowired
+	private CertificateIssuanceMapper certificateIssuanceMapper;
 	@Autowired
 	private HobongMapper hobongMapper;
 
@@ -137,6 +138,7 @@ public class FoudInfoMgmtServiceImpl implements FoudInfoMgmtService {
 
 	}
 
+
 	@Override
 	public String findWeekDayCount(String startDate, String endDate) {
 		HashMap<String , Object> map = new HashMap<>();
@@ -224,6 +226,12 @@ public class FoudInfoMgmtServiceImpl implements FoudInfoMgmtService {
 	public void updateHobongByFixed(HobongFixedTO hobongFixedTO) {
 		System.out.println("서비스에서 받은 hobongFixedTO: " + hobongFixedTO);
 		hobongMapper.updateHobongByFixed(hobongFixedTO);
+	}
+
+	@Override
+	public ArrayList<CertificateIssuanceResTO> searchEmpDeatilInfo(String empCode) {
+		ArrayList<CertificateIssuanceResTO> empDetailList = certificateIssuanceMapper.selectEmpDeatilInfo(empCode);
+		return empDetailList;
 	}
 }
 

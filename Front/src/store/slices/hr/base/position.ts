@@ -22,23 +22,19 @@ const slice = createSlice({
       state.error = action.payload;
     },
 
-    getPosition1(state) {
+    getPosition1(state, action) {
       state.isLoading = true;
     },
 
     // GET POSITION
     getPositionSuccess(state, action) {
+      console.log('getPositionSuccess호출됨');
       state.isLoading = false;
       state.positionList = action.payload;
       state.isDone = true;
-    },
-
-    getPositionFailure(state) {
-      state.isLoading = false;
-      state.error = '직급정보 조회 실패';
     }
   }
 });
 
 export default slice.reducer;
-export const { getPosition1, getPositionFailure, hasError, getPositionSuccess } = slice.actions;
+export const PositionAction = slice.actions;

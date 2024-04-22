@@ -8,7 +8,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper=false)
 public class FamilyInfoTO extends BaseTO{
 	
-	private String empCode,familyCode,familyName,relation,birthdate,liveTogether;
+<<<<<<< HEAD
+	private String empCode,familyCode,familyName,relation,familybirthdate,liveTogether;
 
 	public String getEmpCode() {
 		return empCode;
@@ -43,11 +44,11 @@ public class FamilyInfoTO extends BaseTO{
 	}
 
 	public String getBirthdate() {
-		return birthdate;
+		return familybirthdate;
 	}
 
 	public void setBirthdate(String birthdate) {
-		this.birthdate = birthdate;
+		this.familybirthdate = familybirthdate;
 	}
 
 	public String getLiveTogether() {
@@ -57,5 +58,8 @@ public class FamilyInfoTO extends BaseTO{
 	public void setLiveTogether(String liveTogether) {
 		this.liveTogether = liveTogether;
 	}
+=======
+	private String empCode,familyCode,familyName,relation,famailyBirthDate,liveTogether;
+>>>>>>> da321188eb75d1ec6b8fe452dcd8f4085659efd3
 
 }

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import hrApi from 'store/redux-saga/api/intercepter';
 
 // 근무기준시간 조회
 export const getBaseWorkTimeList = () =>
@@ -62,7 +63,17 @@ export const postHoliday = async (sendData: any) => {
 };
 
 // 부서정보 조회
-export const deptListManage = () => axios.get('http://localhost:9101/hr/foudinfomgmt/deptlist');
+export const deptListManage = async () => {
+  try {
+    return await hrApi.get('foudinfomgmt/deptlist', {
+      params: {
+        token: localStorage.getItem('access')
+      }
+    });
+  } catch (error: any) {
+    console.log(error);
+  }
+};
 
 export const deptListUpdate = (action: any) => {
   console.log('action');
@@ -82,6 +93,7 @@ export const deptMember = (action: any) => {
 
 // 직급정보 조회
 export const getPosition = async () => {
+  console.log('오잉');
   let url = 'http://localhost:9101/hr/foudinfomgmt/positionlist';
   const response = await axios.get(url, {
     params: {

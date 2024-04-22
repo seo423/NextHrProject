@@ -1,4 +1,5 @@
 // project import
+import { String } from 'lodash';
 import { NavItemType } from 'types';
 
 // ==============================|| MENU TYPES ||============================== //
@@ -50,7 +51,29 @@ export interface PositionTO {
 export interface HobongTO {
   hobongLevel?: string;
   baseSalary?: number;
+<<<<<<< HEAD
+  positionAllowance?: number;
+  longevityBonus?: number;
+  totalHobong?: number;
+}
+
+export interface empCardTO {
+  hobongLevel?: string;
+  baseSalary?: number;
+  positionAllowance?: number;
+  longevityBonus?: number;
+  totalHobong?: number;
+}
+=======
   positionAllowance?:number;
   longevityBonus?:number;
   totalHobong?:number;
 }
+
+export interface empDetailTO {
+  address?: string | undefined | null;
+  position?: string| undefined | null;
+  residentId?: string| undefined| null;
+  hiredate?: string| undefined | null;
+}
+>>>>>>> da321188eb75d1ec6b8fe452dcd8f4085659efd3

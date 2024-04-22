@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, useEffect } from 'react';
+import React, { ReactElement, useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Grid,
@@ -38,10 +38,12 @@ function DailyAttendManage() {
   const [selectedEmp, setSelectedEmp] = useState<dailyAttdEntity[]>([]);
   const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>({});
   const [authCheck, setAuthCheck] = useState(false); // 페이지 접근 권한체크
+  const selectRef = useRef<HTMLSelectElement>(null);
 
   const dispatch = useDispatch();
 
   const dayAttdlist = useSelector((state: RootState) => (state.dailyAttend.dayAttdlist !== undefined ? state.dailyAttend.dayAttdlist : []));
+  const deptList = useSelector((state: any) => (state.dailyAttend.deptlist !== undefined ? state.dailyAttend.deptlist : []));
 
   // 부서
   const [deptName, setDeptName] = useState('');
@@ -186,6 +188,26 @@ function DailyAttendManage() {
     setSelectedEmp([...dayAttdlist]);
   };
 
+  useEffect(() => {
+    console.log('dispatch호출됨');
+    dispatch(dailyAttendAction.DEPT_LIST_SEARCH_FETCH_REQUESTED(''));
+    dispatch(dailyAttendAction.CLEAR_ATTD_LIST());
+  }, []);
+  
+  const deptLists = deptList.map((item: any) => {
+    return (
+      <MenuItem value={item.deptCode} key={item.deptCode}>
+        {item.deptName}
+      </MenuItem>
+    );
+});
+
+  //부서 선택함
+  const deptChangeHandler = (value: string) => {
+    setDeptCode(value);
+    console.log(value);
+    dispatch(dailyAttendAction.DAILY_ATTEND_SEARCH_EMPLIST_FETCH_REQUESTED(value));
+  };
   return (
     <Page title="일근태 관리">
       {authCheck ? (
@@ -202,31 +224,16 @@ function DailyAttendManage() {
                   </Grid>
                   <Grid item xs={12} md={4}>
                     <Box sx={{ minWidth: 120, marginBottom: 1 }}>
+                    <InputLabel>부서</InputLabel>
                       <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">조회부서</InputLabel>
                         <Select
-                          value={deptName}
-                          label="조회부서"
-                          onChange={(event: any) => {
-                            setDeptName(event.target.value);
-                            if (event.target.value === '회계팀') {
-                              setDeptCode('DEP000');
-                            } else if (event.target.value === '인사팀') {
-                              setDeptCode('DEP001');
-                            } else if (event.target.value === '전산팀') {
-                              setDeptCode('DEP002');
-                            } else if (event.target.value === '보안팀') {
-                              setDeptCode('DEP003');
-                            } else if (event.target.value === '개발팀') {
-                              setDeptCode('DEP004');
-                            }
+                          defaultValue="-1"
+                          ref={selectRef}
+                          onChange={(e) => {
+                            deptChangeHandler(String(e.target.value));
                           }}
                         >
-                          <MenuItem value={'회계팀'}>회계팀</MenuItem>
-                          <MenuItem value={'인사팀'}>인사팀</MenuItem>
-                          <MenuItem value={'전산팀'}>전산팀</MenuItem>
-                          <MenuItem value={'보안팀'}>보안팀</MenuItem>
-                          <MenuItem value={'개발팀'}>개발팀</MenuItem>
+                          {deptLists}
                         </Select>
                       </FormControl>
                     </Box>
@@ -328,7 +335,7 @@ function DailyAttendManage() {
                       ))
                     ) : (
                       <TableCell colSpan={11} align="center">
-                        <p>사원 정보가 없습니다.</p>
+                        <p>일근태 정보가 없습니다.</p>
                       </TableCell>
                     )}
                   </TableBody>

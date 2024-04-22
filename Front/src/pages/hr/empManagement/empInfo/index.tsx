@@ -14,6 +14,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { empInfoAction } from '../slices/empInfoReducer';
 import EmpModifyModal from './EmpModifyModal';
 import { EmpInfoEntity } from '../types/empManagementTypes';
+import { empCardAction } from '../slices/empCardReducer';
+
 import Swal from 'sweetalert2';
 
 const selectData: { deptCode: string; deptName: string }[] = [
@@ -34,6 +36,7 @@ function EmpInfo() {
   );
   const fetchStatus = useSelector((state: any) => state.empManagement.empInfo.fetchStatus);
   const [selectedEmp, setSelectedEmp] = useState<EmpInfoEntity[]>([]);
+
   const selectRef = useRef<HTMLSelectElement>(null);
   const [isValid, setIsValid] = useState<boolean>(false);
 
@@ -50,7 +53,7 @@ function EmpInfo() {
 
   useEffect(() => {
     dispatch(empInfoAction.EMP_FETCH_REQUESTED(''));
-    console.log(selectRef.current?.value);
+    console.log('selectRef', selectRef.current?.value);
   }, [fetchStatus, dispatch]);
 
   const onChangeHandler = (value: any) => {
@@ -86,7 +89,8 @@ function EmpInfo() {
           return;
         }
         setIsValid(true);
-        console.log(identifier);
+        // dispatch(empCardAction.EMP_CARD_REQUESTED(selectedEmp));
+        console.log('identifier', identifier);
       } else if (identifier === 'del') {
         const bool = confirm('삭제 하시겠습니까?');
         if (bool) {
@@ -123,7 +127,7 @@ function EmpInfo() {
               <Stack direction="row" spacing={2} alignItems="center">
                 {isValid && <EmpModifyModal toggle={onToggleHandler} emp={selectedEmp} />}
                 <Button variant="contained" onClick={() => onClickHandler('mod')}>
-                  수정
+                  인사기록카드
                 </Button>
                 <Button variant="contained" onClick={() => onClickHandler('del')}>
                   삭제

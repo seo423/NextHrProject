@@ -23,6 +23,12 @@
 		ORDER BY LENGTH(H.HOBONG_LEVEL)
 	</select>
 
+	<select id="selectHobongCodeByHobongLevel" parameterType="String" resultType="java.lang.String">
+		SELECT HOBONG_CODE
+		FROM HOBONG
+		WHERE HOBONG_LEVEL = #{hobongLevel}
+	</select>
+
 	<insert id="insertHobongList" parameterType="HobongReqTO">
 		<![CDATA[
 		{

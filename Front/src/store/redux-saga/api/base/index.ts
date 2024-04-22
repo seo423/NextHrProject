@@ -5,7 +5,11 @@ const DETAIL_CODE_URL = 'base/detailCode';
 const HOBONG_URL = 'foudinfomgmt/hobonglist';
 const HOBONG_UPDATE_BY_PERCENTAGE_URL = 'foudinfomgmt/hobong_percentage';
 const HOBONG_UPDATE_BY_FIXED_URL = 'foudinfomgmt/hobong_fixed';
-
+<<<<<<< HEAD
+const EMP_CARD_URL = 'empinfomgmt/empcard';
+=======
+const EMP_DETAIL_LIST_URL = 'foudinfomgmt/certificate-issuance';
+>>>>>>> da321188eb75d1ec6b8fe452dcd8f4085659efd3
 
 // 권한 조회
 export const getAuthList = async () => {
@@ -26,6 +30,21 @@ export const getCodeList = async () => {
     return await hrApi.get(DETAIL_CODE_URL, {
       params: {
         token: localStorage.getItem('access')
+      }
+    });
+  } catch (error: any) {
+    console.log(error);
+  }
+};
+
+//인사기록카드
+export const getEmpCard = async (param: string) => {
+  console.log('api에서 받아온 param: ', param);
+  try {
+    return await hrApi.get(EMP_CARD_URL, {
+      params: {
+        token: localStorage.getItem('access'),
+        empCode: param
       }
     });
   } catch (error: any) {
@@ -85,4 +104,22 @@ export const updateFixedHobongList = async (body: any) => {
     console.log(error);
   }
 };
+<<<<<<< HEAD
+=======
 
+// 재직증명서에 기재될 사원코드에 따른 사원의 주소, 주민등록번호, 직위 조회하기
+export const searchEmpDeatilInfo = async (param: string) => {
+  try {
+    return await hrApi.get(EMP_DETAIL_LIST_URL, {
+      params: {
+        empCode: param,
+        token: localStorage.getItem('access')
+      }
+    });
+  } catch (error: any) {
+    console.log(error);
+  }
+};
+
+
+>>>>>>> da321188eb75d1ec6b8fe452dcd8f4085659efd3

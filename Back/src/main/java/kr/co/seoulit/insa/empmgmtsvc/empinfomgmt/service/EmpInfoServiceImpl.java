@@ -1,7 +1,11 @@
 package kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.service;
 
 import kr.co.seoulit.insa.commsvc.foudinfomgmt.mapper.DeptMapper;
-import kr.co.seoulit.insa.commsvc.foudinfomgmt.to.DeptTO;
+<<<<<<< HEAD
+=======
+import kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.mapper.WorkInfoMapper;
+import kr.co.seoulit.insa.commsvc.foudinfomgmt.mapper.HobongMapper;
+>>>>>>> da321188eb75d1ec6b8fe452dcd8f4085659efd3
 import kr.co.seoulit.insa.commsvc.systemmgmt.mapper.DetailCodeMapper;
 import kr.co.seoulit.insa.commsvc.systemmgmt.to.DetailCodeTO;
 import kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.entity.EmpDetailEntity;
@@ -10,8 +14,17 @@ import kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.repository.EmpDetailRepository;
 import kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.to.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.Blob;
 import java.util.*;
+
+import static java.lang.Integer.parseInt;
 
 @Service
 public class EmpInfoServiceImpl implements EmpInfoService {
@@ -23,11 +36,12 @@ public class EmpInfoServiceImpl implements EmpInfoService {
     @Autowired
     private EmpMapper empMapper;
     @Autowired
+    private HobongMapper hobongMapper;
+    @Autowired
     private DetailCodeMapper detailCodeMapper;
     @Autowired
     private FamilyInfoMapper familyInfoMapper;
-    @Autowired
-    private WorkInfoMapper workInfoMapper;
+
     @Autowired
     private LicenseInfoMapper licenseInfoMapper;
     @Autowired
@@ -44,7 +58,41 @@ public class EmpInfoServiceImpl implements EmpInfoService {
         return empTO;
 
     }
+    public void registEmployeePic(MultipartFile file, String residentId){
 
+        String originalFileName = file.getOriginalFilename();
+        Path currentWorkingDirectory = Paths.get("").toAbsolutePath();
+        String newPathString = currentWorkingDirectory.toString(); // newPath를 String으로 변환
+        String imagePath = newPathString + File.separator + "images"; // 경로 구분자 추가
+        System.out.println("Current working directory: " + imagePath);
+        String saveFileName = "";
+
+        if (!originalFileName.isEmpty()) {
+            saveFileName = UUID.randomUUID().toString()  // UUID는 이미지 이름 중복 방지 위해 랜덤하게 생성된 고유값
+                    + originalFileName.substring(originalFileName.lastIndexOf('.'));
+        }
+        try {
+            file.transferTo(new File(imagePath, saveFileName));
+            String fullImagePath = imagePath + File.separator +  saveFileName; // 경로 구분자 추가
+            System.out.println("saveFileName: " + saveFileName);
+
+//            // MultipartFile에서 InputStream 가져오기
+//            InputStream inputStream = file.getInputStream();
+//
+//            // InputStream에서 바이트 배열로 읽어들이기
+//            byte[] imageBytes = inputStream.readAllBytes();
+
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("fileName", saveFileName);
+            map.put("residentId", residentId);
+            System.out.println("ServiceImpl에 받아온 map: " + map);
+            empMapper.insertEmpPic(map);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
     // 본인 직급 이하의 사원 조회할때 사용하는 코드
     @Override
@@ -97,39 +145,66 @@ public class EmpInfoServiceImpl implements EmpInfoService {
         return empList;
     }
 
+//    @Override
+//    public void registEmployeePic(String image) {
+//        String encodedImage = image.split(",")[1];
+//        System.out.println("인코딩된 이미지: " + encodedImage);
+//        byte[] imageBytes = Base64.getDecoder().decode(encodedImage);
+//        empMapper.insertEmpPic(imageBytes);
+//    }
+
+    @Override
+    public EmpTO findEmpCard(String empCode) {
+        EmpTO empTO = null;
+        empTO = empMapper.empDetailcard(empCode);
+        System.out.println("empTO = " + empTO);
+        return empTO;
+    }
+
     @Override
     public void registEmployee(EmpTO emp) {
 
         // 마지막 사원의 empCode를 가져와서 새로운 사원의 empCode를 생성한다.
         String lastEmpCode = empMapper.selectLastEmpCode();
         String lastTwoDigits = lastEmpCode.substring(lastEmpCode.length() - 2);
-        int number = Integer.parseInt(lastTwoDigits) + 1;
+        int number = parseInt(lastTwoDigits) + 1;
 
         String empCode = "EMP-" + String.format("%02d", number);
         System.out.println("<<<< emp_code = " + empCode);
         //새로 생성된 empCode를 넘겨받은 객체의 empCode로 할당
         emp.setEmpCode(empCode);
+        String hobongCode = hobongMapper.selectHobongCodeByHobongLevel(emp.getHobong());
+        emp.setHobong(hobongCode);
+        familyInfoMapper.insertFamilyInfo(emp.getFamilyInfo());
 
-        HashMap<String, String> map = new HashMap<>();
+
+
+        // EMP테이블 등록
+        empMapper.registEmployee(emp);
+
+        String[] parts = emp.getHiredate().split("-");
+        String convertedDate = "";
+        for (int i = 0; i < parts.length; i++) {
+            if (i == 0) {
+                convertedDate += parts[i].substring(2); // "20"을 제거
+            } else {
+                convertedDate += parts[i];
+            }
+        }
+        int workInfoDays = parseInt(convertedDate);
+        System.out.println("workInfoDays:  " + workInfoDays);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("hiredate", emp.getHiredate());
+        map.put("employmentType", emp.getEmployment());
+        map.put("occupation", emp.getOccupation());
         map.put("empCode", emp.getEmpCode());
-        map.put("empName", emp.getEmpName());
-        map.put("birthDate", emp.getBirthDate());
-        map.put("gender", emp.getGender());
-        map.put("mobileNumber", emp.getMobileNumber());
-        map.put("address", emp.getAddress());
-        map.put("detailAddress", emp.getDetailAddress());
-        map.put("postNumber", emp.getPostNumber());
-        map.put("email", emp.getEmail());
-        map.put("lastSchool", emp.getLastSchool());
-        map.put("imgExtend", emp.getImgExtend());
-        map.put("deptCode", emp.getDeptCode());
-        map.put("position", emp.getPosition());
-//        map.put("hobong", emp.getHobong());
-//        map.put("occupation", emp.getOccupation());
-//        map.put("employment", emp.getEmployment());
-        System.out.println("<<<<<<<<<<<<<< map = " + map);
-        empMapper.registEmployee(map);
+        map.put("workInfoDays", workInfoDays);
 
+        // WORK_INFO 테이블 등록
+        System.out.println("<<<< WORK_INFO 테이블 등록전 map = " + map);
+        empMapper.registEmpWorkInfo(map);
+
+        // DETAIL_CODE 테이블 등록
         DetailCodeTO detailCodeto = new DetailCodeTO();
         detailCodeto.setDetailCodeNumber(emp.getEmpCode());
         detailCodeto.setDetailCodeName(emp.getEmpName());
@@ -140,65 +215,68 @@ public class EmpInfoServiceImpl implements EmpInfoService {
     }
 
 
+<<<<<<< HEAD
     // 아래의 코드들은 empMapper.updateEmployee(emp)를 제외하고는 복합적인 문제로 인하여 작동하지 않을 확률이 높습니다.
     @Override
     public void modifyEmployee(EmpTO emp) {
-
-        if (!"".equals(emp.getStatus()) || emp.getStatus().equals("update")) {
-            empMapper.updateEmployee(emp);
-        }
-        if (emp.getWorkInfo() != null) {
-            ArrayList<WorkInfoTO> workInfoList = emp.getWorkInfo();
-            for (WorkInfoTO workInfo : workInfoList) {
-                switch (workInfo.getStatus()) {
-                    case "insert":
-                        workInfoMapper.insertWorkInfo(workInfo);
-                        break;
-                    case "update":
-                        workInfoMapper.updateWorkInfo(workInfo);
-                        break;
-                    case "delete":
-                        workInfoMapper.deleteWorkInfo(workInfo);
-                        break;
-                }
-            }
-        }
-
-        if (emp.getLicenseInfoList() != null && emp.getLicenseInfoList().size() > 0) {
-            ArrayList<LicenseInfoTO> licenseInfoList = emp.getLicenseInfoList();
-            for (LicenseInfoTO licenseInfo : licenseInfoList) {
-                switch (licenseInfo.getStatus()) {
-                    case "insert":
-                        licenseInfoMapper.insertLicenseInfo(licenseInfo);
-                        break;
-                    case "update":
-                        licenseInfoMapper.updateLicenseInfo(licenseInfo);
-                        break;
-                    case "delete":
-                        licenseInfoMapper.deleteLicenseInfo(licenseInfo);
-                        break;
-                }
-            }
-        }
-
-        if (emp.getFamilyInfoList() != null && emp.getFamilyInfoList().size() > 0) {
-            ArrayList<FamilyInfoTO> familyInfoList = emp.getFamilyInfoList();
-            for (FamilyInfoTO familyInfo : familyInfoList) {
-                switch (familyInfo.getStatus()) {
-                    case "insert":
-                        familyInfoMapper.insertFamilyInfo(familyInfo);
-                        break;
-                    case "update":
-                        familyInfoMapper.updateFamilyInfo(familyInfo);
-                        break;
-                    case "delete":
-                        familyInfoMapper.deleteFamilyInfo(familyInfo);
-                        break;
-                }
-            }
-        }
+//
+//        if (!"".equals(emp.getStatus()) || emp.getStatus().equals("update")) {
+//            empMapper.updateEmployee(emp);
+//        }
+//        if (emp.getWorkInfo() != null) {
+//            ArrayList<WorkInfoTO> workInfoList = emp.getWorkInfo();
+//            for (WorkInfoTO workInfo : workInfoList) {
+//                switch (workInfo.getStatus()) {
+//                    case "insert":
+//                        workInfoMapper.insertWorkInfo(workInfo);
+//                        break;
+//                    case "update":
+//                        workInfoMapper.updateWorkInfo(workInfo);
+//                        break;
+//                    case "delete":
+//                        workInfoMapper.deleteWorkInfo(workInfo);
+//                        break;
+//                }
+//            }
+//        }
+//
+//        if (emp.getLicenseInfoList() != null && emp.getLicenseInfoList().size() > 0) {
+//            ArrayList<LicenseInfoTO> licenseInfoList = emp.getLicenseInfoList();
+//            for (LicenseInfoTO licenseInfo : licenseInfoList) {
+//                switch (licenseInfo.getStatus()) {
+//                    case "insert":
+//                        licenseInfoMapper.insertLicenseInfo(licenseInfo);
+//                        break;
+//                    case "update":
+//                        licenseInfoMapper.updateLicenseInfo(licenseInfo);
+//                        break;
+//                    case "delete":
+//                        licenseInfoMapper.deleteLicenseInfo(licenseInfo);
+//                        break;
+//                }
+//            }
+//        }
+//
+//        if (emp.getFamilyInfoList() != null && emp.getFamilyInfoList().size() > 0) {
+//            ArrayList<FamilyInfoTO> familyInfoList = emp.getFamilyInfoList();
+//            for (FamilyInfoTO familyInfo : familyInfoList) {
+//                switch (familyInfo.getStatus()) {
+//                    case "insert":
+//                        familyInfoMapper.insertFamilyInfo(familyInfo);
+//                        break;
+//                    case "update":
+//                        familyInfoMapper.updateFamilyInfo(familyInfo);
+//                        break;
+//                    case "delete":
+//                        familyInfoMapper.deleteFamilyInfo(familyInfo);
+//                        break;
+//                }
+//            }
+//        }
 
     }
+=======
+>>>>>>> da321188eb75d1ec6b8fe452dcd8f4085659efd3
 
     @Override
     public void removeEmployee(List<EmpDetailEntity> empDetailEntities) {

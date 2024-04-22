@@ -63,8 +63,13 @@ const hr: NavItemType = {
           title: <FormattedMessage id="HobongRegister" />,
           type: 'item',
           url: '/hr/base/Hobong/HobongRegisterMainPage'
+        },
+        {
+          id: 'CertificateOfIssuance',
+          title: <FormattedMessage id="CertificateOfIssuance" />,
+          type: 'item',
+          url: '/hr/base/Certification/CertificationPage'
         }
-        
       ]
     },
     {

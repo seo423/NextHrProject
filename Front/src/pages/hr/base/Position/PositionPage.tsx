@@ -11,7 +11,7 @@ import { gridSpacing } from 'store/constant';
 import { ColumnProps } from '../types/types';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getPosition1 } from 'store/slices/hr/base/position';
+import {PositionAction} from 'store/slices/hr/base/position';
 
 export const positionGrid: ColumnProps[] = [
   // 칼럼정의
@@ -38,7 +38,7 @@ export const positionGrid: ColumnProps[] = [
 function PositionPage() {
   const dispatch = useDispatch();
   const [selRow, setSelRow] = useState(null);
-  const { positionList } = useSelector((state: any) => state.positionList.positionList);
+  const { positionList } = useSelector((state: any) => state.positionList2.positionList);
 
   const selectRow = (rowData: any) => {
     setSelRow(rowData); // 선택한 행의 데이터를 상태에 저장
@@ -46,7 +46,8 @@ function PositionPage() {
   };
 
   const selectData = () => {
-    dispatch(getPosition1());
+    console.log('조회버튼 누름');
+    dispatch(PositionAction.getPosition1(''));
   };
 
   return (
@@ -69,7 +70,12 @@ function PositionPage() {
                 <TableHead>
                   <TableRow>
                     {positionGrid.map((column: any) => (
-                      <TableCell sx={{ py: 3 }} key={column.id} style={{ minWidth: column.minWidth }}>
+                      <TableCell sx={{
+                        borderTop: '1px solid black',
+                        borderBottom: '3px solid black',
+                        marginBottom: '3px',
+                        backgroundColor: '#E8D9FF'
+                      }} key={column.id} style={{ minWidth: column.minWidth }}>
                         <div style={{ textAlign: 'center', fontWeight: 'bold' }}>{column.label}</div>
                       </TableCell>
                     ))}

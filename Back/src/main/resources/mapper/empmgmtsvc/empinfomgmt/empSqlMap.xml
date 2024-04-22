@@ -18,7 +18,6 @@
         <result property="detailAddress" column="DETAIL_ADDRESS"/>
         <result property="postNumber" column="POST_NUMBER"/>
         <result property="lastSchool" column="LAST_SCHOOL"/>
-        <result property="imgExtend" column="IMG_EXTEND"/>
     </resultMap>
 
 
@@ -34,7 +33,6 @@
         <result property="postNumber" column="POST_NUMBER"/>
         <result property="email" column="EMAIL"/>
         <result property="lastSchool" column="LAST_SCHOOL"/>
-        <result property="imgExtend" column="IMG_EXTEND"/>
         <result property="position" column="POSITION"/>
         <result property="ability" column="ABILITY"/>
         <result property="achievement" column="ACHIEVEMENT"/>
@@ -50,6 +48,42 @@
                     javaType="java.util.ArrayList"/>
     </resultMap>
 
+    <resultMap type="kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.to.EmpTO" id="selectempdetailcard">
+        <result property="empCode" column="EMP_CODE"/>
+        <result property="empName" column="EMP_NAME"/>
+        <result property="birthDate" column="BIRTHDATE"/>
+        <result property="gender" column="GENDER"/>
+        <result property="mobileNumber" column="MOBILE_NUMBER"/>
+        <result property="address" column="ADDRESS"/>
+        <result property="detailAddress" column="DETAIL_ADDRESS"/>
+        <result property="postNumber" column="POST_NUMBER"/>
+        <result property="email" column="EMAIL"/>
+        <result property="lastSchool" column="LAST_SCHOOL"/>
+        <result property="imgExtend" column="IMG_EXTEND"/>
+        <result property="certificationsName" column="CERTIFICATIONS_NAME"/>
+        <result property="acquisitionDate" column="ACQUISITION_DATE"/>
+        <result property="expirationDate" column="EXPIRATION_DATE"/>
+        <result property="testSubject" column="TEST_SUBJECT"/>
+        <result property="subject" column="SUBJECT"/>
+        <result property="score" column="SCORE"/>
+        <result property="highSchoolName" column="HIGHSCHOOL_NAME"/>
+        <result property="collegeName" column="COLLEGE_NAME"/>
+        <result property="graduateSchoolName" column="GRADUATE_SCHOOL_NAME"/>
+        <result property="major" column="MAJOR"/>
+        <result property="familyName" column="FAMILY_NAME"/>
+        <result property="relation" column="RELATION"/>
+        <result property="familyBirthdate" column="FAMILY_BIRTHDATE"/>
+        <result property="liveTogether" column="LIVE_TOGETHER"/>
+        <result property="placeOfEmployment" column="PLACE_OF_EMPLOYMENT"/>
+        <result property="employmentPeriod" column="EMPLOYMENT_PERIOD"/>
+        <result property="employmentPosition" column="POSITION"/>
+        <result property="jobDuties" column="JOB_DUTIES"/>
+        <result property="workAddress" column="WORK_ADDRESS"/>
+        <result property="occupation" column="OCCUPATION"/>
+        <result property="hiredate" column="HIREDATE"/>
+        <result property="employmentType" column="EMPLOYMENT_TYPE"/>
+    </resultMap>
+
 
     <select id="selectEmp" parameterType="String" resultMap="empResult">
         SELECT E.EMP_CODE
@@ -63,7 +97,6 @@
              , E.POST_NUMBER
              , E.EMAIL
              , E.LAST_SCHOOL
-             , E.IMG_EXTEND
              , PD.DEPT_NAME
              , PD.POSITION
         FROM EMP E
@@ -96,7 +129,6 @@
         <parameter property="postNumber" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
         <parameter property="email" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
         <parameter property="lastSchool" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
-        <parameter property="imgExtend" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
         <parameter property="deptCode" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
         <parameter property="position" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
         <parameter property="hobong" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
@@ -104,7 +136,7 @@
         <parameter property="employment" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
     </parameterMap>
 
-    <select id="registEmployee" parameterType="map">
+    <insert id="registEmployee" parameterType="EmpTO">
           <![CDATA[
             INSERT INTO EMP
             (
@@ -118,10 +150,11 @@
                 , POST_NUMBER
                 , EMAIL
                 , LAST_SCHOOL
-                , IMG_EXTEND
                 , DEPT_CODE
                 , POSITION_CODE
                 , AUTHORITY
+                , HOBONG_CODE
+                , RESIDENT_ID
             ) VALUES
                 (
                       #{empCode}
@@ -134,13 +167,35 @@
                     , #{postNumber}
                     , #{email, jdbcType=NULL}
                     , #{lastSchool, jdbcType=NULL}
-                    , #{imgExtend, jdbcType=NULL}
                     , #{deptCode, jdbcType=NULL}
                     , #{position, jdbcType=NULL}
                     , #{authority, jdbcType=NULL}
+                    , #{hobong, jdbcType=NULL}
+                    , #{residentId, jdbcType=NULL}
                 )
           ]]>
-    </select>
+    </insert>
+    <insert id="registEmpWorkInfo" parameterType="map">
+          <![CDATA[
+        INSERT INTO WORK_INFO
+        (
+            EMP_CODE
+          , HIREDATE
+          , OCCUPATION
+          , EMPLOYMENT_TYPE
+          , WORK_INFO_DAYS
+        ) VALUES
+            (
+              #{empCode}
+            , TO_DATE(#{hiredate}, 'YYYY-MM-DD')
+            , #{occupation}
+            , #{employmentType}
+            , #{workInfoDays}
+            )
+        ]]>
+    </insert>
+
+
 
     <select id="selectEmpList" resultMap="empResult">
         SELECT E.EMP_CODE
@@ -154,7 +209,6 @@
              , E.POST_NUMBER
              , E.EMAIL
              , E.LAST_SCHOOL
-             , E.IMG_EXTEND
              , PD.DEPT_NAME
              , PD.POSITION
         FROM EMP E
@@ -167,6 +221,11 @@
         ORDER BY E.EMP_CODE
     </select>
 
+    <update id="insertEmpPic" parameterType="map">
+        UPDATE EMP
+        SET IMAGE = #{fileName}
+        WHERE RESIDENT_ID = #{residentId}
+    </update>
 
     <select id="selectEmpListD" parameterType="string" resultMap="empResult">
         SELECT E.EMP_CODE
@@ -179,7 +238,6 @@
              , E.POST_NUMBER
              , E.EMAIL
              , E.LAST_SCHOOL
-             , E.IMG_EXTEND
              , PD.DEPT_NAME
              , PD.POSITION
         FROM EMP E
@@ -231,7 +289,6 @@
              , E.POST_NUMBER
              , E.EMAIL
              , E.LAST_SCHOOL
-             , E.IMG_EXTEND
              , PD.DEPT_NAME
              , PD.POSITION
              , EV.ACHIEVEMENT
@@ -304,6 +361,60 @@
     </select>
 
 <!--    사원의 정보를 수정할때 부서와 직급은 변경할수 없다. (인사발령 서비스에서 진행) -->
+<<<<<<< HEAD
+    <select id="empDetailcard" parameterType="string" resultMap="selectempdetailcard">
+        SELECT E.EMP_CODE
+            ,E.EMP_NAME
+             , TO_CHAR(E.BIRTHDATE, 'YYYY/MM/DD') BIRTHDATE
+             , E.GENDER
+             , E.MOBILE_NUMBER
+             , E.ADDRESS
+             , E.DETAIL_ADDRESS
+             , E.POST_NUMBER
+             , E.EMAIL
+             , E.LAST_SCHOOL
+             , E.IMG_EXTEND
+             , CER.CERTIFICATIONS_NAME
+             , EMP_CER.ACQUISITION_DATE
+             , EMP_CER.EXPIRATION_DATE
+             , LAN.TEST_SUBJECT
+             , LAN.SUBJECT
+             , TO_NUMBER(EMP_LAN.SCORE) SCORE
+             , EDU.HIGHSCHOOL_NAME
+             , EDU.COLLEGE_NAME
+             , EDU.GRADUATE_SCHOOL_NAME
+             , EDU.MAJOR
+             , FAM.FAMILY_NAME
+             , FAM.RELATION
+             , TO_CHAR(FAM.FAMILY_BIRTHDATE, 'YYYY/MM/DD') FAMILY_BIRTHDATE
+             , FAM.LIVE_TOGETHER
+             , WOR.PLACE_OF_EMPLOYMENT
+             , WOR.EMPLOYMENT_PERIOD
+             , WOR.POSITION
+             , WOR.JOB_DUTIES
+             , WOR.WORK_ADDRESS
+             , WORINFO.HIREDATE
+             , WORINFO.OCCUPATION
+             , WORINFO.EMPLOYMENT_TYPE
+        FROM EMP E,
+             CERTIFICATIONS CER,
+             EMP_CERTIFICATIONS EMP_CER,
+             EMP_LANGUAGE_SKILLS EMP_LAN,
+             LANGUAGE_SKILLS LAN,
+             EDUCATION_INFO EDU,
+             FAMILY_INFO FAM,
+             WORKEXPERIENCE WOR,
+             WORK_INFO WORINFO
+        WHERE E.EMP_CODE = EMP_CER.EMP_CODE
+          AND E.EMP_CODE = EMP_LAN.EMP_CODE
+          AND E.EMP_CODE = EDU.EMP_CODE
+          AND E.EMP_CODE = FAM.EMP_CODE
+          AND E.EMP_CODE = WOR.EMP_CODE
+          AND E.EMP_CODE = WORINFO.EMP_CODE
+          AND CER.CERTIFICATIONS_CODE = EMP_CER.CERTIFICATIONS_CODE
+          AND EMP_LAN.TEST_SUBJECT_CODE = LAN.TEST_SUBJECT_CODE
+    </select>
+=======
     <update id="updateEmployee" parameterType="kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.entity.EmpDetailEntity">
         UPDATE EMP
         SET EMP_NAME       = #{empName}
@@ -315,9 +426,9 @@
           , POST_NUMBER    = #{postNumber,jdbcType=VARCHAR}
           , EMAIL          = #{email,jdbcType=VARCHAR}
           , LAST_SCHOOL    = #{lastSchool}
-          , IMG_EXTEND     = #{imgExtend,jdbcType=VARCHAR}
         WHERE EMP_CODE = #{empCode}
     </update>
+>>>>>>> da321188eb75d1ec6b8fe452dcd8f4085659efd3
 
     <parameterMap type="map" id="empDeleteParameter">
         <parameter property="empCode" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>

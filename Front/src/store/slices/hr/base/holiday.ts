@@ -21,6 +21,7 @@ const slice = createSlice({
     },
 
     requestHoliday(state) {
+      console.log("가나다라");
       state.isLoading = true;
     },
 
