@@ -46,6 +46,8 @@ public class EmpTO extends BaseTO {
     private String attitude;
     @Transient
     private String status;
+    @Transient
+    private String occupation;
 
     @Transient
     FamilyInfoTO familyInfo;

@@ -1,14 +1,21 @@
 package kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.controller;
 
+import kr.co.seoulit.insa.attdsvc.attdmgmt.to.DailyAttdSearchReqTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.service.EmpInfoService;
 import kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.to.EmpTO;
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
-@RequestMapping("/empinfomgmt/*")
+@RequestMapping("/hr/empinfomgmt/*")
 @RestController
 @CrossOrigin
 public class EmpRegisterController {
@@ -35,6 +42,13 @@ public class EmpRegisterController {
 		}
 		return map;
 	}
+	@PostMapping("/employee-pic")
+	public void registPicOfEmployee(@RequestParam("file") MultipartFile file, @RequestParam("residentId") String residentId) {
+		System.out.println("registPicOfEmployee Controller로 넘어옴");
+		System.out.println(file.getOriginalFilename());
+		System.out.println(residentId);
+		empInfoService.registEmployeePic(file, residentId);
 
+	}
 
 }

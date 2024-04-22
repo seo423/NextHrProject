@@ -10,5 +10,4 @@ public class FamilyInfoTO extends BaseTO{
 	
 	private String empCode,familyCode,familyName,relation,famailyBirthDate,liveTogether;
 
-
 }

@@ -30,24 +30,24 @@ public class EmpDetailController {
 
 
     //사원정보를 수정하는 로직
-    @PutMapping("/empdetail/empcode")
-    public Map<String, Object> modifyEmployee(@RequestBody EmpTO empTO) {
-        System.out.println("empTO = " + empTO);
-        Map<String,Object> map = new HashMap<>();
-
-        try {
-            empInfoService.modifyEmployee(empTO);
-            map.put("errorMsg", "success");
-            map.put("errorCode", 0);
-
-        } catch (Exception dae) {
-            dae.printStackTrace();
-            map.clear();
-            map.put("errorCode", -1);
-            map.put("errorMsg", dae.getMessage());
-        }
-        return map;
-    }
+//    @PutMapping("/empdetail/empcode")
+//    public Map<String, Object> modifyEmployee(@RequestBody EmpTO empTO) {
+//        System.out.println("empTO = " + empTO);
+//        Map<String,Object> map = new HashMap<>();
+//
+//        try {
+//            empInfoService.modifyEmployee(empTO);
+//            map.put("errorMsg", "success");
+//            map.put("errorCode", 0);
+//
+//        } catch (Exception dae) {
+//            dae.printStackTrace();
+//            map.clear();
+//            map.put("errorCode", -1);
+//            map.put("errorMsg", dae.getMessage());
+//        }
+//        return map;
+//    }
 
     // 삭제할 사원의 정보를 객체배열로 받아서 삭제한다.
     @DeleteMapping("/empdetail/empcode")

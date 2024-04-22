@@ -18,7 +18,6 @@
         <result property="detailAddress" column="DETAIL_ADDRESS"/>
         <result property="postNumber" column="POST_NUMBER"/>
         <result property="lastSchool" column="LAST_SCHOOL"/>
-        <result property="imgExtend" column="IMG_EXTEND"/>
     </resultMap>
 
 
@@ -34,7 +33,6 @@
         <result property="postNumber" column="POST_NUMBER"/>
         <result property="email" column="EMAIL"/>
         <result property="lastSchool" column="LAST_SCHOOL"/>
-        <result property="imgExtend" column="IMG_EXTEND"/>
         <result property="position" column="POSITION"/>
         <result property="ability" column="ABILITY"/>
         <result property="achievement" column="ACHIEVEMENT"/>
@@ -63,7 +61,6 @@
              , E.POST_NUMBER
              , E.EMAIL
              , E.LAST_SCHOOL
-             , E.IMG_EXTEND
              , PD.DEPT_NAME
              , PD.POSITION
         FROM EMP E
@@ -96,7 +93,6 @@
         <parameter property="postNumber" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
         <parameter property="email" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
         <parameter property="lastSchool" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
-        <parameter property="imgExtend" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
         <parameter property="deptCode" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
         <parameter property="position" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
         <parameter property="hobong" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
@@ -104,7 +100,7 @@
         <parameter property="employment" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
     </parameterMap>
 
-    <select id="registEmployee" parameterType="EmpTO">
+    <insert id="registEmployee" parameterType="EmpTO">
           <![CDATA[
             INSERT INTO EMP
             (
@@ -118,7 +114,6 @@
                 , POST_NUMBER
                 , EMAIL
                 , LAST_SCHOOL
-                , IMG_EXTEND
                 , DEPT_CODE
                 , POSITION_CODE
                 , AUTHORITY
@@ -136,7 +131,6 @@
                     , #{postNumber}
                     , #{email, jdbcType=NULL}
                     , #{lastSchool, jdbcType=NULL}
-                    , #{imgExtend, jdbcType=NULL}
                     , #{deptCode, jdbcType=NULL}
                     , #{position, jdbcType=NULL}
                     , #{authority, jdbcType=NULL}
@@ -144,7 +138,28 @@
                     , #{residentId, jdbcType=NULL}
                 )
           ]]>
-    </select>
+    </insert>
+    <insert id="registEmpWorkInfo" parameterType="map">
+          <![CDATA[
+        INSERT INTO WORK_INFO
+        (
+            EMP_CODE
+          , HIREDATE
+          , OCCUPATION
+          , EMPLOYMENT_TYPE
+          , WORK_INFO_DAYS
+        ) VALUES
+            (
+              #{empCode}
+            , TO_DATE(#{hiredate}, 'YYYY-MM-DD')
+            , #{occupation}
+            , #{employmentType}
+            , #{workInfoDays}
+            )
+        ]]>
+    </insert>
+
+
 
     <select id="selectEmpList" resultMap="empResult">
         SELECT E.EMP_CODE
@@ -158,7 +173,6 @@
              , E.POST_NUMBER
              , E.EMAIL
              , E.LAST_SCHOOL
-             , E.IMG_EXTEND
              , PD.DEPT_NAME
              , PD.POSITION
         FROM EMP E
@@ -171,6 +185,11 @@
         ORDER BY E.EMP_CODE
     </select>
 
+    <update id="insertEmpPic" parameterType="map">
+        UPDATE EMP
+        SET IMAGE = #{fileName}
+        WHERE RESIDENT_ID = #{residentId}
+    </update>
 
     <select id="selectEmpListD" parameterType="string" resultMap="empResult">
         SELECT E.EMP_CODE
@@ -183,7 +202,6 @@
              , E.POST_NUMBER
              , E.EMAIL
              , E.LAST_SCHOOL
-             , E.IMG_EXTEND
              , PD.DEPT_NAME
              , PD.POSITION
         FROM EMP E
@@ -235,7 +253,6 @@
              , E.POST_NUMBER
              , E.EMAIL
              , E.LAST_SCHOOL
-             , E.IMG_EXTEND
              , PD.DEPT_NAME
              , PD.POSITION
              , EV.ACHIEVEMENT
@@ -319,7 +336,6 @@
           , POST_NUMBER    = #{postNumber,jdbcType=VARCHAR}
           , EMAIL          = #{email,jdbcType=VARCHAR}
           , LAST_SCHOOL    = #{lastSchool}
-          , IMG_EXTEND     = #{imgExtend,jdbcType=VARCHAR}
         WHERE EMP_CODE = #{empCode}
     </update>
 

@@ -1,4 +1,3 @@
-import { ReactElement, useEffect, useRef} from 'react';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 import { gridSpacing } from 'store/constant';
 import React, { useState } from 'react';
@@ -17,6 +16,8 @@ import LanguageSkills from './LanguageSkills';
 import {Grid, Avatar, Box, Tab, Tabs, Button, Stack } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import {registerEmpAction} from '../slices/registerEmpReducer';
+import { ReactElement, useEffect, useRef} from 'react';
+
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -67,6 +68,8 @@ function RegisterEmp() {
   const [position, setPosition] = useState<string| undefined>('');
   const [salaryStep, setSalaryStep] = useState<string| undefined>('');
   const [employment, setEmployment] = useState<string| undefined>('');
+  const [occupation, setOccupation] = useState<string| undefined>('');
+  const [hireDate, setHireDate] = useState<string| undefined>('');
 
  //EducationInfo에 넘겨줄 useState의 훅함수들
  const [schoolName, setSchoolName] = useState<string | undefined>('');
@@ -99,6 +102,7 @@ function RegisterEmp() {
  
  
  //EmpRegister
+  //empRegister용 setter함수들
   const stateSetters = {
     setEmpName,
     setBirthDate,
@@ -113,7 +117,9 @@ function RegisterEmp() {
     setLastSchool,
     setPosition,
     setSalaryStep,
-    setEmployment
+    setEmployment,
+    setOccupation,
+    setHireDate
   };
   //EducationInfo
   const educationInfoSetters = {
@@ -163,6 +169,11 @@ function RegisterEmp() {
     }
   }, []);
 
+  useEffect(() => {
+    console.log("hireDate값: " , hireDate);
+  }, [hireDate]);
+
+
   const [value, setValue] = useState<number>(0);
   type TabChangeHandler = (event: React.SyntheticEvent, newValue: number) => void;
 
@@ -177,14 +188,14 @@ function RegisterEmp() {
   //      유효성 검사를 합니다(DB의 제약조건과 비교해 보세요).
 
 
-  const onFileChanges = (event: React.ChangeEvent<HTMLInputElement>) =>{
-    console.log(event.target.files);
-  };
+  // const onFileChanges = (event: React.ChangeEvent<HTMLInputElement>) =>{
+  //   console.log(event.target.files);
+  // };
 
-  const handleClick = () => {
-    if(fileInput.current)
-      fileInput.current.click();
-  };
+  // const handleClick = () => {
+  //   if(fileInput.current)
+  //     fileInput.current.click();
+  // };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
@@ -246,18 +257,46 @@ function RegisterEmp() {
       lastSchool: lastSchool,
       position: position,
       hobong: salaryStep,
-      employment: employment,
-      educationInfoData : educationInfoData,
-      familyInfo : familyInfoData,
-      workExperData : workExperData,
-      certificationData : certificationData,
-      languageSkillsData : languageSkillsData
-      
+      employment: employment
   };
 
   dispatch(registerEmpAction.REGISTER_EMP_REQUSTED(data));
-  }
+  dispatch(registerEmpAction.REGISTER_EMP_PiC_REQUSTED(file));
 
+  }
+ 
+  const upload = async(e:any) => {
+    e.preventDefault();
+    const formData = new FormData();
+    if(file)
+      formData.append('file', file);
+    
+    console.log("occupation:" ,occupation);
+    console.log("hireDate:" ,hireDate);
+    console.log("employment:" ,employment);
+
+    const data = {
+      empName: empName,
+      birthDate: birthDate,
+      mobileNumber: mobileNumber,
+      address: address,
+      detailAddress: detailAddress,
+      postNumber: postNumber,
+      email: email,
+      residentId: residentId,
+      deptCode: dept,
+      gender: gender,
+      lastSchool: lastSchool,
+      position: position,
+      hobong: salaryStep,
+      employment: employment,
+      occupation: occupation,
+      hiredate: hireDate,
+      formData: formData
+    };
+
+    dispatch(registerEmpAction.REGISTER_EMP_REQUSTED(data));
+  };
 
 
   return (
@@ -268,8 +307,8 @@ function RegisterEmp() {
             <MainCard content={false} title="사원 등록">
               <Grid mt={3} mb={40} ml={3} pt={3} pl={3} pr={3} container width={1700} spacing={3}>
                 <Grid container spacing={gridSpacing}>
-                  <Grid item xs={6} pr={1} md={1.5}>
-                    <Grid item xs={8} md={18} container  spacing={2}>
+                <Grid item xs={6} pr={1} md={1.5}>
+                  <Grid container xs={8} spacing={2} md={18}>
                     <Grid item xs={10} md={16}>
                       <div style={{ width: '200px', height: '200px', overflow: 'hidden' }}>
                       <Avatar 
@@ -278,19 +317,18 @@ function RegisterEmp() {
                         sx={{ width: 150, height: 150, margin: 'auto' }}
                         />
                       </div>
-                      <button onClick={handleClick}>
-                        사진 등록
-                        <input 
-                            type='file' 
+                        
+                    </Grid>
+                  </Grid>
+                </Grid>
+                  <form encType='multipart/form-data' onSubmit={upload} method="post" >
+                          <input 
+                          type='file' 
+                          name='file' 
                           accept='image/jpg,impge/png,image/jpeg' 
                           onChange={onChange}
                           ref={fileInput}
-                          style={{ display: 'none' }}
                           />
-                      </button>
-                      </Grid>
-                    </Grid>
-                  </Grid>
                   {/*여기가 사원 사진을 넣을수 있는 곳이다.*/}
                   <MainCard>
                     <Tabs
@@ -353,20 +391,20 @@ function RegisterEmp() {
                     </TabPanel>
                   </MainCard>
                   <Grid item xs={12}>
+                      
                           <Stack direction="row">
                             <AnimateButton>
                               <Button
                                 sx={{ width: '100px' }}
-                                onClick={() => {
-                                  onRegisterHandler();
-                                }}
                                 variant="contained"
+                                type="submit"
                               >
                                 등록
                               </Button>
                             </AnimateButton>
                           </Stack>
-                        </Grid>
+                  </Grid>
+                  </form>
                 </Grid>
               </Grid>
             </MainCard>

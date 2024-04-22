@@ -59,7 +59,6 @@ const FamilyInfo: React.FC<FamilyInfoProps>= ({familyInfoSetters}) => {
       
     }
 
-
     return(
         <Grid item sm={6} md={8}>
         <SubCard title="가족관계">
