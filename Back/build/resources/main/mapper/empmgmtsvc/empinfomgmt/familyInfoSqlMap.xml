@@ -9,7 +9,7 @@
 		<result property="familyCode" column="FAMILY_CODE" />
 		<result property="familyName" column="FAMILY_NAME" />
 		<result property="relation" column="RELATION" />
-		<result property="birthdate" column="F_BIRTHDATE" />
+		<result property="famailyBirthDate" column="F_BIRTHDATE" />
 		<result property="liveTogether" column="LIVE_TOGETHER" />
 	</resultMap>
 
@@ -30,7 +30,7 @@
 		, FAMILY_CODE_SEQ.NEXTVAL
 		, #{familyName}
 		, #{relation}
-		, TO_DATE(#{birthdate}, 'YYYY/MM/DD')
+		, TO_DATE(#{famailyBirthDate}, 'YYYY/MM/DD')
 		, #{liveTogether})
 	</insert>
 	

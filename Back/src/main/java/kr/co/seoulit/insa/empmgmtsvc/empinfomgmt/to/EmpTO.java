@@ -48,6 +48,8 @@ public class EmpTO extends BaseTO {
     private String status;
 
     @Transient
+    FamilyInfoTO familyInfo;
+    @Transient
     ArrayList<FamilyInfoTO> familyInfoList;
     @Transient
     ArrayList<LicenseInfoTO> licenseInfoList;

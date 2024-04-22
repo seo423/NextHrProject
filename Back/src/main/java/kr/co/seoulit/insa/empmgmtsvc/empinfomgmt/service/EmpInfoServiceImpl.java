@@ -113,6 +113,9 @@ public class EmpInfoServiceImpl implements EmpInfoService {
         emp.setEmpCode(empCode);
         String hobongCode = hobongMapper.selectHobongCodeByHobongLevel(emp.getHobong());
         emp.setHobong(hobongCode);
+        familyInfoMapper.insertFamilyInfo(emp.getFamilyInfo());
+
+
 
         empMapper.registEmployee(emp);
 

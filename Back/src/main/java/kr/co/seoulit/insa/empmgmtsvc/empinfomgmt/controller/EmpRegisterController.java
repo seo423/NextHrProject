@@ -18,6 +18,7 @@ public class EmpRegisterController {
 
 	@PostMapping("/employee")
 	public Map<String, Object> registEmployee(@RequestBody EmpTO empTO) {
+		System.out.print("empTo가 오냐ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ"+empTO.getFamilyInfo());
 		System.out.println("<<<<<<<<<<< empTO = " + empTO);
 		Map<String, Object> map = new HashMap<>();
 

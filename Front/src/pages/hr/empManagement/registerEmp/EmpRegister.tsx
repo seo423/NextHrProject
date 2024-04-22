@@ -10,7 +10,7 @@ import { RootState } from 'store/reducer';
 
 interface StateSetters {
   setEmpName: React.Dispatch<React.SetStateAction<string | undefined>>;
-  setDate: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setBirthDate: React.Dispatch<React.SetStateAction<string | undefined>>;
   setMobileNumber: React.Dispatch<React.SetStateAction<string | undefined>>;
   setAddress: React.Dispatch<React.SetStateAction<string | undefined>>;
   setDetailAddress: React.Dispatch<React.SetStateAction<string | undefined>>;
@@ -34,7 +34,7 @@ const EmpRegister: React.FC<EmpRegisterProps> = ({ stateSetters }) => {
     const dispatch = useDispatch();
 
     const empNameRef = useRef<HTMLInputElement>(null);
-    const DateRef = useRef<HTMLInputElement>(null);
+    const birthDateRef = useRef<HTMLInputElement>(null);
     const mobileNumberRef = useRef<HTMLInputElement>(null);
     const addressRef = useRef<HTMLInputElement>(null);
     const detailAddressRef = useRef<HTMLInputElement>(null);
@@ -50,7 +50,7 @@ const EmpRegister: React.FC<EmpRegisterProps> = ({ stateSetters }) => {
     const [employment, setEmployment] = useState<number | string>(-1);
     
     const deptList = useSelector((state: any) => (state.dailyAttend.deptlist !== undefined ? state.dailyAttend.deptlist : []));
-    const positionList = useSelector((state: RootState) => state.positionList.positionList);
+    const positionList = useSelector((state: RootState) => (state.positionList.positionList !== undefined ? state.positionList.positionList : []));
 
     useEffect(() => {
       console.log('dispatch호출됨');
@@ -125,7 +125,7 @@ const EmpRegister: React.FC<EmpRegisterProps> = ({ stateSetters }) => {
   const onSaveHandler = () => {
  
       const empNameref = empNameRef.current?.value;
-      const Dateref = DateRef.current?.value;
+      const birthDateref = birthDateRef.current?.value;
       const residentId = residentIdRef.current?.value;
       const mobileNumberref = mobileNumberRef.current?.value;
       const addressref = addressRef.current?.value;
@@ -169,12 +169,12 @@ const EmpRegister: React.FC<EmpRegisterProps> = ({ stateSetters }) => {
       // 여기서 select에서 선택된 값에 따라 state에 값을 할당
       // ---> 여기서 할당된 값을 아래에서 호출하는 함수에 넘겨준다.
     
-      console.log(empNameref, Dateref, mobileNumberref, addressref, detailAddressref, postNumberref, emailref);
+      console.log(empNameref, birthDateref, mobileNumberref, addressref, detailAddressref, postNumberref, emailref);
       console.log(dept, gender, lastSchool, position, salaryStep, employment);
 
       stateSetters.setEmail(emailRef.current?.value);
       stateSetters.setEmpName(empNameRef.current?.value);
-      stateSetters.setDate(DateRef.current?.value);
+      stateSetters.setBirthDate(birthDateRef.current?.value);
       stateSetters.setMobileNumber(mobileNumberRef.current?.value);
       stateSetters.setDetailAddress(detailAddressRef.current?.value);
       stateSetters.setPostNumber(postNumberRef.current?.value);
@@ -206,7 +206,7 @@ const EmpRegister: React.FC<EmpRegisterProps> = ({ stateSetters }) => {
                         </Grid>
                         <Grid item md={6} xs={12}>
                           <InputLabel>생일</InputLabel>
-                          <TextField id="outlined-basic14" inputRef={DateRef} fullWidth type="date" style={{width: '200px'}} />
+                          <TextField id="outlined-basic14"  fullWidth type="date" style={{width: '200px'}} />
                         </Grid>
                         <Grid item md={6} xs={12}>
                           <InputLabel>주민등록번호</InputLabel>

@@ -30,7 +30,7 @@ const getEmpList = async (data: any) => {
 
 //사원 등록
 const registerEmp = async (action: any) => {
-  console.log('log from regiserEmp', action.payload);
+  console.log('log from regiserEmp api.ts', action.payload);
   const url = new URL('http://localhost:9101/empinfomgmt/employee');
   url.searchParams.append('token', localStorage.getItem('access') as string);
 

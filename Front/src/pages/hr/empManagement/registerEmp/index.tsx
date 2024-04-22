@@ -54,7 +54,7 @@ function RegisterEmp() {
 
   //EmpRegister에 넘겨줄 useState의 훅함수들
   const [empName, setEmpName] = useState<string| undefined>('');
-  const [date, setDate] = useState<string| undefined>('');
+  const [birthDate, setBirthDate] = useState<string| undefined>('');
   const [mobileNumber, setMobileNumber] = useState<string| undefined>('');
   const [address, setAddress] = useState<string| undefined>('');
   const [detailAddress, setDetailAddress] = useState<string| undefined>('');
@@ -68,9 +68,40 @@ function RegisterEmp() {
   const [salaryStep, setSalaryStep] = useState<string| undefined>('');
   const [employment, setEmployment] = useState<string| undefined>('');
 
+ //EducationInfo에 넘겨줄 useState의 훅함수들
+ const [schoolName, setSchoolName] = useState<string | undefined>('');
+ const [major, setMajor] = useState<string | undefined>('');
+ const [entranceDate, setEntranceDate] = useState<string | undefined>('');
+ const [graduateDate, setGraduateDate] = useState<string | undefined>('');
+
+ //EducationInfo에 넘겨줄 useState의 훅함수들
+ const [familyName, setFamilyName] = useState<string | undefined>('');
+ const [relation, setRelation] = useState<string | undefined>('');
+ const [familyDate, setFamilyDate] = useState<string | undefined>('');
+ const [liveTogether, setLiveTogether] = useState<string | undefined>('');
+
+ //WorkExper에 넘겨줄 useState의 훅함수들
+ const [placeOfEmployment, setPlaceOfEmployment] = useState<string | undefined>('');
+ const [employmentPeriod, setEmploymentPeriod] = useState<string | undefined>('');
+ const [workedPosition, setWorkedPosition] = useState<string | undefined>('');
+ const [jobDuties, setJobDuties] = useState<string | undefined>('');
+ const [workAddress, setWorkAddress] = useState<string | undefined>('');
+
+ //Certification에 넘겨줄 useState의 훅함수들
+ const [certificationsName, setCertificationsName] = useState<string | undefined>('');
+ const [acquisitionDate, setAquisitionDate] = useState<string | undefined>('');
+ const [expirationDate, setExpirationDate] = useState<string | undefined>('');
+ 
+ //Certification에 넘겨줄 useState의 훅함수들
+ const [testSubject, setTestSubject] = useState<string | undefined>('');
+ const [subject, setSubject] = useState<string | undefined>('');
+ const [score, setScore] = useState<string | undefined>('');
+ 
+ 
+ //EmpRegister
   const stateSetters = {
     setEmpName,
-    setDate,
+    setBirthDate,
     setMobileNumber,
     setAddress,
     setDetailAddress,
@@ -83,7 +114,41 @@ function RegisterEmp() {
     setPosition,
     setSalaryStep,
     setEmployment
-};
+  };
+  //EducationInfo
+  const educationInfoSetters = {
+    setSchoolName,
+    setMajor,
+    setEntranceDate,
+    setGraduateDate
+  };
+  //FamilyInfo
+  const familyInfoSetters = {
+    setFamilyName,
+    setRelation,
+    setFamilyDate,
+    setLiveTogether
+  };
+  //WorkExper
+  const workExperSetters = {
+    setPlaceOfEmployment,
+    setEmploymentPeriod,
+    setWorkedPosition,
+    setJobDuties,
+    setWorkAddress
+  };
+  //Certification
+  const certificationSetters = {
+    setCertificationsName,
+    setAquisitionDate,
+    setExpirationDate
+  }
+  //LanguageSkills
+  const languageSkillSetter = {
+    setTestSubject,
+    setSubject,
+    setScore
+  }
 
   useEffect(() => {
     const level = localStorage.getItem('authLevel') as string;
@@ -131,9 +196,45 @@ function RegisterEmp() {
     }
   }
   const onRegisterHandler = () => {
+    console.log('등록버튼 누름');
+
+    const languageSkillsData = {
+      testSubject : testSubject,
+      subject : subject,
+      score : score
+    }
+
+    const certificationData = {
+      certificationsName : certificationsName,
+      acquisitionDate : acquisitionDate,
+      expirationDate : expirationDate
+    }
+
+    const workExperData = {
+      placeOfEmployment : placeOfEmployment,
+      employmentPeriod : employmentPeriod,
+      workedPosition : workedPosition,
+      jobDuties : jobDuties,
+      workAddress : workAddress
+    }
+
+    const familyInfoData = {
+      familyName : familyName,
+      relation : relation,
+      familyDate : familyDate,
+      liveTogether : liveTogether
+    }
+
+    const educationInfoData = {
+      schoolName: schoolName,
+      major : major,
+      entranceDate : entranceDate,
+      graduateDate : graduateDate
+    }
+
     const data = {
       empName: empName,
-      birthDate: date,
+      birthDate: birthDate,
       mobileNumber: mobileNumber,
       address: address,
       detailAddress: detailAddress,
@@ -145,7 +246,13 @@ function RegisterEmp() {
       lastSchool: lastSchool,
       position: position,
       hobong: salaryStep,
-      employment: employment
+      employment: employment,
+      educationInfoData : educationInfoData,
+      familyInfo : familyInfoData,
+      workExperData : workExperData,
+      certificationData : certificationData,
+      languageSkillsData : languageSkillsData
+      
   };
 
   dispatch(registerEmpAction.REGISTER_EMP_REQUSTED(data));
@@ -162,7 +269,7 @@ function RegisterEmp() {
               <Grid mt={3} mb={40} ml={3} pt={3} pl={3} pr={3} container width={1700} spacing={3}>
                 <Grid container spacing={gridSpacing}>
                   <Grid item xs={6} pr={1} md={1.5}>
-                    <Grid container xs={8} spacing={2} md={18}>
+                    <Grid item xs={8} md={18} container  spacing={2}>
                     <Grid item xs={10} md={16}>
                       <div style={{ width: '200px', height: '200px', overflow: 'hidden' }}>
                       <Avatar 
@@ -226,23 +333,23 @@ function RegisterEmp() {
                     </TabPanel>
 
                     <TabPanel value={value} index={1}>
-                      <EducationInfo />
+                      <EducationInfo educationInfoSetters={educationInfoSetters} />
                     </TabPanel>
 
                     <TabPanel value={value} index={2}>
-                      <FamilyInfo />
+                      <FamilyInfo familyInfoSetters={familyInfoSetters} />
                     </TabPanel>
 
                     <TabPanel value={value} index={3}>
-                      <WorkExper />
+                      <WorkExper workExperSetters={workExperSetters} />
                     </TabPanel>
 
                     <TabPanel value={value} index={4}>
-                      <Certification />
+                      <Certification certificationSetters={certificationSetters} />
                     </TabPanel>
 
                     <TabPanel value={value} index={5}>
-                      <LanguageSkills />
+                      <LanguageSkills languageSkillSetter={languageSkillSetter} />
                     </TabPanel>
                   </MainCard>
                   <Grid item xs={12}>
