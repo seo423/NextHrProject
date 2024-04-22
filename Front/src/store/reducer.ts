@@ -27,13 +27,8 @@ import DailyAttendReducer from './redux-saga/reducer/attendance/DailyAttendReduc
 import commonReducer from './redux-saga/reducer/common/commonReducer';
 import baseReducer from './redux-saga/reducer/base/baseReducer';
 import salReducer from './redux-saga/reducer/salary/salaryReducer';
-<<<<<<< HEAD
 import empcardReducer from 'pages/hr/empManagement/slices/empCardReducer';
-=======
 import certificateIssuanceReducer from 'store/redux-saga/reducer/base/certificateIssuanceReducer';
-
-
->>>>>>> da321188eb75d1ec6b8fe452dcd8f4085659efd3
 
 // ==============================|| COMBINE REDUCER ||============================== //
 
@@ -68,11 +63,8 @@ const reducer = combineReducers({
   baseReducer: baseReducer, // 권한리듀서
   commonReducer: commonReducer, // 로그인리듀서
   salReducer: salReducer, // 급여리듀서
-<<<<<<< HEAD
-  empcardReducer: empcardReducer
-=======
+  empcardReducer: empcardReducer,
   certificateIssuanceReducer: certificateIssuanceReducer //증명서 리듀서
->>>>>>> da321188eb75d1ec6b8fe452dcd8f4085659efd3
 });
 
 export default reducer;

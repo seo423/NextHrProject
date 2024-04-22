@@ -13,11 +13,10 @@ import FamilyInfo from './FamilyInfo';
 import WorkExper from './WorkExper';
 import Certification from './Certification';
 import LanguageSkills from './LanguageSkills';
-import {Grid, Avatar, Box, Tab, Tabs, Button, Stack } from '@mui/material';
+import { Grid, Avatar, Box, Tab, Tabs, Button, Stack } from '@mui/material';
 import { useDispatch } from 'react-redux';
-import {registerEmpAction} from '../slices/registerEmpReducer';
-import { ReactElement, useEffect, useRef} from 'react';
-
+import { registerEmpAction } from '../slices/registerEmpReducer';
+import { ReactElement, useEffect, useRef } from 'react';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -38,7 +37,7 @@ function TabPanel({ children, value, index }: TabPanelProps) {
   );
 }
 
-function a11yProps(index:number) {
+function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
     'aria-controls': `simple-tabpanel-${index}`
@@ -54,54 +53,53 @@ function RegisterEmp() {
   const [file, setFile] = useState<File | null>();
 
   //EmpRegister에 넘겨줄 useState의 훅함수들
-  const [empName, setEmpName] = useState<string| undefined>('');
-  const [birthDate, setBirthDate] = useState<string| undefined>('');
-  const [mobileNumber, setMobileNumber] = useState<string| undefined>('');
-  const [address, setAddress] = useState<string| undefined>('');
-  const [detailAddress, setDetailAddress] = useState<string| undefined>('');
-  const [postNumber, setPostNumber] = useState<string| undefined>('');
-  const [email, setEmail] = useState<string| undefined>('');
-  const [residentId, setResidentId] = useState<string| undefined>('');
-  const [dept, setDept] = useState<string| undefined>('');
-  const [gender, setGender] = useState<string| undefined>('');
-  const [lastSchool, setLastSchool] = useState<string| undefined>('');
-  const [position, setPosition] = useState<string| undefined>('');
-  const [salaryStep, setSalaryStep] = useState<string| undefined>('');
-  const [employment, setEmployment] = useState<string| undefined>('');
-  const [occupation, setOccupation] = useState<string| undefined>('');
-  const [hireDate, setHireDate] = useState<string| undefined>('');
+  const [empName, setEmpName] = useState<string | undefined>('');
+  const [birthDate, setBirthDate] = useState<string | undefined>('');
+  const [mobileNumber, setMobileNumber] = useState<string | undefined>('');
+  const [address, setAddress] = useState<string | undefined>('');
+  const [detailAddress, setDetailAddress] = useState<string | undefined>('');
+  const [postNumber, setPostNumber] = useState<string | undefined>('');
+  const [email, setEmail] = useState<string | undefined>('');
+  const [residentId, setResidentId] = useState<string | undefined>('');
+  const [dept, setDept] = useState<string | undefined>('');
+  const [gender, setGender] = useState<string | undefined>('');
+  const [lastSchool, setLastSchool] = useState<string | undefined>('');
+  const [position, setPosition] = useState<string | undefined>('');
+  const [salaryStep, setSalaryStep] = useState<string | undefined>('');
+  const [employment, setEmployment] = useState<string | undefined>('');
+  const [occupation, setOccupation] = useState<string | undefined>('');
+  const [hireDate, setHireDate] = useState<string | undefined>('');
 
- //EducationInfo에 넘겨줄 useState의 훅함수들
- const [schoolName, setSchoolName] = useState<string | undefined>('');
- const [major, setMajor] = useState<string | undefined>('');
- const [entranceDate, setEntranceDate] = useState<string | undefined>('');
- const [graduateDate, setGraduateDate] = useState<string | undefined>('');
+  //EducationInfo에 넘겨줄 useState의 훅함수들
+  const [schoolName, setSchoolName] = useState<string | undefined>('');
+  const [major, setMajor] = useState<string | undefined>('');
+  const [entranceDate, setEntranceDate] = useState<string | undefined>('');
+  const [graduateDate, setGraduateDate] = useState<string | undefined>('');
 
- //EducationInfo에 넘겨줄 useState의 훅함수들
- const [familyName, setFamilyName] = useState<string | undefined>('');
- const [relation, setRelation] = useState<string | undefined>('');
- const [familyDate, setFamilyDate] = useState<string | undefined>('');
- const [liveTogether, setLiveTogether] = useState<string | undefined>('');
+  //EducationInfo에 넘겨줄 useState의 훅함수들
+  const [familyName, setFamilyName] = useState<string | undefined>('');
+  const [relation, setRelation] = useState<string | undefined>('');
+  const [familyDate, setFamilyDate] = useState<string | undefined>('');
+  const [liveTogether, setLiveTogether] = useState<string | undefined>('');
 
- //WorkExper에 넘겨줄 useState의 훅함수들
- const [placeOfEmployment, setPlaceOfEmployment] = useState<string | undefined>('');
- const [employmentPeriod, setEmploymentPeriod] = useState<string | undefined>('');
- const [workedPosition, setWorkedPosition] = useState<string | undefined>('');
- const [jobDuties, setJobDuties] = useState<string | undefined>('');
- const [workAddress, setWorkAddress] = useState<string | undefined>('');
+  //WorkExper에 넘겨줄 useState의 훅함수들
+  const [placeOfEmployment, setPlaceOfEmployment] = useState<string | undefined>('');
+  const [employmentPeriod, setEmploymentPeriod] = useState<string | undefined>('');
+  const [workedPosition, setWorkedPosition] = useState<string | undefined>('');
+  const [jobDuties, setJobDuties] = useState<string | undefined>('');
+  const [workAddress, setWorkAddress] = useState<string | undefined>('');
 
- //Certification에 넘겨줄 useState의 훅함수들
- const [certificationsName, setCertificationsName] = useState<string | undefined>('');
- const [acquisitionDate, setAquisitionDate] = useState<string | undefined>('');
- const [expirationDate, setExpirationDate] = useState<string | undefined>('');
- 
- //Certification에 넘겨줄 useState의 훅함수들
- const [testSubject, setTestSubject] = useState<string | undefined>('');
- const [subject, setSubject] = useState<string | undefined>('');
- const [score, setScore] = useState<string | undefined>('');
- 
- 
- //EmpRegister
+  //Certification에 넘겨줄 useState의 훅함수들
+  const [certificationsName, setCertificationsName] = useState<string | undefined>('');
+  const [acquisitionDate, setAquisitionDate] = useState<string | undefined>('');
+  const [expirationDate, setExpirationDate] = useState<string | undefined>('');
+
+  //Certification에 넘겨줄 useState의 훅함수들
+  const [testSubject, setTestSubject] = useState<string | undefined>('');
+  const [subject, setSubject] = useState<string | undefined>('');
+  const [score, setScore] = useState<string | undefined>('');
+
+  //EmpRegister
   //empRegister용 setter함수들
   const stateSetters = {
     setEmpName,
@@ -148,13 +146,13 @@ function RegisterEmp() {
     setCertificationsName,
     setAquisitionDate,
     setExpirationDate
-  }
+  };
   //LanguageSkills
   const languageSkillSetter = {
     setTestSubject,
     setSubject,
     setScore
-  }
+  };
 
   useEffect(() => {
     const level = localStorage.getItem('authLevel') as string;
@@ -170,9 +168,12 @@ function RegisterEmp() {
   }, []);
 
   useEffect(() => {
-    console.log("hireDate값: " , hireDate);
+    console.log('hireDate값: ', hireDate);
   }, [hireDate]);
 
+  useEffect(() => {
+    console.log('empName값<!DOCTYPE html>: ', empName);
+  }, [empName]);
 
   const [value, setValue] = useState<number>(0);
   type TabChangeHandler = (event: React.SyntheticEvent, newValue: number) => void;
@@ -181,100 +182,57 @@ function RegisterEmp() {
     setValue(newValue);
   };
 
-  // 백엔드에 보낼 데이터를
-
-  // 등록 버튼을 클릭하면은 유효성 검사를 진행한뒤 값들이 유효하면은 백엔드로 데이터를 전송
-  // ---> 유효성 검사는 입력된 모든 값들에 진행되는것이 아닌 특정 값들에 대해서만
-  //      유효성 검사를 합니다(DB의 제약조건과 비교해 보세요).
-
-
-  // const onFileChanges = (event: React.ChangeEvent<HTMLInputElement>) =>{
-  //   console.log(event.target.files);
-  // };
-
-  // const handleClick = () => {
-  //   if(fileInput.current)
-  //     fileInput.current.click();
-  // };
-
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
-      const file = e.target.files[0];
+    const file = e.target.files[0];
     if (file) {
       let image = window.URL.createObjectURL(file);
       setImage(image);
       setFile(file);
     }
-  }
-  const onRegisterHandler = () => {
-    console.log('등록버튼 누름');
+  };
 
+  const upload = async (e: any) => {
+    e.preventDefault();
+    const formData = new FormData();
+    if (file) formData.append('file', file);
+
+    console.log('occupation:', occupation);
+    console.log('hireDate:', hireDate);
+    console.log('employment:', employment);
     const languageSkillsData = {
-      testSubject : testSubject,
-      subject : subject,
-      score : score
-    }
+      testSubject: testSubject,
+      subject: subject,
+      score: score
+    };
 
     const certificationData = {
-      certificationsName : certificationsName,
-      acquisitionDate : acquisitionDate,
-      expirationDate : expirationDate
-    }
+      certificationsName: certificationsName,
+      acquisitionDate: acquisitionDate,
+      expirationDate: expirationDate
+    };
 
     const workExperData = {
-      placeOfEmployment : placeOfEmployment,
-      employmentPeriod : employmentPeriod,
-      workedPosition : workedPosition,
-      jobDuties : jobDuties,
-      workAddress : workAddress
-    }
+      placeOfEmployment: placeOfEmployment,
+      employmentPeriod: employmentPeriod,
+      workedPosition: workedPosition,
+      jobDuties: jobDuties,
+      workAddress: workAddress
+    };
 
     const familyInfoData = {
-      familyName : familyName,
-      relation : relation,
-      familyDate : familyDate,
-      liveTogether : liveTogether
-    }
+      familyName: familyName,
+      relation: relation,
+      familyDate: familyDate,
+      liveTogether: liveTogether
+    };
 
     const educationInfoData = {
       schoolName: schoolName,
-      major : major,
-      entranceDate : entranceDate,
-      graduateDate : graduateDate
-    }
-
-    const data = {
-      empName: empName,
-      birthDate: birthDate,
-      mobileNumber: mobileNumber,
-      address: address,
-      detailAddress: detailAddress,
-      postNumber: postNumber,
-      email: email,
-      residentId: residentId,
-      deptCode: dept,
-      gender: gender,
-      lastSchool: lastSchool,
-      position: position,
-      hobong: salaryStep,
-      employment: employment
-  };
-
-  dispatch(registerEmpAction.REGISTER_EMP_REQUSTED(data));
-  dispatch(registerEmpAction.REGISTER_EMP_PiC_REQUSTED(file));
-
-  }
- 
-  const upload = async(e:any) => {
-    e.preventDefault();
-    const formData = new FormData();
-    if(file)
-      formData.append('file', file);
-    
-    console.log("occupation:" ,occupation);
-    console.log("hireDate:" ,hireDate);
-    console.log("employment:" ,employment);
-
+      major: major,
+      entranceDate: entranceDate,
+      graduateDate: graduateDate
+    };
     const data = {
       empName: empName,
       birthDate: birthDate,
@@ -292,12 +250,16 @@ function RegisterEmp() {
       employment: employment,
       occupation: occupation,
       hiredate: hireDate,
-      formData: formData
+      formData: formData,
+      educationInfoData: educationInfoData,
+      familyInfo: familyInfoData,
+      workExperData: workExperData,
+      certificationData: certificationData,
+      languageSkillsData: languageSkillsData
     };
 
     dispatch(registerEmpAction.REGISTER_EMP_REQUSTED(data));
   };
-
 
   return (
     <Page title="사원 등록">
@@ -307,103 +269,87 @@ function RegisterEmp() {
             <MainCard content={false} title="사원 등록">
               <Grid mt={3} mb={40} ml={3} pt={3} pl={3} pr={3} container width={1700} spacing={3}>
                 <Grid container spacing={gridSpacing}>
-                <Grid item xs={6} pr={1} md={1.5}>
-                  <Grid container xs={8} spacing={2} md={18}>
-                    <Grid item xs={10} md={16}>
-                      <div style={{ width: '200px', height: '200px', overflow: 'hidden' }}>
-                      <Avatar 
-                        src={Image} 
-                        alt="employee"
-                        sx={{ width: 150, height: 150, margin: 'auto' }}
-                        />
-                      </div>
-                        
+                  <Grid item xs={6} pr={1} md={1.5}>
+                    <Grid container xs={8} spacing={2} md={18}>
+                      <Grid item xs={10} md={16}>
+                        <div style={{ width: '200px', height: '200px', overflow: 'hidden' }}>
+                          <Avatar src={Image} alt="employee" sx={{ width: 150, height: 150, margin: 'auto' }} />
+                        </div>
+                      </Grid>
                     </Grid>
                   </Grid>
-                </Grid>
-                  <form encType='multipart/form-data' onSubmit={upload} method="post" >
-                          <input 
-                          type='file' 
-                          name='file' 
-                          accept='image/jpg,impge/png,image/jpeg' 
-                          onChange={onChange}
-                          ref={fileInput}
-                          />
-                  {/*여기가 사원 사진을 넣을수 있는 곳이다.*/}
-                  <MainCard>
-                    <Tabs
-                      value={value}
-                      indicatorColor="secondary"
-                      textColor="secondary"
-                      onChange={handleChange}
-                      variant="scrollable"
-                      aria-label="simple tabs example"
-                      sx={{
-                        '& a': {
-                          fontWeight: 'bold',
-                          minHeight: 'auto',
-                          minWidth: 10,
-                          px: 1,
-                          py: 1.5,
-                          mr: 2.25,
-                          display: 'flex',
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                          justifyContent: 'center'
-                        },
-                        '& a > svg': {
-                          marginBottom: '0px !important',
-                          marginRight: 1.25
-                        },
-                        mb: 3
-                      }}
-                    >
-                      <Tab label="사원정보" {...a11yProps(0)} />
-                      <Tab label="학력정보" {...a11yProps(1)} />
-                      <Tab label="가족관계" {...a11yProps(2)} />
-                      <Tab label="경력사항" {...a11yProps(3)} />
-                      <Tab label="자격증" {...a11yProps(4)} />
-                      <Tab label="어학능력" {...a11yProps(5)} />
-                    </Tabs>
+                  <form encType="multipart/form-data" onSubmit={upload} method="post">
+                    <input type="file" name="file" accept="image/jpg,impge/png,image/jpeg" onChange={onChange} ref={fileInput} />
+                    {/*여기가 사원 사진을 넣을수 있는 곳이다.*/}
+                    <MainCard>
+                      <Tabs
+                        value={value}
+                        indicatorColor="secondary"
+                        textColor="secondary"
+                        onChange={handleChange}
+                        variant="scrollable"
+                        aria-label="simple tabs example"
+                        sx={{
+                          '& a': {
+                            fontWeight: 'bold',
+                            minHeight: 'auto',
+                            minWidth: 10,
+                            px: 1,
+                            py: 1.5,
+                            mr: 2.25,
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          },
+                          '& a > svg': {
+                            marginBottom: '0px !important',
+                            marginRight: 1.25
+                          },
+                          mb: 3
+                        }}
+                      >
+                        <Tab label="사원정보" {...a11yProps(0)} />
+                        <Tab label="학력정보" {...a11yProps(1)} />
+                        <Tab label="가족관계" {...a11yProps(2)} />
+                        <Tab label="경력사항" {...a11yProps(3)} />
+                        <Tab label="자격증" {...a11yProps(4)} />
+                        <Tab label="어학능력" {...a11yProps(5)} />
+                      </Tabs>
 
-                    <TabPanel value={value} index={0}>
-                      <EmpRegister stateSetters={stateSetters}/>
-                    </TabPanel>
+                      <TabPanel value={value} index={0}>
+                        <EmpRegister stateSetters={stateSetters} />
+                      </TabPanel>
 
-                    <TabPanel value={value} index={1}>
-                      <EducationInfo educationInfoSetters={educationInfoSetters} />
-                    </TabPanel>
+                      <TabPanel value={value} index={1}>
+                        <EducationInfo educationInfoSetters={educationInfoSetters} />
+                      </TabPanel>
 
-                    <TabPanel value={value} index={2}>
-                      <FamilyInfo familyInfoSetters={familyInfoSetters} />
-                    </TabPanel>
+                      <TabPanel value={value} index={2}>
+                        <FamilyInfo familyInfoSetters={familyInfoSetters} />
+                      </TabPanel>
 
-                    <TabPanel value={value} index={3}>
-                      <WorkExper workExperSetters={workExperSetters} />
-                    </TabPanel>
+                      <TabPanel value={value} index={3}>
+                        <WorkExper workExperSetters={workExperSetters} />
+                      </TabPanel>
 
-                    <TabPanel value={value} index={4}>
-                      <Certification certificationSetters={certificationSetters} />
-                    </TabPanel>
+                      <TabPanel value={value} index={4}>
+                        <Certification certificationSetters={certificationSetters} />
+                      </TabPanel>
 
-                    <TabPanel value={value} index={5}>
-                      <LanguageSkills languageSkillSetter={languageSkillSetter} />
-                    </TabPanel>
-                  </MainCard>
-                  <Grid item xs={12}>
-                      
-                          <Stack direction="row">
-                            <AnimateButton>
-                              <Button
-                                sx={{ width: '100px' }}
-                                variant="contained"
-                                type="submit"
-                              >
-                                등록
-                              </Button>
-                            </AnimateButton>
-                          </Stack>
-                  </Grid>
+                      <TabPanel value={value} index={5}>
+                        <LanguageSkills languageSkillSetter={languageSkillSetter} />
+                      </TabPanel>
+                    </MainCard>
+                    <Grid item xs={12}>
+                      <Stack direction="row">
+                        <AnimateButton>
+                          <Button sx={{ width: '100px' }} variant="contained" type="submit">
+                            등록
+                          </Button>
+                        </AnimateButton>
+                      </Stack>
+                    </Grid>
                   </form>
                 </Grid>
               </Grid>

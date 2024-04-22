@@ -10,13 +10,8 @@ import commonSaga from 'store/redux-saga/saga/common/commonSaga';
 import baseSaga from 'store/redux-saga/saga/base/baseSaga';
 import empManagementRootSaga from '../../pages/hr/empManagement/saga/index';
 import salSaga from 'store/redux-saga/saga/salary/salarySaga';
-<<<<<<< HEAD
-// import { empCardSaga } from 'pages/hr/empManagement/saga/empcardSaga';
 import { empCardSaga } from 'pages/hr/empManagement/saga/empCardSaga';
-=======
 import certificateIssuanceSaga from 'store/redux-saga/saga/base/certificateIssuanceSaga';
-
->>>>>>> da321188eb75d1ec6b8fe452dcd8f4085659efd3
 
 function* rootSaga() {
   yield all([
@@ -31,11 +26,8 @@ function* rootSaga() {
     fork(commonSaga),
     fork(baseSaga),
     fork(salSaga),
-<<<<<<< HEAD
-    fork(empCardSaga)
-=======
+    fork(empCardSaga),
     fork(certificateIssuanceSaga)
->>>>>>> da321188eb75d1ec6b8fe452dcd8f4085659efd3
   ]);
 }
 

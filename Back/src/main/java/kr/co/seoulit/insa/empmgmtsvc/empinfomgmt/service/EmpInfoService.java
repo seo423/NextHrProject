@@ -97,8 +97,6 @@ public interface EmpInfoService {
 
     public ArrayList<EmpTO> findEmprealList();
 
-<<<<<<< HEAD
+
     EmpTO findEmpCard(String empCode);
-=======
->>>>>>> da321188eb75d1ec6b8fe452dcd8f4085659efd3
 }

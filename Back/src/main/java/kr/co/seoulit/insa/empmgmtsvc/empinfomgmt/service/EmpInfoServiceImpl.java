@@ -1,11 +1,8 @@
 package kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.service;
 
 import kr.co.seoulit.insa.commsvc.foudinfomgmt.mapper.DeptMapper;
-<<<<<<< HEAD
-=======
-import kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.mapper.WorkInfoMapper;
 import kr.co.seoulit.insa.commsvc.foudinfomgmt.mapper.HobongMapper;
->>>>>>> da321188eb75d1ec6b8fe452dcd8f4085659efd3
+import kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.mapper.WorkInfoMapper;
 import kr.co.seoulit.insa.commsvc.systemmgmt.mapper.DetailCodeMapper;
 import kr.co.seoulit.insa.commsvc.systemmgmt.to.DetailCodeTO;
 import kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.entity.EmpDetailEntity;
@@ -215,10 +212,9 @@ public class EmpInfoServiceImpl implements EmpInfoService {
     }
 
 
-<<<<<<< HEAD
     // 아래의 코드들은 empMapper.updateEmployee(emp)를 제외하고는 복합적인 문제로 인하여 작동하지 않을 확률이 높습니다.
-    @Override
-    public void modifyEmployee(EmpTO emp) {
+//    @Override
+//    public void modifyEmployee(EmpTO emp) {
 //
 //        if (!"".equals(emp.getStatus()) || emp.getStatus().equals("update")) {
 //            empMapper.updateEmployee(emp);
@@ -274,9 +270,7 @@ public class EmpInfoServiceImpl implements EmpInfoService {
 //            }
 //        }
 
-    }
-=======
->>>>>>> da321188eb75d1ec6b8fe452dcd8f4085659efd3
+    //}
 
     @Override
     public void removeEmployee(List<EmpDetailEntity> empDetailEntities) {

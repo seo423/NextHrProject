@@ -4,9 +4,5 @@
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$" />
   </component>
-<<<<<<< HEAD
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" project-jdk-name="11" project-jdk-type="JavaSDK" />
-=======
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
->>>>>>> da321188eb75d1ec6b8fe452dcd8f4085659efd3
 </project>
