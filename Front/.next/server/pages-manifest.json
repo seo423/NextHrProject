@@ -3,5 +3,7 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
-  "/hr/empManagement/registerEmp": "pages/hr/empManagement/registerEmp.js"
+  "/login": "pages/login.js",
+  "/hr/empManagement/registerEmp": "pages/hr/empManagement/registerEmp.js",
+  "/dashboard/default": "pages/dashboard/default.js"
 }

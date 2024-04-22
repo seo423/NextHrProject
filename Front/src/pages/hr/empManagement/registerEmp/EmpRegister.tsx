@@ -23,7 +23,8 @@ interface StateSetters {
   setPosition: React.Dispatch<React.SetStateAction<string | undefined>>;
   setSalaryStep: React.Dispatch<React.SetStateAction<string | undefined>>;
   setEmployment: React.Dispatch<React.SetStateAction<string | undefined>>;
-
+  setOccupation: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setHireDate: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
 interface EmpRegisterProps {
@@ -35,6 +36,7 @@ const EmpRegister: React.FC<EmpRegisterProps> = ({ stateSetters }) => {
 
     const empNameRef = useRef<HTMLInputElement>(null);
     const DateRef = useRef<HTMLInputElement>(null);
+    const hireDateRef = useRef<HTMLInputElement>(null);
     const mobileNumberRef = useRef<HTMLInputElement>(null);
     const addressRef = useRef<HTMLInputElement>(null);
     const detailAddressRef = useRef<HTMLInputElement>(null);
@@ -48,9 +50,12 @@ const EmpRegister: React.FC<EmpRegisterProps> = ({ stateSetters }) => {
     const [position, setPosition] = useState<number | string>(-1);
     const [salaryStep, setSalaryStep] = useState<number | string>(-1);
     const [employment, setEmployment] = useState<number | string>(-1);
-    
-    const deptList = useSelector((state: any) => (state.dailyAttend.deptlist !== undefined ? state.dailyAttend.deptlist : []));
-    const positionList = useSelector((state: RootState) => state.positionList.positionList);
+    const [occupation, setOccupation] = useState<number | string>(-1);
+    const [hireDate, setHireDate] = useState<number | string>('');
+
+
+    const deptList = useSelector((state: RootState) => (state.dailyAttend.deptlist !== undefined ? state.dailyAttend.deptlist : []));
+    const positionList = useSelector((state: RootState) => (state.positionList.positionList !== undefined ? state.positionList.positionList : []));
 
     useEffect(() => {
       console.log('dispatch호출됨');
@@ -67,6 +72,7 @@ const EmpRegister: React.FC<EmpRegisterProps> = ({ stateSetters }) => {
       );
   });
 
+  
     //화면에 보일 직급 선택 리스트 생성
     const positionLists = positionList.map((item: any) => {
       return (
@@ -121,6 +127,18 @@ const EmpRegister: React.FC<EmpRegisterProps> = ({ stateSetters }) => {
         console.log(value);
       };
 
+      const occupationChangeHandler = (value: string) => {
+        setOccupation(value);
+        stateSetters.setOccupation(value);
+        console.log(value);
+      };
+
+      const hireDateChangeHandler = (value: string) => {
+        setHireDate(value);
+        stateSetters.setHireDate(value);
+        console.log(value);
+      };
+
 
   const onSaveHandler = () => {
  
@@ -132,7 +150,8 @@ const EmpRegister: React.FC<EmpRegisterProps> = ({ stateSetters }) => {
       const detailAddressref = detailAddressRef.current?.value;
       const postNumberref = postNumberRef.current?.value;
       const emailref = emailRef.current?.value;
-
+      
+      console.log("hireDate", hireDate);
 
       if (empNameref?.trim().length === 0 || empNameref === null) {
         alert('사원명을 입력해 주세요.');
@@ -142,6 +161,9 @@ const EmpRegister: React.FC<EmpRegisterProps> = ({ stateSetters }) => {
         return;
       } else if (mobileNumberref?.trim().length === 0 || mobileNumberref === null) {
         alert('전화번호를 입력해주세요.');
+        return;
+      } else if (hireDate === '') {
+        alert('입사일을 입력해주세요.');
         return;
       } else if (Number(dept) === -1) {
         alert('부서를 선택해 주세요.');
@@ -164,12 +186,15 @@ const EmpRegister: React.FC<EmpRegisterProps> = ({ stateSetters }) => {
       } else if (Number(employment) === -1) {
         alert('고용형태를 선택해 주세요.');
         return;
+      } else if (Number(occupation) === -1) {
+        alert('직무를 선택해 주세요.');
+        return;
       } 
 
       // 여기서 select에서 선택된 값에 따라 state에 값을 할당
       // ---> 여기서 할당된 값을 아래에서 호출하는 함수에 넘겨준다.
     
-      console.log(empNameref, Dateref, mobileNumberref, addressref, detailAddressref, postNumberref, emailref);
+      console.log(empNameref, Dateref, hireDateRef, mobileNumberref, addressref, detailAddressref, postNumberref, emailref);
       console.log(dept, gender, lastSchool, position, salaryStep, employment);
 
       stateSetters.setEmail(emailRef.current?.value);
@@ -180,7 +205,7 @@ const EmpRegister: React.FC<EmpRegisterProps> = ({ stateSetters }) => {
       stateSetters.setPostNumber(postNumberRef.current?.value);
       stateSetters.setAddress(addressRef.current?.value);
       stateSetters.setResidentId(residentIdRef.current?.value);
-  
+      
   };
 
     return (
@@ -204,6 +229,7 @@ const EmpRegister: React.FC<EmpRegisterProps> = ({ stateSetters }) => {
                             </Select>
                           </FormControl>
                         </Grid>
+                       
                         <Grid item md={6} xs={12}>
                           <InputLabel>생일</InputLabel>
                           <TextField id="outlined-basic14" inputRef={DateRef} fullWidth type="date" style={{width: '200px'}} />
@@ -262,7 +288,10 @@ const EmpRegister: React.FC<EmpRegisterProps> = ({ stateSetters }) => {
                             </Select>
                           </FormControl>
                         </Grid>
-
+                        <Grid item md={6} xs={12}>
+                          <InputLabel>입사일</InputLabel>
+                          <TextField id="outlined-basic14" inputRef={hireDateRef} onChange={(e) => hireDateChangeHandler(e.target.value)} fullWidth type="date" style={{width: '200px'}} />
+                        </Grid>
                         <Grid item xs={12} sm={6}>
                           <InputLabel>호봉</InputLabel>
                           <FormControl fullWidth style={{width: '200px'}}>
@@ -275,12 +304,20 @@ const EmpRegister: React.FC<EmpRegisterProps> = ({ stateSetters }) => {
                           <InputLabel>고용형태</InputLabel>
                           <FormControl fullWidth style={{width: '200px'}}>
                             <Select defaultValue="-1" onChange={(e) => employmentChangeHandler(e.target.value)}>
-                              <MenuItem value={0}>정규직</MenuItem>
-                              <MenuItem value={1}>계약직</MenuItem>
+                              <MenuItem value='정규직'>정규직</MenuItem>
+                              <MenuItem value='계약직'>계약직</MenuItem>
                             </Select>
                           </FormControl>
                         </Grid>
-
+                        <Grid item xs={12} sm={6}>
+                          <InputLabel>직무</InputLabel>
+                          <FormControl fullWidth style={{width: '200px'}}>
+                            <Select defaultValue="-1" onChange={(e) => occupationChangeHandler(e.target.value)}>
+                              <MenuItem value='사무직'>사무직</MenuItem>
+                              <MenuItem value='생산직'>생산직</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </Grid>
                         <Grid item xs={12}>
                           <Stack direction="row">
                             <AnimateButton>

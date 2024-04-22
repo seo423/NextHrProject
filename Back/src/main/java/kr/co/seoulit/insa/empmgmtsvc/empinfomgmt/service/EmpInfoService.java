@@ -7,6 +7,9 @@ import java.util.Map;
 import kr.co.seoulit.insa.commsvc.foudinfomgmt.to.DeptTO;
 import kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.entity.EmpDetailEntity;
 import kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.to.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.mail.Multipart;
 
 public interface EmpInfoService {
 
@@ -14,6 +17,7 @@ public interface EmpInfoService {
 
 
     public void registEmployee(EmpTO empto);
+    public void registEmployeePic(MultipartFile file, String residentId);
 
     public EmpTO findAllEmpInfo(String empCode);
 
@@ -24,7 +28,7 @@ public interface EmpInfoService {
     public List<EmpDetailEntity> findEmpAllList(String deptCode); //findEmployeeListByDept
 
 
-    public void modifyEmployee(EmpTO empTO);
+//    public void modifyEmployee(EmpTO empTO);
 
     public String findEmpCode(String empName, String deptCode);
 
@@ -92,4 +96,5 @@ public interface EmpInfoService {
 
 
     public ArrayList<EmpTO> findEmprealList();
+
 }

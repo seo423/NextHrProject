@@ -9,7 +9,6 @@ function FamilyInfo(){
   const DateRef = useRef<HTMLInputElement>(null);
     const onClickHandler = () => {}
 
-
     return(
         <Grid item sm={6} md={8}>
         <SubCard title="가족관계">
