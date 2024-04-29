@@ -21,8 +21,6 @@ public interface SystemMgmtService {
 
 	public ArrayList<AppointmentTO> findAppList();
 
-	//IO part
-	public void registEmpImg(String empCode, String imgExtend);
 
 
 

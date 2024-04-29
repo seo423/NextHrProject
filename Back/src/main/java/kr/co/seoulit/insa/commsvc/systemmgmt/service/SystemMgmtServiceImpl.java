@@ -10,9 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.co.seoulit.insa.commsvc.systemmgmt.repository.HrSystemRepository;
 import kr.co.seoulit.insa.commsvc.systemmgmt.to.*;
-import org.hibernate.procedure.spi.ParameterRegistrationImplementor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
 import org.springframework.stereotype.Service;
 
 import kr.co.seoulit.insa.commsvc.systemmgmt.exception.IdNotFoundException;
@@ -108,24 +106,6 @@ public class SystemMgmtServiceImpl implements SystemMgmtService {
 		ArrayList<DetailCodeTO> detailCodeto = null;
 		detailCodeto = detailCodeMapper.selectDetailCodeListRest(map);
 		return detailCodeto;
-
-	}
-
-	@Override
-	public void registEmpImg(String empCode, String imgExtend) {
-
-		EmpTO emp = empMapper.selectEmployee(empCode);
-		if (emp == null) {
-			emp = new EmpTO();
-			emp.setEmpCode(empCode);
-			emp.setStatus("insert");
-		} else {
-			emp.setStatus("update");
-		}
-
-		emp.setImgExtend(imgExtend);
-
-		empMapper.updateEmployee(emp);
 
 	}
 

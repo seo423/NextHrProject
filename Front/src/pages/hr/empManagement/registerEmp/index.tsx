@@ -9,6 +9,7 @@ import MainCard from 'components/hr/MainCard';
 import DoDisturbIcon from '@mui/icons-material/DoDisturb';
 import Swal from 'sweetalert2';
 import EmpRegister from './EmpRegister';
+import {empRegisterTO} from '../../base/types/types'
 import EducationInfo from './EducationInfo';
 import FamilyInfo from './FamilyInfo';
 import WorkExper from './WorkExper';
@@ -17,9 +18,7 @@ import LanguageSkills from './LanguageSkills';
 import {Grid, Avatar, Box, Tab, Tabs, Button, Stack } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import {registerEmpAction} from '../slices/registerEmpReducer';
-import { uploadFile } from '../api/api';
-import express from 'express';
-import multer from 'multer';
+
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -56,42 +55,25 @@ function RegisterEmp() {
   const [file, setFile] = useState<File | null>();
 
   //EmpRegister에 넘겨줄 useState의 훅함수들
-  const [empName, setEmpName] = useState<string| undefined>('');
-  const [date, setDate] = useState<string| undefined>('');
-  const [mobileNumber, setMobileNumber] = useState<string| undefined>('');
-  const [address, setAddress] = useState<string| undefined>('');
-  const [detailAddress, setDetailAddress] = useState<string| undefined>('');
-  const [postNumber, setPostNumber] = useState<string| undefined>('');
-  const [email, setEmail] = useState<string| undefined>('');
-  const [residentId, setResidentId] = useState<string| undefined>('');
-  const [dept, setDept] = useState<string| undefined>('');
-  const [gender, setGender] = useState<string| undefined>('');
-  const [lastSchool, setLastSchool] = useState<string| undefined>('');
-  const [position, setPosition] = useState<string| undefined>('');
-  const [salaryStep, setSalaryStep] = useState<string| undefined>('');
-  const [employment, setEmployment] = useState<string| undefined>('');
-  const [occupation, setOccupation] = useState<string| undefined>('');
-  const [hireDate, setHireDate] = useState<string| undefined>('');
-
-  //empRegister용 setter함수들
-  const stateSetters = {
-    setEmpName,
-    setDate,
-    setMobileNumber,
-    setAddress,
-    setDetailAddress,
-    setPostNumber,
-    setEmail,
-    setResidentId,
-    setDept,
-    setGender,
-    setLastSchool,
-    setPosition,
-    setSalaryStep,
-    setEmployment,
-    setOccupation,
-    setHireDate
-};
+  const [empRegisterBean, setEmpRegisterBean] = useState<empRegisterTO>({
+    empName: '',
+    birthDate: '',
+    mobileNumber: '',
+    address: '',
+    detailAddress: '',
+    employment: '',
+    email: '',
+    residentId: '',
+    dept: '',
+    gender: '',
+    lastSchool: '',
+    position: '',
+    occupation: '',
+    hireDate: '',
+    hobong: '',
+    postNumber: ''
+  });
+ 
 
   useEffect(() => {
     const level = localStorage.getItem('authLevel') as string;
@@ -106,10 +88,6 @@ function RegisterEmp() {
     }
   }, []);
 
-  useEffect(() => {
-    console.log("hireDate값: " , hireDate);
-  }, [hireDate]);
-
 
   const [value, setValue] = useState<number>(0);
   type TabChangeHandler = (event: React.SyntheticEvent, newValue: number) => void;
@@ -118,21 +96,6 @@ function RegisterEmp() {
     setValue(newValue);
   };
 
-  // 백엔드에 보낼 데이터를
-
-  // 등록 버튼을 클릭하면은 유효성 검사를 진행한뒤 값들이 유효하면은 백엔드로 데이터를 전송
-  // ---> 유효성 검사는 입력된 모든 값들에 진행되는것이 아닌 특정 값들에 대해서만
-  //      유효성 검사를 합니다(DB의 제약조건과 비교해 보세요).
-
-
-  // const onFileChanges = (event: React.ChangeEvent<HTMLInputElement>) =>{
-  //   console.log(event.target.files);
-  // };
-
-  // const handleClick = () => {
-  //   if(fileInput.current)
-  //     fileInput.current.click();
-  // };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
@@ -143,31 +106,6 @@ function RegisterEmp() {
       setFile(file);
     }
   }
-  const onRegisterHandler = () => {
-
-    const data = {
-      empName: empName,
-      birthDate: date,
-      mobileNumber: mobileNumber,
-      address: address,
-      detailAddress: detailAddress,
-      postNumber: postNumber,
-      email: email,
-      residentId: residentId,
-      deptCode: dept,
-      gender: gender,
-      lastSchool: lastSchool,
-      position: position,
-      hobong: salaryStep,
-      employment: employment,
-      occupation: occupation,
-      hireDate: hireDate
-  };
-
-  dispatch(registerEmpAction.REGISTER_EMP_REQUSTED(data));
-  dispatch(registerEmpAction.REGISTER_EMP_PiC_REQUSTED(file));
-
-  }
  
   const upload = async(e:any) => {
     e.preventDefault();
@@ -175,31 +113,16 @@ function RegisterEmp() {
     if(file)
       formData.append('file', file);
     
-    console.log("occupation:" ,occupation);
-    console.log("hireDate:" ,hireDate);
-    console.log("employment:" ,employment);
-
-    const data = {
-      empName: empName,
-      birthDate: date,
-      mobileNumber: mobileNumber,
-      address: address,
-      detailAddress: detailAddress,
-      postNumber: postNumber,
-      email: email,
-      residentId: residentId,
-      deptCode: dept,
-      gender: gender,
-      lastSchool: lastSchool,
-      position: position,
-      hobong: salaryStep,
-      employment: employment,
-      occupation: occupation,
-      hiredate: hireDate,
-      formData: formData
+    console.log("empRegisterTO:  " , empRegisterBean);
+ 
+    const modifiedEmpRegisterBean= {
+      empRegisterBean: empRegisterBean,
+      image: formData
     };
 
-    dispatch(registerEmpAction.REGISTER_EMP_REQUSTED(data));
+    console.log(" modifiedEmpRegisterTO:  " , modifiedEmpRegisterBean);
+
+    dispatch(registerEmpAction.REGISTER_EMP_REQUSTED(modifiedEmpRegisterBean));
   };
 
 
@@ -271,7 +194,7 @@ function RegisterEmp() {
                     </Tabs>
 
                     <TabPanel value={value} index={0}>
-                      <EmpRegister stateSetters={stateSetters}/>
+                      <EmpRegister empRegisterSetter={setEmpRegisterBean}/>
                     </TabPanel>
 
                     <TabPanel value={value} index={1}>

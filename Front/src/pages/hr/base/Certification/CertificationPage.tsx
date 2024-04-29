@@ -100,7 +100,8 @@ function CertificationPage() {
       alert('부서를 먼저 선택해주세요.');
     }
   };
-  const empLists = empList.map((item: any) => {
+
+  const empLists = empList?.map((item: any) => {
       return (
         <MenuItem value={item.empCode} key={item.empCode}>
           {item.empName}

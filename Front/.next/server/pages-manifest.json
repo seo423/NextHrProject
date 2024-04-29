@@ -2,8 +2,7 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/login": "pages/login.js",
+  "/404": "pages/404.js",
   "/hr/empManagement/registerEmp": "pages/hr/empManagement/registerEmp.js",
-  "/dashboard/default": "pages/dashboard/default.js"
+  "/": "pages/index.js"
 }

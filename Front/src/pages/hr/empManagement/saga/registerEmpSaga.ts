@@ -8,13 +8,16 @@ type empEvalRequest = { empList: []; message: '' };
 // console.log()는 예외인거 같다.
 
 export function* registerEmpActionSaga(action: typeAction) {
-  console.log('empEvalResultActionSaga called!!! ', action.payload);
-  console.log('empEvalResultActionSaga formData!!! ', action.payload.formData);
+  console.log('empEvalResultActionSaga formData!!! ', action.payload.empRegisterBean);
 
-  const data: empEvalRequest = yield call(api.registerEmp, action);
+  const data: empEvalRequest = yield call(api.registerEmp, action.payload.empRegisterBean);
   console.log('data from empEvalResultActionSaga:', data);
+  const uploadFileTO = {
+    image: action.payload.image,
+    residentId: action.payload.empRegisterBean.residentId
+  };
 
-  yield call(api.uploadFile, action);
+  yield call(api.uploadFile, uploadFileTO);
 }
 export function* registerEmpPicActionSaga(action: typeAction) {
   yield console.log('registerEmpPicActionSaga called!!! ', action.payload);

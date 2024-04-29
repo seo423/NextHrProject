@@ -62,3 +62,26 @@ export interface empDetailTO {
   residentId?: string| undefined| null;
   hiredate?: string| undefined | null;
 }
+
+export interface empRegisterTO {
+  empName?: string | undefined;
+  birthDate?: string| undefined;
+  mobileNumber?: string| undefined;
+  address?: string| undefined;
+  detailAddress?: string| undefined;
+  employment?: string| undefined;
+  email?: string| undefined;
+  postNumber?: string| undefined;
+  residentId?: string| undefined;
+  dept?: string| undefined;
+  gender?: string| undefined;
+  lastSchool?: string| undefined;
+  position?: string| undefined;
+  occupation?: string| undefined;
+  hireDate?: string| undefined;
+  hobong?: string| undefined;
+
+}
+
+
+

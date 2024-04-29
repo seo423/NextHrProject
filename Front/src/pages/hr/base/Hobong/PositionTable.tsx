@@ -33,7 +33,7 @@ function PositionTable({ onRowClick }: { onRowClick: OnRowClickHandler }) {
 
   useEffect(() => {
     console.log('dispatch호출됨');
-    dispatch(positionAction.POSITION_LIST_SEARCH_FETCH_REQUESTED(''));
+    dispatch(positionAction.POSITION_LIST_SEARCH_FETCH_REQUESTED);
   }, []);
 
   const handleRowClick = (positionCode: string | undefined) => {

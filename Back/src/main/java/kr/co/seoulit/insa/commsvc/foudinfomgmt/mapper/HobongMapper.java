@@ -15,5 +15,5 @@ public interface HobongMapper {
     public void insertHobongList(HobongReqTO hobongReqTO);
     public void updateHobongByPercentage(HobongPercentageTO hobongPercentageTO);
     public void updateHobongByFixed(HobongFixedTO hobongFixedTO);
-    public String selectHobongCodeByHobongLevel(String hobongLevel);
+    public String selectHobongCodeByHobongLevel(String hobong);
 }

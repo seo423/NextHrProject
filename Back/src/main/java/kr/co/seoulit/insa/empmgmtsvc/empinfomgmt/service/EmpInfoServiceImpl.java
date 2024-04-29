@@ -142,13 +142,6 @@ public class EmpInfoServiceImpl implements EmpInfoService {
         return empList;
     }
 
-//    @Override
-//    public void registEmployeePic(String image) {
-//        String encodedImage = image.split(",")[1];
-//        System.out.println("인코딩된 이미지: " + encodedImage);
-//        byte[] imageBytes = Base64.getDecoder().decode(encodedImage);
-//        empMapper.insertEmpPic(imageBytes);
-//    }
 
     @Override
     public void registEmployee(EmpTO emp) {
@@ -168,7 +161,7 @@ public class EmpInfoServiceImpl implements EmpInfoService {
         // EMP테이블 등록
         empMapper.registEmployee(emp);
 
-        String[] parts = emp.getHiredate().split("-");
+        String[] parts = emp.getHireDate().split("-");
         String convertedDate = "";
         for (int i = 0; i < parts.length; i++) {
             if (i == 0) {
@@ -180,7 +173,7 @@ public class EmpInfoServiceImpl implements EmpInfoService {
         int workInfoDays = parseInt(convertedDate);
         System.out.println("workInfoDays:  " + workInfoDays);
         HashMap<String, Object> map = new HashMap<>();
-        map.put("hiredate", emp.getHiredate());
+        map.put("hireDate", emp.getHireDate());
         map.put("employmentType", emp.getEmployment());
         map.put("occupation", emp.getOccupation());
         map.put("empCode", emp.getEmpCode());

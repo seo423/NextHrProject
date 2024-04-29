@@ -6,6 +6,7 @@ import kr.co.seoulit.insa.commsvc.systemmgmt.to.BaseTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Transient;
 
@@ -17,7 +18,6 @@ public class EmpTO extends BaseTO {
     private String empCode;
     private String empName;
     private String deptCode;
-    private String birthDate;
     private String gender;
     private String mobileNumber;
     private String address;
@@ -29,7 +29,9 @@ public class EmpTO extends BaseTO {
     private String residentId;
 
     @Transient
-    private String imgExtend;
+    private String deptName;
+    @Transient
+    private String birthDate;
     @Transient
     private String hobong;
     @Transient
@@ -37,7 +39,7 @@ public class EmpTO extends BaseTO {
     @Transient
     private String authority;
     @Transient
-    private String hiredate;
+    private String hireDate;
     @Transient
     private String achievement;
     @Transient
