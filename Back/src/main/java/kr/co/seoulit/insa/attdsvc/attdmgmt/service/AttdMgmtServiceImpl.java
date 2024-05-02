@@ -71,6 +71,7 @@ public class AttdMgmtServiceImpl implements AttdMgmtService {
 	}
 
 
+	//일근태 조회
 	@Override
 	public ArrayList<DailyAttdSearchResTO> searchDayAttd(DailyAttdSearchReqTO dailyAttdSearchReqTO) {
 		System.out.println("서비스단으로 넘어온 searchDayAttdMap: " + dailyAttdSearchReqTO);
@@ -93,6 +94,8 @@ public class AttdMgmtServiceImpl implements AttdMgmtService {
 		System.out.println("서비스단으로 넘어온 DailyAttdModifyTO: " + dailyAttdModifyTO);
 		dayAttndMapper.updateDayAttd(dailyAttdModifyTO);
 	}
+
+	//일근태 마감
 	@Override
 	public void finalizeDailyAttd(List<DailyAttdSearchResTO> selectedAttdList){
 		System.out.println("서비스단으로 넘어온 DailyAttdModifyTO: " + selectedAttdList);

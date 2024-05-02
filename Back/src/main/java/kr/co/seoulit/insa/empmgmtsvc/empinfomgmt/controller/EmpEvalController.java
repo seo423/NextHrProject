@@ -31,6 +31,7 @@ public class EmpEvalController {
 	// ---> 프론트 단에서 검색된 값이 없을때 빈배열을 사용할수 있다.
 	// 사원 고과 평가 페이지에서 사용하는 쿼리문 입니다.(사원고과를 진행하지 않은 사원의 정보 및 사원고과 삭제 및 반려
 	// 진행중인 사원들의 정보를 가져옵니다.)
+	//인사고과 등록 페이지로 들어가게되면 '사원 선택'이 이부분에 해당됨.
 	@GetMapping("/evaluation/list")
 	public List<EmpEvalTO> validEmpEvalList(@RequestParam("authLevel") String authLevel) {
 		List<EmpEvalTO> empList = new ArrayList<EmpEvalTO>();
@@ -47,7 +48,8 @@ public class EmpEvalController {
 
 	}
 
-	// 사원고과 관리 페이지에서
+	// 사원고과 승인탭에서 '사원고과 승인관리'에 '대기'인 사람이 표시됨.
+	// GET방식
 	@GetMapping("/evaluation/list/approvalStatus")
 	public Map<String,Object> findEmpEvalByApprovalStatus() {
 
@@ -70,7 +72,8 @@ public class EmpEvalController {
 	}
 
 
-
+//POST 방식
+	//이게 뭘 하는 아이일까...
 	@PostMapping("/evaluation/list/approvalStatus")
 	public Map<String,Object> findEmpEvalByApprovalStatusCondition(@RequestBody EmpEvalTO empEvalTO) {
 		System.out.println("approvalStatus = " + empEvalTO.getApprovalStatus());
@@ -96,6 +99,8 @@ public class EmpEvalController {
 	}
 
 
+	// 사원고과 관리에서 인사고과 승인 탭으로 들어가게 되면 '사원고과 결과조회'가 이부분에 해당
+	// 결재상태가 반려/승인/대기 다불러오게 됨.
 	@GetMapping("/evaluation/list/all")
 	public Map<String,Object> selectEmpEvalList(){
 
@@ -121,6 +126,7 @@ public class EmpEvalController {
 
 	// 사원 평가 엔드 포인트가 여기인거 같다.
 	// 정상 작동한다.
+	// 인사고과등록
 	@PostMapping("/evaluation")
 	public Map<String,Object> registEmpEval(@RequestBody EmpEvalTO empEvalTO) {
 			Map<String,Object> map = new HashMap<>();
@@ -150,7 +156,7 @@ public class EmpEvalController {
 
 	// 이거는 배열로 받아서 작업을 할수 있도록 한다.
 
-
+//이게 delete하는 부분이겠지..?
 	@DeleteMapping("/evaluation")
 	public ModelMap removeEmpEvalList(@RequestBody List<EmpEvalTO> empEvalTO) {
 

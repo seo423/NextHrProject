@@ -172,5 +172,4 @@
         WHERE REST_ATTD_NO = #{restAttdNo}
         ]]>
     </update>
-
 </mapper>

@@ -20,6 +20,9 @@ import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Blob;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static java.lang.Integer.parseInt;
@@ -132,6 +135,18 @@ public class EmpInfoServiceImpl implements EmpInfoService {
 
         if (deptCode.equals("000000")) {
             empAllList = empDetailRepository.findAll();
+
+            //날짜가 00년00월00일 00:00:00 시분초 나와 시분초를 없애는 코드과정
+            for(EmpDetailEntity bean: empAllList){
+                String birthDate = bean.getBirthdate();
+                if(birthDate != null){
+                    String[] parts = birthDate.split(" ");   // 출력 형식으로 포맷팅하여 문자열로 변환
+                    String outputDateStr = parts[0];
+                    bean.setBirthdate(outputDateStr);
+                }
+                // 입력 날짜를 파싱하여 Date 객체로 변환
+                System.out.println("getBirthdate: " + bean.getBirthdate());
+            }
         } else if (deptCode.substring(deptCode.length() - 1, deptCode.length()).equals("팀")) {
             empAllList = empDetailRepository.findAllByDeptCodeOrderByEmpCodeAsc(deptCode);
 
@@ -281,9 +296,10 @@ public class EmpInfoServiceImpl implements EmpInfoService {
 
 
     // 아래의 코드들은 empMapper.updateEmployee(emp)를 제외하고는 복합적인 문제로 인하여 작동하지 않을 확률이 높습니다.
-//    @Override
-//    public void modifyEmployee(EmpTO emp) {
-//
+    @Override
+    public void modifyEmployee(EmpTO empTO) {
+        System.out.println("서비스단 empTO = " + empTO);
+        empMapper.updateEmployee(empTO);
 //        if (!"".equals(emp.getStatus()) || emp.getStatus().equals("update")) {
 //            empMapper.updateEmployee(emp);
 //        }
@@ -303,6 +319,7 @@ public class EmpInfoServiceImpl implements EmpInfoService {
 //                }
 //            }
 //        }
+    }
 //
 //        if (emp.getLicenseInfoList() != null && emp.getLicenseInfoList().size() > 0) {
 //            ArrayList<LicenseInfoTO> licenseInfoList = emp.getLicenseInfoList();

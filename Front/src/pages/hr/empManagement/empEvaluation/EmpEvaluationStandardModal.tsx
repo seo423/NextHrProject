@@ -6,6 +6,7 @@ import Image from 'next/image';
 import EmpEvaluationStandard from '../../../../../public/assets/images/standard-table2.png';
 // ===============================|| UI DIALOG - FORMS ||=============================== //
 
+// 고과 기준표 모달창
 // 코드가 긴 관계로 각각의 입력값에 따른 유효성 검사 로직은 작성하지 않았습니다.
 export default function EmpEvalutaionStandardModal() {
   const theme = useTheme();

@@ -47,12 +47,16 @@ function EmpEvaluation() {
   const [resultInput, setResultInput] = useState<string>('');
   const [isDisabled, setIsDisabled] = useState<boolean>(true);
   // 최종값을 계산하기 위한 ref
+  // score를 통해서 인사고과점수를 계산하게됨
   const score = useRef<any>(0);
 
   // 현재 페이지가 로드 되면은 데이터를 가지고 온다.
 
   const [authCheck, setAuthCheck] = useState(false); // 페이지 접근 권한체크
 
+  //인사고과등록 페이지에 들어오게되면 '사원 선택' 인사고과 상태가 '반려' 이거나 null인 사람들의 리스트가 나온다.
+  //이부분은 사가와 리듀서를 사용해서 만들었으면 더 좋았을것같은데...
+  //발표 일주일전이라 손댈 엄두가 나지 않는다
   useEffect(() => {
     const getEmpList = async () => {
       const url = new URL('http://localhost:9101/empinfomgmt/evaluation/list');
@@ -72,6 +76,7 @@ function EmpEvaluation() {
         });
         console.log('resposne : ', response);
         const empList = await response.json();
+        console.log('empList???????????', empList);
         // state에 값을 넘겨주고
         setEmpList(empList);
         // isValid값을 변경해준다.
@@ -86,6 +91,7 @@ function EmpEvaluation() {
     console.log('getEmpList function has been called.');
   }, []);
 
+  //권한확인
   useEffect(() => {
     const level = localStorage.getItem('authLevel') as string;
     if (level && parseInt(level.slice(-1)) >= 3) {

@@ -111,6 +111,23 @@ public class SystemMgmtServiceImpl implements SystemMgmtService {
 
 	}
 
+	@Override
+	public void registEmpImg(String empCode, String imgExtend) {
+
+		EmpTO emp = empMapper.selectEmployee(empCode);
+		if (emp == null) {
+			emp = new EmpTO();
+			emp.setEmpCode(empCode);
+			emp.setStatus("insert");
+		} else {
+			emp.setStatus("update");
+		}
+
+//		emp.setImage(imgExtend);
+
+		empMapper.updateEmployee(emp);
+
+	}
 
 	@Override
 	public ArrayList<CodeTO> findCodeList() {

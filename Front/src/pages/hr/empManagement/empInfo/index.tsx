@@ -43,6 +43,10 @@ function EmpInfo() {
   const [authCheck, setAuthCheck] = useState(false); // 수정 삭제 권한체크
 
   useEffect(() => {
+    console.log('empList값 바뀜', empList);
+  }, [empList]);
+
+  useEffect(() => {
     const level = localStorage.getItem('authLevel') as string;
     if (level && parseInt(level.slice(-1)) >= 2) {
       setAuthCheck(true);
@@ -109,7 +113,7 @@ function EmpInfo() {
       });
     }
 
-    console.log('selectedEmp is : ', selectedEmp);
+    console.log('selectedEmp is : ', selectedEmp[0].empCode);
   };
 
   const onToggleHandler = () => {
@@ -125,7 +129,7 @@ function EmpInfo() {
             title="사원 조회"
             secondary={
               <Stack direction="row" spacing={2} alignItems="center">
-                {isValid && <EmpModifyModal toggle={onToggleHandler} emp={selectedEmp} />}
+                {isValid && <EmpModifyModal toggle={onToggleHandler} empCode={selectedEmp[0].empCode} />}
                 <Button variant="contained" onClick={() => onClickHandler('mod')}>
                   인사기록카드
                 </Button>

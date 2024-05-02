@@ -78,6 +78,7 @@ export default function DailyAttendModal(props: { toggle: () => void; emp: daily
   const [newLatenessStatus, setLatenessStatus] = useState<number | string>(latenessStatusValue);
 
   //지각여부
+  //지각이 아닐경우 0 지각일 경우 1로 표시
   const latenessStatusChangeHandler = (value: string | number) => {
     setLatenessStatus(value);
     console.log(value);
@@ -93,6 +94,7 @@ export default function DailyAttendModal(props: { toggle: () => void; emp: daily
     const overWorkHour = overWorkHourRef.current?.value;
     const nightWorkHour = nightWorkHourRef.current?.value;
 
+    //지각에 대한 유효성 검사
     if (Number(newLatenessStatus) === -1 && latenessStatus === null) {
       alert('지각여부를 선택해 주세요.');
       return;

@@ -5,7 +5,9 @@ import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Column;
 
+import java.util.Date;
 @Entity
 @Data
 @Table(name="EMP")
@@ -22,7 +24,7 @@ public class EmpDetailEntity {
     private String postNumber;
     private String email;
     private String lastSchool;
-//    private String imgExtend;
+//    private String image;
     private String deptCode;
     private String positionCode;
     private String authority;

@@ -14,7 +14,7 @@ export function* empInfoActionSaga(action: typeAction) {
   yield console.log('empInfoActionSaga called!!! ', action.payload);
 
   const data: empRequest = yield call(api.getEmpList, action);
-  yield put(empInfoAction.EMP_FETCH_STATUS(data));
+  yield put(empInfoAction.EMP_FETCH_STATUS(data.empList));
   console.log('data from empInfoActionSaga:', data);
 }
 

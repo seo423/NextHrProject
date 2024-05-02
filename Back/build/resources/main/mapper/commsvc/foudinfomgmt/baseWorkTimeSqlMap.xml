@@ -18,7 +18,8 @@
 
 		<select id="selectTimeList" resultMap="baseWorkTimeResult">
 		<![CDATA[                
-   		select * from base_work_time order by apply_year]]>
+   		select * from base_work_time order by apply_year
+   		]]>
 		</select>
 
 		<update id="updateTime" parameterType="kr.co.seoulit.insa.commsvc.foudinfomgmt.to.BaseWorkTimeTO">

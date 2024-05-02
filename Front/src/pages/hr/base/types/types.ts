@@ -51,9 +51,17 @@ export interface PositionTO {
 export interface HobongTO {
   hobongLevel?: string;
   baseSalary?: number;
-  positionAllowance?:number;
-  longevityBonus?:number;
-  totalHobong?:number;
+  positionAllowance?: number;
+  longevityBonus?: number;
+  totalHobong?: number;
+}
+
+export interface empCardTO {
+  hobongLevel?: string;
+  baseSalary?: number;
+  positionAllowance?: number;
+  longevityBonus?: number;
+  totalHobong?: number;
 }
 
 export interface empDetailTO {
@@ -120,3 +128,4 @@ export interface languageSkillsTo{
   subject?: string | undefined;
   score?: string | undefined;
 }
+

@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper=false)
 public class FamilyInfoTO extends BaseTO{
+
 	
 	private String empCode, familyName,relation,familyDate,liveTogether;
 

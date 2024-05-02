@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.entity.EmpDetailEntity;
+import kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.mapper.EmpMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,7 @@ public class EmpListController {
 
 	@Autowired
 	private EmpInfoService empInfoService;
+	private EmpMapper empMapper;
 
 	ModelMap map = null;
 
@@ -66,6 +68,7 @@ public class EmpListController {
 				value = val;
 			}
 			List<EmpDetailEntity> list = empInfoService.findEmpAllList(value);
+
 			map.put("errorCode",0);
 			map.put("errorMsg","succeed");
 			map.put("list", list);
@@ -93,6 +96,8 @@ public class EmpListController {
 		}
 		return map;
 	}
+	
+	//인사기록카드
 	@GetMapping("empcard")
 	public Map<String, Object> findEmpCard(@RequestParam("empCode") String empCode) {
 		System.out.println("findEmpCard 컨트롤러의 empCode = " + empCode);
@@ -115,4 +120,23 @@ public class EmpListController {
 		}
 		return map;
 	}
+	//사원정보를 수정하는 로직
+    @PutMapping("empcard")
+    public Map<String, Object> modifyEmployee(@RequestBody EmpTO empTO) {
+        System.out.println("컨트롤러의 empTO = " + empTO);
+        Map<String,Object> map = new HashMap<>();
+
+        try {
+            empInfoService.modifyEmployee(empTO);
+            map.put("errorMsg", "success");
+            map.put("errorCode", 0);
+
+        } catch (Exception dae) {
+            dae.printStackTrace();
+            map.clear();
+            map.put("errorCode", -1);
+            map.put("errorMsg", dae.getMessage());
+        }
+        return map;
+    }
 }

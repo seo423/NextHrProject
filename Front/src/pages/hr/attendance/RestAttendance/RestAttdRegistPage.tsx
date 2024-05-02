@@ -59,7 +59,6 @@ const RestAttdRegistPage = () => {
     const year = today.getFullYear();
     const month = String(today.getMonth() + 1).padStart(2, '0');
     const day = String(today.getDate()).padStart(2, '0');
-
     setRequestDate(`${year}-${month}-${day}`);
   }, []);
 
@@ -77,6 +76,7 @@ const RestAttdRegistPage = () => {
   });
 
   // 근태코드 세팅
+  //사용자가 드랍메뉴에서 고른 값이 e.target.value에 담기게된다.
   const attdTypeSetting = (e: any) => {
     setAttdCode(e.target.value);
     if (e.target.value === 'ADC006') setAttdType('외출');
@@ -115,11 +115,11 @@ const RestAttdRegistPage = () => {
         cause
       } as restAttdTO;
       console.log('추가 폼 :', restAttdTO);
-
+      // restAttdTO에 데이터를 담아 사가->api->리듀서순으로 가게됨
       dispatch(attdActions.registRestAttdRequest(restAttdTO));
-
+      // setSnackBarVisible를 보여줌
       setSnackBarVisible(true);
-
+      //창을 리셋
       reset();
     }
   };
