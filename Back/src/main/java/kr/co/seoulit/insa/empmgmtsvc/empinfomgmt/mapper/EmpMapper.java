@@ -20,7 +20,7 @@ public interface EmpMapper {
 	public void registEmployee(EmpTO emp);
 	public void registEmpWorkInfo(HashMap<String, Object> map);
 
-	public void updateEmployee(EmpTO emp);
+	public void updateEmployee(EmpTO empTO);
 	public void deleteEmployee(String empCode);
 	public String selectEmpCode(String empName, String deptCode);
 

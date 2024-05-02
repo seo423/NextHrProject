@@ -19,10 +19,11 @@ const empInfoSlice = createSlice({
       console.log('action.payload at EMP_FETCH_STATUS:', action.payload);
       const { empList, message } = action.payload;
 
-      state.empList = empList;
+      state.empList = action.payload;
       state.message = message; // 여기서 받은 메세지는 empInfo 컴포넌트에서 사용하면은 될거 같다.
+      console.log('EMP_FETCH_STATUS 상태값:', state.empList);
 
-      console.log('log from emp_feth_status', state.empList, state.message);
+      console.log('log from emp_fetch_status', state.empList, state.message);
     },
     EMP_UPDATE_REQUESTED(state, action) {
       console.log('data from reducer is :', action.payload);

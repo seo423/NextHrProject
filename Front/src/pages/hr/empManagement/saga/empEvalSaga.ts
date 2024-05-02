@@ -7,7 +7,6 @@ type empEvalRequest = { errorCode: number; errorMsg: string };
 
 // generator 함수는 yield 안하면은 해당 라인의 코드 실행 안함
 // console.log()는 예외인거 같다.
-
 export function* registerEmpEvalActionSaga(action: typeAction) {
   console.log(action.payload);
   const data: empEvalRequest = yield call(api.registerEmpEval, action);

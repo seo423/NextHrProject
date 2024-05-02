@@ -30,6 +30,7 @@ function EmpEvaluationManagement() {
   const [selectedEmp, setSelectedEmp] = useState<EmpEvalManagementInfoEntity[]>([]);
   const [authCheck, setAuthCheck] = useState(false); // 페이지 접근 권한체크
 
+  //권한체크하는 코드
   useEffect(() => {
     const level = localStorage.getItem('authLevel') as string;
     if (level && parseInt(level.slice(-1)) >= 5) {

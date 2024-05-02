@@ -1,20 +1,12 @@
 package kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.controller;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import kr.co.seoulit.insa.attdsvc.attdmgmt.to.DailyAttdModifyTO;
 import kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.entity.EmpDetailEntity;
-import kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.to.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.service.EmpInfoService;
 
 

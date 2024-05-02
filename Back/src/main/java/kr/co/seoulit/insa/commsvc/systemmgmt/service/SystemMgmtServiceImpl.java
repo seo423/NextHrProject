@@ -123,7 +123,7 @@ public class SystemMgmtServiceImpl implements SystemMgmtService {
 			emp.setStatus("update");
 		}
 
-		emp.setImgExtend(imgExtend);
+//		emp.setImage(imgExtend);
 
 		empMapper.updateEmployee(emp);
 

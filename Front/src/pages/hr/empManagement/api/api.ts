@@ -145,6 +145,7 @@ const registerEmpEval = async (action: typeAction) => {
 // response에서 json()을 한번 소모하면은 response의 status 정보를 사용할수 없는거 같다.
 // 사원고과가 진행된 사원의 정보를 가져오는 api
 // ---> 코드의 통일성을 주기위해 코드 리펙터링을 하자.
+// 너무 헷갈리게 만들어놨어..............후
 const getEmpEvalEndedList = async () => {
   const url = new URL('http://localhost:9101/empinfomgmt/evaluation/list/approvalStatus');
   url.searchParams.append('token', localStorage.getItem('access') as string);

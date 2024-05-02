@@ -8,70 +8,23 @@ export type sendData = {
 };
 
 //==========================================================================
-//  PersonnelRecordCardModal types
-// export interface PersonnelRecordCardEntity {
-//   empCode: string;
-//   empName: string; //
-//   email: string; //
-//   deptName: string;
-//   positionCode: string;
-//   gender: string; //
-//   address: string; //
-//   birthdate: string; //
-//   mobileNumber: string; //
-//   deptCode: string;
-//   detailAddress: string; //
-//   postNumber: string; //
-//   lastSchool: string; //
-//   //학력사항
-//   education_code: string; //
-//   school_name: string; //
-//   major: string; //
-//   entrance_date: string; //
-//   granduate_date: string; //
-//   grade: string; //
-//   //가족관계
-//   family_name: string; //
-//   relation: string; //
-//   family_birthdate: string; //
-//   live_together: string; //
-//   //경력사항
-//   place_of_employment: string; //
-//   employment_period: string; //
-//   position: string; //
-//   job_duties: string; //
-//   work_address: string; //
-//   //어학능력
-//   test_subject: string;
-//   subject: string;
-//   score: string;
-//   certifications: string;
-//   acquisition_date: string;
-//   expiration_date: string;
-// }
-
-//==========================================================================
 //  EmpModifyModal types
 export interface ModifyEmpInfoEntity {
   empCode: string | undefined | null;
   empName: string | undefined | null;
   email: string | undefined | null;
-  deptName: string;
-  hobong: string;
-  positionCode: string;
   gender: string | undefined | null;
   address: string | undefined | null;
-  birthdate: string | undefined | null;
+  birthDate: string | undefined | null;
   mobileNumber: string | undefined | null;
-  deptCode: string;
   detailAddress: string | undefined | null;
   postNumber: string | undefined | null;
   lastSchool: string | undefined | null;
   //학력사항
   highSchoolName: string | undefined | null;
   major: string | undefined | null;
-  collegeName: string | undefined | null;
-  graduateSchoolName: string | undefined | null;
+  entranceDate: string | undefined | null;
+  graduateDate: string | undefined | null;
   //가족관계
   familyName: string | undefined | null;
   relation: string | undefined | null;
@@ -101,15 +54,16 @@ export interface ModifyEmpInfoEntity {
 //empInfo types
 
 export interface EmpInfoEntity {
-  empCode: string | undefined | null;
+  empCode: string;
   empName: string | undefined | null;
   email: string | undefined | null;
+  image: string | undefined | null;
   deptName: string;
   hobong: string;
   positionCode: string;
   gender: string | undefined | null;
   address: string | undefined | null;
-  birthdate: string | undefined | null;
+  birthDate: string | undefined | null;
   mobileNumber: string | undefined | null;
   deptCode: string;
   detailAddress: string | undefined | null;
@@ -118,8 +72,8 @@ export interface EmpInfoEntity {
   //학력사항
   highSchoolName: string | undefined | null;
   major: string | undefined | null;
-  collegeName: string | undefined | null;
-  graduateSchoolName: string | undefined | null;
+  entranceDate: string | undefined | null;
+  graduateDate: string | undefined | null;
   //가족관계
   familyName: string | undefined | null;
   relation: string | undefined | null;

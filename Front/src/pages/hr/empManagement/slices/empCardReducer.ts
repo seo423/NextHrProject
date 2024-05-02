@@ -16,6 +16,13 @@ const empCardSlice = createSlice({
     },
     EMP_CARD_REQUESTED(state, action) {
       console.log('리듀서로 옴!!!EMP_CARD_REQUESTED:', action.payload);
+    },
+    EMP_CARD_UPDATE_REQUESTED(state, action) {
+      console.log('리듀서로 옴!!!EMP_CARD_UPDATE_REQUESTED:', action.payload);
+      console.log('12312541515151616', action.payload);
+    },
+    EMP_CARD_UPDATE_STATUS(state, action) {
+      console.log('리듀서로 옴!!!EMP_CARD_UPDATE_STATUS:', action.payload);
     }
   }
 });

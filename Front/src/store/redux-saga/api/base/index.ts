@@ -50,6 +50,20 @@ export const getEmpCard = async (param: string) => {
   }
 };
 
+//인사기록카드 수정
+export const getEmpCardModify = async (body: any) => {
+  console.log('api까지는 오는걸까 : ', body);
+  try {
+    return await hrApi.put(EMP_CARD_URL, body, {
+      params: {
+        token: localStorage.getItem('access')
+      }
+    });
+  } catch (error: any) {
+    console.log(error);
+  }
+};
+
 // 호봉 조회
 export const getHobongList = async (param: string) => {
   try {

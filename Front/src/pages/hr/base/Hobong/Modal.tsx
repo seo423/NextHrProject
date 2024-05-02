@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { hobongAction } from 'store/redux-saga/reducer/base/hobongReducer';
-
 import {
   Box,
   Button,
@@ -20,7 +19,7 @@ import {
 import { useTheme } from '@mui/material/styles';
 import { dispatch } from 'store';
 
-const Modal = (props: { toggle: () => void; positionCode: string | undefined; applyDate: string; applyEndDate: string }) => {
+export const Modal = (props: { toggle: () => void; positionCode: string | undefined; applyDate: string; applyEndDate: string }) => {
   const [open, setOpen] = useState<boolean>(true);
   const [baseSalaryPer, setBaseSalaryPer] = useState<number | null>(); // 초기치
   const [baseSalaryFixed, setBaseSalaryFixed] = useState<number | null>(); // 증가액
@@ -210,5 +209,3 @@ const Modal = (props: { toggle: () => void; positionCode: string | undefined; ap
     </div>
   );
 };
-
-export default React.memo(Modal);

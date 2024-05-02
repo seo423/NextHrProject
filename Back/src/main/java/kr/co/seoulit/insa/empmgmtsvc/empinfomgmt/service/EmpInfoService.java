@@ -26,7 +26,7 @@ public interface EmpInfoService {
     public List<EmpDetailEntity> findEmpAllList(String deptCode); //findEmployeeListByDept
 
 
-//    public void modifyEmployee(EmpTO empTO);
+    public void modifyEmployee(EmpTO empTO);
 
     public String findEmpCode(String empName, String deptCode);
 

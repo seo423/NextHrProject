@@ -53,6 +53,7 @@ public class FullTimeSalaryController
 		return map;
 	}
 
+	//월급여조회
 	@GetMapping("/salary/empcode")
 	public ModelMap selectSalary(@RequestParam("empName") String empCode, HttpServletRequest request, HttpServletResponse response)
 	{
