@@ -97,7 +97,7 @@ function TableBasic() {
       })
       .catch(() => {
         alert('해당부서에는 사원이 존재하지 않습니다');
-        window.location.reload();
+        // window.location.reload();
       });
   };
 

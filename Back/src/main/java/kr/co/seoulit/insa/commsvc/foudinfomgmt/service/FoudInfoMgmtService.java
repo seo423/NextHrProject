@@ -14,6 +14,12 @@ public interface FoudInfoMgmtService {
   public ArrayList<PositionTO> findPositionList();
   public void modifyPosition(ArrayList<PositionTO> positionList);
 
+  //자격증이름정보관리
+  public ArrayList<CertificationsNameTo> findCertificationsNameList();
+
+  //어학능력정보관리
+  public ArrayList<LanguageSkillssTo> findLanguageSkillsList();
+
   //공휴일정보관리
   public ArrayList<HolidayTO> findHolidayList();
   public String findWeekDayCount(String startDate, String endDate);

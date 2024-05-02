@@ -2,50 +2,54 @@ import { Grid, InputLabel, TextField, Button, Stack } from '@mui/material';
 import SubCard from 'ui-component/cards/SubCard';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 import { gridSpacing } from 'store/constant';
-import React, { useRef } from 'react';
+import React, { ChangeEventHandler, Dispatch, SetStateAction, useRef, useState } from 'react';
+import { educationInfoTo } from 'pages/hr/base/types/types';
+import { useDispatch } from 'react-redux';
 
-interface EducationInfoSetters{
-  setSchoolName : React.Dispatch<React.SetStateAction<string | undefined>>;
-  setMajor : React.Dispatch<React.SetStateAction<string | undefined>>;
-  setEntranceDate : React.Dispatch<React.SetStateAction<string | undefined>>;
-  setGraduateDate : React.Dispatch<React.SetStateAction<string | undefined>>;
+
+interface Props {
+  educationInfoSetter : Dispatch<SetStateAction<educationInfoTo>>;
 }
 
-interface EducationInfoProps{
-  educationInfoSetters : EducationInfoSetters;
-}
-const EducationInfo: React.FC<EducationInfoProps>= ({educationInfoSetters}) => {
+const EducationInfo: React.FC<Props> = ({ educationInfoSetter }) => {
+  const dispatch = useDispatch();
 
-  const schoolNameRef = useRef<HTMLInputElement>(null);
-  const majorRef = useRef<HTMLInputElement>(null);
-  const entranceDateRef = useRef<HTMLInputElement>(null);
-  const graduateDateRef = useRef<HTMLInputElement>(null);
+  const [ educationInfoBean, setEducationInfoBean] = useState<educationInfoTo>({
+    schoolName: '',
+    major: '',
+    entranceDate: '',
+    graduateDate: ''
+  });
 
-  
+  const handleInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    // input 필드에 대한 작업을 수행합니다.
+    const insertedEducationInfoBean = {
+      ...educationInfoBean,
+      [e.target.name] : e.target.value
+    }
+    setEducationInfoBean(insertedEducationInfoBean);
+    educationInfoSetter(insertedEducationInfoBean);
+  }
+
 
     const onSaveHandler = () => {
-      const schoolNameref = schoolNameRef.current?.value;
-      const majorref = majorRef.current?.value;
-      const entranceDateref = entranceDateRef.current?.value;
-      const graduateDateref = graduateDateRef.current?.value;
+      
 
-      if (schoolNameref?.trim().length === 0 || schoolNameref === null) {
+      if (educationInfoBean.schoolName === '') {
         alert('학교명을 입력해 주세요.');
         return;
-      } else if (majorref?.trim().length === 0 || majorref === null) {
+      } else if (educationInfoBean.major === '') {
         alert('전공을 입력해주세요.');
         return;
-      } else if (entranceDateref?.trim().length === 0 || entranceDateref === null) {
+      } else if (educationInfoBean.entranceDate === '') {
         alert('입학일을 입력해주세요.');
         return;
-      } else if (graduateDateref?.trim().length === 0 || graduateDateref === null) {
+      } else if (educationInfoBean.graduateDate === '') {
         alert('졸업일 입력해주세요.');
         return;
       }
 
-      educationInfoSetters.setSchoolName(schoolNameRef.current?.value);
-      educationInfoSetters.setMajor(majorRef.current?.value);
-      educationInfoSetters.setEntranceDate(entranceDateRef.current?.value);
+      
     }
 
 
@@ -55,19 +59,19 @@ const EducationInfo: React.FC<EducationInfoProps>= ({educationInfoSetters}) => {
           <Grid container spacing={gridSpacing}>
             <Grid item md={6} xs={12}>
               <InputLabel>학교명</InputLabel>
-              <TextField id="outlined-basic1" inputRef={schoolNameRef}  fullWidth style={{width: '200px'}} />
+              <TextField id="outlined-basic1" name="schoolName" onChange={handleInputChange}  fullWidth style={{width: '200px'}} />
             </Grid>
             <Grid item md={6} xs={12}>
               <InputLabel>전공</InputLabel>
-              <TextField id="outlined-basic1" inputRef={majorRef}  fullWidth style={{width: '200px'}} />
+              <TextField id="outlined-basic1" name="major" onChange={handleInputChange}  fullWidth style={{width: '200px'}} />
             </Grid>
             <Grid item md={6} xs={12}>
               <InputLabel>입학일</InputLabel>
-              <TextField id="outlined-basic14" inputRef={entranceDateRef} fullWidth type="date" style={{width: '200px'}} />
+              <TextField id="outlined-basic14" name="entranceDate" onChange={handleInputChange} fullWidth type="date" style={{width: '200px'}} />
             </Grid>
             <Grid item md={6} xs={12}>
               <InputLabel>졸업일</InputLabel>
-              <TextField id="outlined-basic14" inputRef={graduateDateRef} fullWidth type="date" style={{width: '200px'}} />
+              <TextField id="outlined-basic14" name="graduateDate" onChange={handleInputChange} fullWidth type="date" style={{width: '200px'}} />
             </Grid>
             
 

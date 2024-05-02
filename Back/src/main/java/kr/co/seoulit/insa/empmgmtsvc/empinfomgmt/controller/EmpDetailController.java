@@ -26,9 +26,6 @@ public class EmpDetailController {
     @Autowired
     private EmpInfoService empInfoService;
 
-
-
-
     //사원정보를 수정하는 로직
 //    @PutMapping("/empdetail/empcode")
 //    public Map<String, Object> modifyEmployee(@RequestBody EmpTO empTO) {
@@ -90,4 +87,5 @@ public class EmpDetailController {
         }
         return map;
     }
+
 }

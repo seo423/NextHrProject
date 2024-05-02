@@ -32,14 +32,15 @@ const getEmpList = async (data: any) => {
 
 //사원 등록
 const registerEmp = async (action: any) => {
-  console.log('log from regiserEmp', action.payload);
+
+  console.log('log from regiserEmp', action.payload.combinedBean);
   const url = new URL('http://localhost:9101/hr/empinfomgmt/employee');
   url.searchParams.append('token', localStorage.getItem('access') as string);
 
   const obj = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(action.payload)
+    body: JSON.stringify(action.payload.combinedBean)
   };
 
   const response = await fetch(url, obj).catch((err) => err);
@@ -52,71 +53,36 @@ const registerEmp = async (action: any) => {
   }
 };
 
-export const uploadFile = async( action: any ) => {
-  const file = action.payload.formData;
-  const residentId = action.payload.residentId;
+export const uploadFile = async (action: any) => {
+  const file = action.payload.image;
+  console.log('action.payload.residentId',action.payload.combinedBean.residentId);
+  const residentId = action.payload.combinedBean.residentId;
   console.log('api에서 받은 file:');
+
+  if (file) {
+    console.log('file.entries():', file.entries());
+  } else {
+    console.log('file is undefined or null.');
+  }
+
   for (let [key, value] of file.entries()) {
-      console.log(key, value);
+    console.log(key, value);
   }
   try {
     const { data } = await apiClient.post('empinfomgmt/employee-pic', file, {
-        params: {
-            residentId: residentId,
-            token: localStorage.getItem('access')
-        },
-        headers: {
-            'Content-Type': 'multipart/form-data'
-        }
+      params: {
+        residentId: residentId,
+        token: localStorage.getItem('access')
+      },
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
     });
     return data;
+  } catch (e) {
+    console.log(e);
   }
-  catch(e) {
-      console.log(e);
-  }
-}
-
-// 이미지 파일을 Blob 형식으로 변환하는 함수
-function fileToBlob(file: File) {
-  return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-          resolve(reader.result);
-      };
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-  });
-}
-//사원 사진 등록
-const registerEmpPicture = async (action: any) => {
-  console.log('log from registerEmpPicture', action.payload);
-
-  const url = new URL('http://localhost:9101/empinfomgmt/employee-pic');
-  url.searchParams.append('token', localStorage.getItem('access') as string);
-
-  try {
-    // 이미지 파일을 Blob으로 변환
-    const blobData = await fileToBlob(action.payload);
-    
-    // 서버에 전송
-    const response = await fetch(url, {
-        method: 'POST',
-        body: JSON.stringify({ image: blobData }),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
-    
-    // 서버 응답 처리
-    const data = await response.json();
-    console.log(data);
-  } catch (error) {
-      console.error('이미지 업로드 에러:', error);
-  }
-
 };
-// 파일 multer
-
 
 //사원정보 수정
 const updateEmpInfo = async (action: typeAction) => {
@@ -481,7 +447,6 @@ const getAppointmentResult = async () => {
 export {
   getEmpList,
   registerEmp,
-  registerEmpPicture,
   updateEmpInfo,
   deleteEmpInfo,
   getEmpEvalResult,

@@ -7,6 +7,7 @@ import { empEvalManagementSaga } from './empEvalManagementSaga';
 import { empAppointmentRegistSaga } from './empAppointmentRegistSaga';
 import { empAppointmentManagementSaga } from './empAppointmentManagementSaga';
 import { empAppointmentResultSaga } from './empAppointmentResultSaga';
+import { empCardSaga } from './empCardSaga';
 
 export default function* empManagementRootSaga() {
   yield all([
@@ -17,6 +18,7 @@ export default function* empManagementRootSaga() {
     call(empEvalManagementSaga),
     call(empAppointmentRegistSaga),
     call(empAppointmentManagementSaga),
-    call(empAppointmentResultSaga)
+    call(empAppointmentResultSaga),
+    call(empCardSaga)
   ]);
 }

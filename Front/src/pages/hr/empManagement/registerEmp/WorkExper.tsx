@@ -2,58 +2,54 @@ import { Grid, InputLabel, TextField, Button, Stack } from '@mui/material';
 import SubCard from 'ui-component/cards/SubCard';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 import { gridSpacing } from 'store/constant';
-import React, { useRef } from 'react';
+import React, { ChangeEventHandler, Dispatch, SetStateAction, useRef, useState } from 'react';
+import { workExperTo } from 'pages/hr/base/types/types';
+import { useDispatch } from 'react-redux';
 
-interface WorkExperSetters{
-  setPlaceOfEmployment : React.Dispatch<React.SetStateAction<string | undefined>>;
-  setEmploymentPeriod : React.Dispatch<React.SetStateAction<string | undefined>>;
-  setWorkedPosition : React.Dispatch<React.SetStateAction<string | undefined>>;
-  setJobDuties :React.Dispatch<React.SetStateAction<string | undefined>>;
-  setWorkAddress : React.Dispatch<React.SetStateAction<string | undefined>>;
+
+interface Props{
+  workExperSetter: Dispatch<SetStateAction<workExperTo>>;
 }
 
-interface WorkExperProps{
-  workExperSetters : WorkExperSetters;
-}
+const WorkExper: React.FC<Props> = ({ workExperSetter }) => {
+  const dispatch = useDispatch();
 
-const WorkExper: React.FC<WorkExperProps>= ({workExperSetters}) => {
+  const [workExperBean, setWorkExperBean] = useState<workExperTo>({
+    placeOfEmployment: '',
+    employmentPeriod: '',
+    workedPosition: '',
+    jobDuties: '',
+    workAddress: ''
+  })
 
-  const placeOfEmploymentRef = useRef<HTMLInputElement>(null);
-  const employmentPeriodRef = useRef<HTMLInputElement>(null);
-  const workedPositionRef = useRef<HTMLInputElement>(null);
-  const jobDutiesRef = useRef<HTMLInputElement>(null);
-  const workAddressRef = useRef<HTMLInputElement>(null);
+  const handleInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    // input 필드에 대한 작업을 수행합니다.
+    const insertedWorkExperBean ={
+      ...workExperBean,
+      [e.target.name]: e.target.value
+    }
+    setWorkExperBean(insertedWorkExperBean);
+    workExperSetter(insertedWorkExperBean);
+  }
 
     const onSaveHandler = () => {
-      const placeOfEmploymentref = placeOfEmploymentRef.current?.value;
-      const employmentPeriodref = employmentPeriodRef.current?.value;
-      const workedPositionref = workedPositionRef.current?.value;
-      const jobDutiesref = jobDutiesRef.current?.value;
-      const workAddressref = workAddressRef.current?.value;
-
       
-      if (placeOfEmploymentref?.trim().length === 0 || placeOfEmploymentref === null) {
+      if (workExperBean.placeOfEmployment === '') {
         alert('근무처를 입력해 주세요.');
         return;
-      } else if (employmentPeriodref?.trim().length === 0 || employmentPeriodref === null) {
+      } else if (workExperBean.employmentPeriod === '') {
         alert('근무기간을 입력해주세요.');
         return;
-      } else if (workedPositionref?.trim().length === 0 || workedPositionref === null) {
+      } else if (workExperBean.workedPosition === '') {
         alert('직위를 입력해주세요.');
         return;
-      } else if (jobDutiesref?.trim().length === 0 || jobDutiesref === null) {
+      } else if (workExperBean.jobDuties === '') {
         alert('직무를 입력해주세요.');
         return;
-      } else if (workAddressref?.trim().length === 0 || workAddressref === null) {
+      } else if (workExperBean.workAddress === '') {
         alert('소재지를 입력해주세요.');
         return;
       }
-
-      workExperSetters.setPlaceOfEmployment(placeOfEmploymentRef.current?.value);
-      workExperSetters.setEmploymentPeriod(employmentPeriodRef.current?.value);
-      workExperSetters.setWorkedPosition(workedPositionRef.current?.value);
-      workExperSetters.setJobDuties(jobDutiesRef.current?.value);
-      workExperSetters.setWorkAddress(workAddressRef.current?.value);
 
     }
 
@@ -64,23 +60,23 @@ const WorkExper: React.FC<WorkExperProps>= ({workExperSetters}) => {
           <Grid container spacing={gridSpacing}>
             <Grid item md={6} xs={12}>
               <InputLabel>근무처</InputLabel>
-              <TextField id="outlined-basic1" inputRef={placeOfEmploymentRef} fullWidth style={{width: '200px'}} />
+              <TextField id="outlined-basic1" name='placeOfEmployment' onChange={handleInputChange} fullWidth style={{width: '200px'}} />
             </Grid>
             <Grid item md={6} xs={12}>
               <InputLabel>근무기간</InputLabel>
-              <TextField id="outlined-basic1" inputRef={employmentPeriodRef} fullWidth style={{width: '200px'}} />
+              <TextField id="outlined-basic1" name='employmentPeriod' onChange={handleInputChange} fullWidth style={{width: '200px'}} />
             </Grid>
             <Grid item md={6} xs={12}>
               <InputLabel>직위</InputLabel>
-              <TextField id="outlined-basic1" inputRef={workedPositionRef} fullWidth style={{width: '200px'}} />
+              <TextField id="outlined-basic1" name='workedPosition' onChange={handleInputChange} fullWidth style={{width: '200px'}} />
             </Grid>
             <Grid item md={6} xs={12}>
               <InputLabel>직무</InputLabel>
-              <TextField id="outlined-basic1" inputRef={jobDutiesRef} fullWidth style={{width: '200px'}} />
+              <TextField id="outlined-basic1" name='jobDuties' onChange={handleInputChange} fullWidth style={{width: '200px'}} />
             </Grid>
             <Grid item md={4} xs={12}>
               <InputLabel>소재지</InputLabel>
-              <TextField id="outlined-basic1" inputRef={workAddressRef} fullWidth style={{width: '200px'}} />
+              <TextField id="outlined-basic1" name='workAddress' onChange={handleInputChange} fullWidth style={{width: '200px'}} />
             </Grid>
             
 

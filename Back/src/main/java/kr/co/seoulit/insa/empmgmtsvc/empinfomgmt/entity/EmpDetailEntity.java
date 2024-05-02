@@ -22,7 +22,7 @@ public class EmpDetailEntity {
     private String postNumber;
     private String email;
     private String lastSchool;
-    private String imgExtend;
+//    private String imgExtend;
     private String deptCode;
     private String positionCode;
     private String authority;

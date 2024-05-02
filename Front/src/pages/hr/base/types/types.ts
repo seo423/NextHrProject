@@ -62,3 +62,61 @@ export interface empDetailTO {
   residentId?: string| undefined| null;
   hiredate?: string| undefined | null;
 }
+
+export interface empRegisterTO {
+  empName?: string | undefined;
+  birthDate?: string| undefined;
+  mobileNumber?: string| undefined;
+  address?: string| undefined;
+  detailAddress?: string| undefined;
+  employment?: string| undefined;
+  email?: string| undefined;
+  postNumber?: string| undefined;
+  residentId?: string| undefined;
+  deptCode?: string| undefined;
+  deptName?: string| undefined;
+  gender?: string| undefined;
+  lastSchool?: string| undefined;
+  position?: string| undefined;
+  occupation?: string| undefined;
+  hireDate?: string| undefined;
+  hobong?: string| undefined;
+  hobongCode?: string| undefined;
+
+}
+
+export interface educationInfoTo{
+  schoolName?:  string | undefined;
+  major?:  string | undefined;
+  entranceDate?:  string | undefined;
+  graduateDate?:  string | undefined;
+}
+
+export interface familyInfoTo{
+  familyName?: string | undefined;
+  relation?: string | undefined;
+  familyDate?: string | undefined;
+  liveTogether?: string | undefined;
+}
+
+export interface workExperTo{
+  placeOfEmployment?: string | undefined;
+  employmentPeriod?: string | undefined;
+  workedPosition?: string | undefined;
+  jobDuties?: string | undefined;
+  workAddress?: string | undefined;
+}
+
+export interface certificationTo{
+  certificationsName?: string | undefined;
+  certificationsCode?: string | undefined;
+  acquisitionDate?: string | undefined;
+  expirationDate?: string | undefined;
+}
+
+export interface languageSkillsTo{
+  testSubject?: string | undefined;
+  testSubjectCode?: string | undefined;
+  subject?: string | undefined;
+  score?: string | undefined;
+}

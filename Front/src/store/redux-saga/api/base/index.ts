@@ -5,6 +5,8 @@ const DETAIL_CODE_URL = 'base/detailCode';
 const HOBONG_URL = 'foudinfomgmt/hobonglist';
 const HOBONG_UPDATE_BY_PERCENTAGE_URL = 'foudinfomgmt/hobong_percentage';
 const HOBONG_UPDATE_BY_FIXED_URL = 'foudinfomgmt/hobong_fixed';
+
+const EMP_CARD_URL = 'empinfomgmt/empcard';
 const EMP_DETAIL_LIST_URL = 'foudinfomgmt/certificate-issuance';
 
 // 권한 조회
@@ -26,6 +28,21 @@ export const getCodeList = async () => {
     return await hrApi.get(DETAIL_CODE_URL, {
       params: {
         token: localStorage.getItem('access')
+      }
+    });
+  } catch (error: any) {
+    console.log(error);
+  }
+};
+
+//인사기록카드
+export const getEmpCard = async (param: string) => {
+  console.log('api에서 받아온 param: ', param);
+  try {
+    return await hrApi.get(EMP_CARD_URL, {
+      params: {
+        token: localStorage.getItem('access'),
+        empCode: param
       }
     });
   } catch (error: any) {
@@ -99,5 +116,3 @@ export const searchEmpDeatilInfo = async (param: string) => {
     console.log(error);
   }
 };
-
-

@@ -57,6 +57,7 @@ public class EmpListController {
 	public Map<String,Object> empAllList(@RequestParam(value="value",required = true,defaultValue = "000000") String val) {
 
 		Map<String,Object> map = new HashMap<>();
+		System.out.println("여기까지는 오니 ??");
 
 		try {
 			System.out.println("부서번호=" + val);
@@ -89,6 +90,28 @@ public class EmpListController {
 		} catch (Exception e) {
 			map.put("errorCode", -1);
 			map.put("errorMsg", e.getMessage());
+		}
+		return map;
+	}
+	@GetMapping("empcard")
+	public Map<String, Object> findEmpCard(@RequestParam("empCode") String empCode) {
+		System.out.println("findEmpCard 컨트롤러의 empCode = " + empCode);
+
+		Map<String,Object> map = new HashMap<>();
+
+		try {
+			EmpTO empCard = empInfoService.findEmpCard(empCode);
+			System.out.println("empCard = " + empCard);
+			map.put("errorMsg", "success");
+			map.put("errorCode", 0);
+			map.put("empCard", empCard);
+
+
+		} catch (Exception dae) {
+			dae.printStackTrace();
+			map.clear();
+			map.put("errorCode", -1);
+			map.put("errorMsg", dae.getMessage());
 		}
 		return map;
 	}

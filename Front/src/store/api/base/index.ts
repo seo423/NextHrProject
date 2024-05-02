@@ -118,3 +118,29 @@ export const deletePosition = async (updatedSelRow1: any) => {
 
   return response.data;
 };
+
+// 자격증이름정보 조회
+export const getCertificationsName = async () => {
+  console.log('오잉');
+  let url = 'http://localhost:9101/hr/foudinfomgmt/certificationsnamelist';
+  const response = await axios.get(url, {
+    params: {
+      token: localStorage.getItem('access')
+    }
+  });
+
+  return response.data;
+};
+
+// 어학능력정보 조회
+export const getLanguageSkills = async () => {
+  console.log('오잉');
+  let url = 'http://localhost:9101/hr/foudinfomgmt/languageskillslist';
+  const response = await axios.get(url, {
+    params: {
+      token: localStorage.getItem('access')
+    }
+  });
+
+  return response.data;
+};

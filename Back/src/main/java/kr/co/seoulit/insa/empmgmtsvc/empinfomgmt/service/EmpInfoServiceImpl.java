@@ -1,8 +1,8 @@
 package kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.service;
 
 import kr.co.seoulit.insa.commsvc.foudinfomgmt.mapper.DeptMapper;
-import kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.mapper.WorkInfoMapper;
 import kr.co.seoulit.insa.commsvc.foudinfomgmt.mapper.HobongMapper;
+import kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.mapper.WorkInfoMapper;
 import kr.co.seoulit.insa.commsvc.systemmgmt.mapper.DetailCodeMapper;
 import kr.co.seoulit.insa.commsvc.systemmgmt.to.DetailCodeTO;
 import kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.entity.EmpDetailEntity;
@@ -11,6 +11,7 @@ import kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.repository.EmpDetailRepository;
 import kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.to.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -38,6 +39,16 @@ public class EmpInfoServiceImpl implements EmpInfoService {
     private DetailCodeMapper detailCodeMapper;
     @Autowired
     private FamilyInfoMapper familyInfoMapper;
+    @Autowired
+    private EducationInfoMapper educationInfoMapper;
+    @Autowired
+    private WorkExperMapper workExperMapper;
+    @Autowired
+    private CertificationsMapper certificationsMapper;
+    @Autowired
+    private EmpCertificationsMapper empCertificationsMapper;
+    @Autowired
+    private LanguageSkillsMapper languageSkillsMapper;
 
     @Autowired
     private LicenseInfoMapper licenseInfoMapper;
@@ -151,7 +162,19 @@ public class EmpInfoServiceImpl implements EmpInfoService {
 //    }
 
     @Override
+    public EmpTO findEmpCard(String empCode) {
+        EmpTO empTO = null;
+        empTO = empMapper.empDetailcard(empCode);
+        System.out.println("empTO = " + empTO);
+        return empTO;
+    }
+
+    @Override
     public void registEmployee(EmpTO emp) {
+        System.out.println("emp.getFamilyInfo()sssssssssssssssssssssssssssssss = " + emp.getFamilyInfo());
+        System.out.println("emp.getCertification()sssssssssssssssssssssssssssssss = " + emp.getCertification());
+        System.out.println("emp.getEducationInfo()sssssssssssssssssssssssssssssss = " + emp.getEducationInfo());
+        System.out.println("emp.getHiredate()aaaaaaaaaaaaaaaaaaaaaaa = " + emp.getHireDate());
 
         // 마지막 사원의 empCode를 가져와서 새로운 사원의 empCode를 생성한다.
         String lastEmpCode = empMapper.selectLastEmpCode();
@@ -160,18 +183,67 @@ public class EmpInfoServiceImpl implements EmpInfoService {
 
         String empCode = "EMP-" + String.format("%02d", number);
         System.out.println("<<<< emp_code = " + empCode);
+        System.out.println("<<<< hiredate = " + empCode);
+
+
+        HashMap<String, String> certificationsMap = new HashMap<>();
+        CertificationsTo certifications = emp.getCertification();
+        certificationsMap.put("certificationsCode", certifications.getCertificationsCode());
+        certificationsMap.put("certificationsName", certifications.getCertificationsName());
+        certificationsMap.put("acquisitionDate", certifications.getAcquisitionDate());
+        certificationsMap.put("expirationDate", certifications.getExpirationDate());
+        certificationsMap.put("empCode",empCode);
+
+        HashMap<String, String> familyInfoMap = new HashMap<>();
+        FamilyInfoTO family = emp.getFamilyInfo();
+        familyInfoMap.put("familyName", family.getFamilyName());
+        familyInfoMap.put("relation", family.getRelation());
+        familyInfoMap.put("familyDate", family.getFamilyDate());
+        familyInfoMap.put("liveTogether", family.getLiveTogether());
+        familyInfoMap.put("empCode",empCode);
+
+        HashMap<String, String> educationInfoMap = new HashMap<>();
+        EducationInfoTo educationInfoTo = emp.getEducationInfo();
+        educationInfoMap.put("empCode",empCode);
+        educationInfoMap.put("schoolName", educationInfoTo.getSchoolName());
+        educationInfoMap.put("major", educationInfoTo.getMajor());
+        educationInfoMap.put("entranceDate", educationInfoTo.getEntranceDate());
+        educationInfoMap.put("graduateDate", educationInfoTo.getGraduateDate());
+
+        HashMap<String, String> workExperMap = new HashMap<>();
+        WorkExperTo workExperTo = emp.getWorkExper();
+        workExperMap.put("empCode",empCode);
+        workExperMap.put("placeOfEmployment", workExperTo.getPlaceOfEmployment());
+        workExperMap.put("employmentPeriod", workExperTo.getEmploymentPeriod());
+        workExperMap.put("workedPosition", workExperTo.getWorkedPosition());
+        workExperMap.put("jobDuties", workExperTo.getJobDuties());
+        workExperMap.put("workAddress", workExperTo.getWorkAddress());
+
+        HashMap<String, String> languageSkillsMap = new HashMap<>();
+        LanguageSkillsTo languageSkillsTo = emp.getLanguageSkills();
+        languageSkillsMap.put("empCode", empCode);
+        languageSkillsMap.put("testSubjectCode", languageSkillsTo.getTestSubjectCode());
+        languageSkillsMap.put("score", languageSkillsTo.getScore());
+
+
         //새로 생성된 empCode를 넘겨받은 객체의 empCode로 할당
         emp.setEmpCode(empCode);
         String hobongCode = hobongMapper.selectHobongCodeByHobongLevel(emp.getHobong());
-        emp.setHobong(hobongCode);
-        familyInfoMapper.insertFamilyInfo(emp.getFamilyInfo());
-
+        emp.setHobongCode(hobongCode);
+        familyInfoMapper.insertFamilyInfo(familyInfoMap);
+        educationInfoMapper.insertEducationInfo(educationInfoMap);
+        workExperMapper.insertWorkExper(workExperMap);
+        empCertificationsMapper.insertEmpCertifications(certificationsMap);
+        languageSkillsMapper.insertLanguageSkills(languageSkillsMap);
 
 
         // EMP테이블 등록
         empMapper.registEmployee(emp);
 
-        String[] parts = emp.getHiredate().split("-");
+        System.out.println("emp.getEmpCode()aaaaaaaaaaaaaaaaaaaaaaaa = " + emp.getEmpCode());
+        System.out.println("emp.getHiredate()aaaaaaaaaaaaaaaaaaaaaaa = " + emp.getHireDate());
+
+        String[] parts = emp.getHireDate().split("-");
         String convertedDate = "";
         for (int i = 0; i < parts.length; i++) {
             if (i == 0) {
@@ -181,13 +253,17 @@ public class EmpInfoServiceImpl implements EmpInfoService {
             }
         }
         int workInfoDays = parseInt(convertedDate);
-        System.out.println("workInfoDays:  " + workInfoDays);
+        System.out.println("workInfo:  " + emp.getWorkInfo());
+        System.out.println("workInfoDaysaaaaaaaaaaaaaaaaaa:  " + workInfoDays);
         HashMap<String, Object> map = new HashMap<>();
-        map.put("hiredate", emp.getHiredate());
-        map.put("employmentType", emp.getEmployment());
-        map.put("occupation", emp.getOccupation());
         map.put("empCode", emp.getEmpCode());
+        map.put("hiredate", emp.getHireDate());
+        map.put("occupation", emp.getOccupation());
+        map.put("employmentType", emp.getEmployment());
+        map.put("hobong",emp.getHobong());
         map.put("workInfoDays", workInfoDays);
+        map.put("position", emp.getPosition());
+        map.put("deptName", emp.getDeptName());
 
         // WORK_INFO 테이블 등록
         System.out.println("<<<< WORK_INFO 테이블 등록전 map = " + map);
@@ -204,6 +280,65 @@ public class EmpInfoServiceImpl implements EmpInfoService {
     }
 
 
+    // 아래의 코드들은 empMapper.updateEmployee(emp)를 제외하고는 복합적인 문제로 인하여 작동하지 않을 확률이 높습니다.
+//    @Override
+//    public void modifyEmployee(EmpTO emp) {
+//
+//        if (!"".equals(emp.getStatus()) || emp.getStatus().equals("update")) {
+//            empMapper.updateEmployee(emp);
+//        }
+//        if (emp.getWorkInfo() != null) {
+//            ArrayList<WorkInfoTO> workInfoList = emp.getWorkInfo();
+//            for (WorkInfoTO workInfo : workInfoList) {
+//                switch (workInfo.getStatus()) {
+//                    case "insert":
+//                        workInfoMapper.insertWorkInfo(workInfo);
+//                        break;
+//                    case "update":
+//                        workInfoMapper.updateWorkInfo(workInfo);
+//                        break;
+//                    case "delete":
+//                        workInfoMapper.deleteWorkInfo(workInfo);
+//                        break;
+//                }
+//            }
+//        }
+//
+//        if (emp.getLicenseInfoList() != null && emp.getLicenseInfoList().size() > 0) {
+//            ArrayList<LicenseInfoTO> licenseInfoList = emp.getLicenseInfoList();
+//            for (LicenseInfoTO licenseInfo : licenseInfoList) {
+//                switch (licenseInfo.getStatus()) {
+//                    case "insert":
+//                        licenseInfoMapper.insertLicenseInfo(licenseInfo);
+//                        break;
+//                    case "update":
+//                        licenseInfoMapper.updateLicenseInfo(licenseInfo);
+//                        break;
+//                    case "delete":
+//                        licenseInfoMapper.deleteLicenseInfo(licenseInfo);
+//                        break;
+//                }
+//            }
+//        }
+//
+//        if (emp.getFamilyInfoList() != null && emp.getFamilyInfoList().size() > 0) {
+//            ArrayList<FamilyInfoTO> familyInfoList = emp.getFamilyInfoList();
+//            for (FamilyInfoTO familyInfo : familyInfoList) {
+//                switch (familyInfo.getStatus()) {
+//                    case "insert":
+//                        familyInfoMapper.insertFamilyInfo(familyInfo);
+//                        break;
+//                    case "update":
+//                        familyInfoMapper.updateFamilyInfo(familyInfo);
+//                        break;
+//                    case "delete":
+//                        familyInfoMapper.deleteFamilyInfo(familyInfo);
+//                        break;
+//                }
+//            }
+//        }
+
+    //}
 
     @Override
     public void removeEmployee(List<EmpDetailEntity> empDetailEntities) {
@@ -221,6 +356,8 @@ public class EmpInfoServiceImpl implements EmpInfoService {
     // 인사고과 관련 코드
 
     @Override
+
+
     public void registEmpEval(EmpEvalTO empeval) {
 
         System.out.println("<<<<<<<< empeval.getEmpCode()" + empeval.getEmpCode());
