@@ -26,5 +26,7 @@ public interface EmpMapper {
 
 	EmpTO empDetailcard(String empCode);
 	public void insertEmpPic(HashMap<String, Object> map);
+	public String selectAuthLevelByPositionCode(String position);
+
 
 }

@@ -87,7 +87,7 @@ export interface empRegisterTO {
   lastSchool?: string| undefined;
   position?: string| undefined;
   occupation?: string| undefined;
-  hireDate?: string| undefined;
+  hiredate?: string| undefined;
   hobong?: string| undefined;
   hobongCode?: string| undefined;
 

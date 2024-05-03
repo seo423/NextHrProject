@@ -79,14 +79,14 @@
         <result property="jobDuties" column="JOB_DUTIES"/>
         <result property="workAddress" column="WORK_ADDRESS"/>
         <result property="occupation" column="OCCUPATION"/>
-        <result property="hireDate" column="HIREDATE"/>
-        <result property="deptCode" column="DEPT_CODE"/>
-        <result property="hobongCode" column="HOBONG_CODE"/>
-    </resultMap>
-
         <result property="hiredate" column="HIREDATE"/>
         <result property="employmentType" column="EMPLOYMENT_TYPE"/>
     </resultMap>
+
+<!--    <resultMap id="authority" type="kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.to.EmpTO">-->
+<!--        <result property="authority" column="AUTH_LEVEL"/>-->
+<!--        <result property="position" column="POSITION_CODE"/>-->
+<!--    </resultMap>>-->
 
     <select id="selectEmp" parameterType="String" resultMap="empResult">
         SELECT E.EMP_CODE
@@ -206,7 +206,11 @@
         ]]>
     </insert>
 
-
+    <select id="selectAuthLevelByPositionCode" resultType="java.lang.String">
+        SELECT AUTH_LEVEL
+        FROM AUTHORITY
+        WHERE POSITION_CODE = #{position}
+    </select>
 
     <select id="selectEmpList" resultMap="empResult">
         SELECT E.EMP_CODE
@@ -261,8 +265,6 @@
           AND PD.DEPT_NAME = #{dept}
         ORDER BY E.EMP_CODE
     </select>
-
-
 
 
     <select id="getEmpCode" parameterType="string" resultMap="empResult">
@@ -372,10 +374,9 @@
     </select>
 
 <!--    인사기록 카드 -->
-
     <select id="empDetailcard" parameterType="string" resultMap="selectempdetailcard">
         SELECT E.EMP_CODE
-            ,E.EMP_NAME
+             ,E.EMP_NAME
              , TO_CHAR(E.BIRTHDATE, 'YYYY-MM-DD') BIRTHDATE
              , E.GENDER
              , E.MOBILE_NUMBER
@@ -427,7 +428,7 @@
     </select>
 
 <!--인사기록카드 수정-->
-    <update id="updateEmployee" parameterType="EmpTO" statementType="CALLABLE">
+    <update id="updateEmployee" parameterType="kr.co.seoulit.insa.empmgmtsvc.empinfomgmt.to.EmpTO" statementType="CALLABLE">
 <![CDATA[
         {CALL
             P_UPDATE_EMPLOYEE_INFO(
@@ -483,11 +484,11 @@
 <!--        WHERE EMP_CODE = #{empCode}-->
 <!--    </update>-->
 
-    <parameterMap type="map" id="empDeleteParameter">
-        <parameter property="empCode" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>
-        <parameter property="errorCode" jdbcType="VARCHAR" javaType="java.lang.String" mode="OUT"/>
-        <parameter property="errorMsg" jdbcType="VARCHAR" javaType="java.lang.String" mode="OUT"/>
-    </parameterMap>
+<!--    <parameterMap type="map" id="empDeleteParameter">-->
+<!--        <parameter property="empCode" jdbcType="VARCHAR" javaType="java.lang.String" mode="IN"/>-->
+<!--        <parameter property="errorCode" jdbcType="VARCHAR" javaType="java.lang.String" mode="OUT"/>-->
+<!--        <parameter property="errorMsg" jdbcType="VARCHAR" javaType="java.lang.String" mode="OUT"/>-->
+<!--    </parameterMap>-->
 
     <delete id="deleteEmployee" parameterType="String">
       <![CDATA[

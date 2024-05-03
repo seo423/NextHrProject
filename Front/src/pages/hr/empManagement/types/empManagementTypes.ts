@@ -92,7 +92,6 @@ export interface ModifyEmpInfoEntity {
   hiredate: string | undefined | null;
   employmentType: string | undefined | null;
 }
-
 //========================================================
 //empInfo types
 

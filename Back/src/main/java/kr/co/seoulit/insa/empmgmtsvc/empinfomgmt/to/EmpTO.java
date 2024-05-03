@@ -29,25 +29,23 @@ public class EmpTO extends BaseTO {
     private String residentId;
 
     @Transient
-    private String deptName;
-    @Transient
     private String image;
-
     @Transient
     private String hobong;
 
     @Transient
     private String hobongCode;
-
+    @Transient
+    private String deptName;
     @Transient
     private String employment;
     @Transient
     private String authority;
-    @Transient
-    private String hireDate;
 
     private String hiredate;
-//    @Transient
+
+    //private String hireDate;
+    //    @Transient
 //    private String achievement;
 //    @Transient
 //    private String ability;

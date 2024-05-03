@@ -68,7 +68,7 @@ function RegisterEmp() {
     lastSchool: '',
     position: '',
     occupation: '',
-    hireDate: '',
+    hiredate: '',
     hobong: '',
     postNumber: '',
     deptName:''
@@ -177,7 +177,7 @@ function RegisterEmp() {
     console.log(" modifiedEmpRegisterTO:  " , modifiedEmpRegisterBean);
 
     dispatch(registerEmpAction.REGISTER_EMP_REQUSTED(modifiedEmpRegisterBean));
-    window.location.reload();
+    //window.location.reload();
   };
 
   return (

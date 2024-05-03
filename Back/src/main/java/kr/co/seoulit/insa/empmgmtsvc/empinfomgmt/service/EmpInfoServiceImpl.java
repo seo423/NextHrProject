@@ -189,7 +189,8 @@ public class EmpInfoServiceImpl implements EmpInfoService {
         System.out.println("emp.getFamilyInfo()sssssssssssssssssssssssssssssss = " + emp.getFamilyInfo());
         System.out.println("emp.getCertification()sssssssssssssssssssssssssssssss = " + emp.getCertification());
         System.out.println("emp.getEducationInfo()sssssssssssssssssssssssssssssss = " + emp.getEducationInfo());
-        System.out.println("emp.getHiredate()aaaaaaaaaaaaaaaaaaaaaaa = " + emp.getHireDate());
+        System.out.println("emp.getHiredate()aaaaaaaaaaaaaaaaaaaaaaa = " + emp.getHiredate());
+        System.out.println("emp.getPosition = " + emp.getPosition());
 
         // 마지막 사원의 empCode를 가져와서 새로운 사원의 empCode를 생성한다.
         String lastEmpCode = empMapper.selectLastEmpCode();
@@ -241,10 +242,16 @@ public class EmpInfoServiceImpl implements EmpInfoService {
         languageSkillsMap.put("score", languageSkillsTo.getScore());
 
 
+
         //새로 생성된 empCode를 넘겨받은 객체의 empCode로 할당
         emp.setEmpCode(empCode);
         String hobongCode = hobongMapper.selectHobongCodeByHobongLevel(emp.getHobong());
+        System.out.println("hobongCode wwwwwwwwwwwwwwwwwwwwwwwww = " + hobongCode);
+        // authority 불러오기
+        String authority = empMapper.selectAuthLevelByPositionCode(emp.getPosition());
+        System.out.println("authority wwwwwwwwwwwwwwwwwwwwwwwwwwwww= " + authority);
         emp.setHobongCode(hobongCode);
+        emp.setAuthority(authority);
         familyInfoMapper.insertFamilyInfo(familyInfoMap);
         educationInfoMapper.insertEducationInfo(educationInfoMap);
         workExperMapper.insertWorkExper(workExperMap);
@@ -252,13 +259,14 @@ public class EmpInfoServiceImpl implements EmpInfoService {
         languageSkillsMapper.insertLanguageSkills(languageSkillsMap);
 
 
+
         // EMP테이블 등록
         empMapper.registEmployee(emp);
 
         System.out.println("emp.getEmpCode()aaaaaaaaaaaaaaaaaaaaaaaa = " + emp.getEmpCode());
-        System.out.println("emp.getHiredate()aaaaaaaaaaaaaaaaaaaaaaa = " + emp.getHireDate());
+        System.out.println("emp.getHiredate()aaaaaaaaaaaaaaaaaaaaaaa = " + emp.getHiredate());
 
-        String[] parts = emp.getHireDate().split("-");
+       String[] parts = emp.getHiredate().split("-");
         String convertedDate = "";
         for (int i = 0; i < parts.length; i++) {
             if (i == 0) {
@@ -272,7 +280,7 @@ public class EmpInfoServiceImpl implements EmpInfoService {
         System.out.println("workInfoDaysaaaaaaaaaaaaaaaaaa:  " + workInfoDays);
         HashMap<String, Object> map = new HashMap<>();
         map.put("empCode", emp.getEmpCode());
-        map.put("hiredate", emp.getHireDate());
+        map.put("hiredate", emp.getHiredate());
         map.put("occupation", emp.getOccupation());
         map.put("employmentType", emp.getEmployment());
         map.put("hobong",emp.getHobong());
@@ -280,7 +288,7 @@ public class EmpInfoServiceImpl implements EmpInfoService {
         map.put("position", emp.getPosition());
         map.put("deptName", emp.getDeptName());
 
-        // WORK_INFO 테이블 등록
+         //WORK_INFO 테이블 등록
         System.out.println("<<<< WORK_INFO 테이블 등록전 map = " + map);
         empMapper.registEmpWorkInfo(map);
 
