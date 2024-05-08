@@ -15,7 +15,7 @@
 		<result property="jobstabilRates" column="JOBSTABIL_RATES" />
 		<result property="vocacompetencyRates" column="VOCA_COMPETENCY_RATES" />
 		<result property="industinsureRates" column="INDUST_INSURE_RATES" />
-		<result property="industinsurecharRates" column="INDUST_INSURE_CHAR_RATES" />
+		<result property="industinsurecharRates" column="INDUST_INSURE_CHAR_RATES"/>
 	</resultMap>
 
 

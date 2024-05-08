@@ -115,12 +115,17 @@ function TableBasic() {
         token: localStorage.getItem('access')
       }
     }).then((response) => {
+      if (response.data.fullTimeSalaryList && response.data.fullTimeSalaryList.length > 0){
       console.log('response ' + response);
       console.log('response ' + response.data);
       console.log('response ' + response.data.fullTimeSalaryList[0]);
       console.log('response ' + response.data.fullTimeSalaryList[0].empCode);
 
       setRowData(response.data.fullTimeSalaryList[0]);
+    } else {
+      console.log('Full time salary list is empty or undefined.');
+      // 처리할 로직 추가
+    }
     });
 
     console.log('rowData' + rowData);
