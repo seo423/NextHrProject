@@ -19,7 +19,7 @@ function* handleHoliday() {
     console.log('사가사가', holidayList);
     yield put(getHolidaySuccess({ holidayList }));
   } catch (error) {
-    console.log('쉬발');
+    console.log('sb');
   }
 }
 

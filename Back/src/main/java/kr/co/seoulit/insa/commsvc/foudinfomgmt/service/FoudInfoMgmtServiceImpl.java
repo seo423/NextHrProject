@@ -29,6 +29,10 @@ public class FoudInfoMgmtServiceImpl implements FoudInfoMgmtService {
 	private CertificateIssuanceMapper certificateIssuanceMapper;
 	@Autowired
 	private HobongMapper hobongMapper;
+	@Autowired
+	private CertificationsNameMapper certificationsNameMapper;
+	@Autowired
+	private LanguageSkillssMapper languageSkillssMapper;
 
 
 
@@ -82,6 +86,22 @@ public class FoudInfoMgmtServiceImpl implements FoudInfoMgmtService {
 
 
 	@Override
+	public ArrayList<CertificationsNameTo> findCertificationsNameList(){
+
+		ArrayList<CertificationsNameTo> certificationsNameList = null;
+		certificationsNameList = certificationsNameMapper.selectCertificationsNameList();
+		return certificationsNameList;
+	}
+
+	@Override
+	public ArrayList<LanguageSkillssTo> findLanguageSkillsList(){
+
+		ArrayList<LanguageSkillssTo> languageSkillsList = null;
+		languageSkillsList = languageSkillssMapper.selectLanguageSkillsList();
+		return  languageSkillsList;
+	}
+
+	@Override
 	public ArrayList<PositionTO> findPositionList() {
 
 		ArrayList<PositionTO> positionList = null;
@@ -128,6 +148,8 @@ public class FoudInfoMgmtServiceImpl implements FoudInfoMgmtService {
 		}
 
 	}
+
+
 
 	@Override
 	public ArrayList<HolidayTO> findHolidayList() {

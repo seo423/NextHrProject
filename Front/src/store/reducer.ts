@@ -27,9 +27,10 @@ import DailyAttendReducer from './redux-saga/reducer/attendance/DailyAttendReduc
 import commonReducer from './redux-saga/reducer/common/commonReducer';
 import baseReducer from './redux-saga/reducer/base/baseReducer';
 import salReducer from './redux-saga/reducer/salary/salaryReducer';
+import empcardReducer from 'pages/hr/empManagement/slices/empCardReducer';
 import certificateIssuanceReducer from 'store/redux-saga/reducer/base/certificateIssuanceReducer';
-
-
+import certificationsNameReducer from './redux-saga/reducer/base/certificationsNameReducer';
+import languageSkillsReducer from './redux-saga/reducer/base/languageSkillsReducer';
 
 // ==============================|| COMBINE REDUCER ||============================== //
 
@@ -57,6 +58,8 @@ const reducer = combineReducers({
   positionList: positionReducer,
   positionList2: positionReducer2,
   hobong: hobongReducer,
+  certificationsName: certificationsNameReducer,
+  languageSkills : languageSkillsReducer,
   holidayList: holidayReducer,
   empManagement: empManagementReducer,
   attdReducer: attdReducer, // 근태리듀서
@@ -64,10 +67,10 @@ const reducer = combineReducers({
   baseReducer: baseReducer, // 권한리듀서
   commonReducer: commonReducer, // 로그인리듀서
   salReducer: salReducer, // 급여리듀서
+  empcardReducer: empcardReducer,
   certificateIssuanceReducer: certificateIssuanceReducer //증명서 리듀서
 });
 
 export default reducer;
 
 export type RootState = ReturnType<typeof reducer>;
-

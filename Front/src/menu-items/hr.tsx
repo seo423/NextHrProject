@@ -70,7 +70,6 @@ const hr: NavItemType = {
           type: 'item',
           url: '/hr/base/Certification/CertificationPage'
         }
-        
       ]
     },
     {

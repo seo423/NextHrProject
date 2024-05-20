@@ -12,9 +12,8 @@
 /out/
 
 # production
-/build
 /.gradle
-
+build/
 # misc
 .DS_Store
 *.pem

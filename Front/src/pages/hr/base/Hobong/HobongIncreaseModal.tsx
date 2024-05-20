@@ -20,16 +20,15 @@ import {
 import { useTheme } from '@mui/material/styles';
 import { dispatch } from 'store';
 
-
-const Modal = (props: { toggle: () => void; positionCode: string|undefined; applyDate: string; applyEndDate: string; }) => {
+const Modal = (props: { toggle: () => void; positionCode: string | undefined; applyDate: string; applyEndDate: string }) => {
   const [open, setOpen] = useState<boolean>(true);
-  const [baseSalaryPer, setBaseSalaryPer] = useState<number|null>(); // 초기치
-  const [baseSalaryFixed, setBaseSalaryFixed] = useState<number|null>(); // 증가액
-  const [posAllowancePer, setPosAllowancePer] = useState<number|null>(); // 초기치
-  const [posAllowanceFixed, setPosAllowanceFixed] = useState<number|null>(); // 증가액
-  const [longevityBonusPer, setLongevityBonusPer] = useState<number|null>(); // 초기치
-  const [longevityBonusFixed, setLongevityBonusFixed] = useState<number|null>(); // 증가액  
-  
+  const [baseSalaryPer, setBaseSalaryPer] = useState<number | null>(); // 초기치
+  const [baseSalaryFixed, setBaseSalaryFixed] = useState<number | null>(); // 증가액
+  const [posAllowancePer, setPosAllowancePer] = useState<number | null>(); // 초기치
+  const [posAllowanceFixed, setPosAllowanceFixed] = useState<number | null>(); // 증가액
+  const [longevityBonusPer, setLongevityBonusPer] = useState<number | null>(); // 초기치
+  const [longevityBonusFixed, setLongevityBonusFixed] = useState<number | null>(); // 증가액
+
   const theme = useTheme();
   const modalClose = () => {
     props.toggle();
@@ -67,31 +66,30 @@ const Modal = (props: { toggle: () => void; positionCode: string|undefined; appl
 
   const handlePercentageChange = (event: React.ChangeEvent<HTMLInputElement>, identifier: string) => {
     const value = event.target.value;
-    if (value.trim() === "") {
+    if (value.trim() === '') {
       setBaseSalaryPer(null);
       setPosAllowancePer(null);
       setLongevityBonusPer(null);
       return;
     }
-     if (isNaN(parseFloat(value))) {
+    if (isNaN(parseFloat(value))) {
       alert('올바른 숫자 형식을 입력해주세요.');
       event.target.value = '';
       return;
     } else {
-      if(identifier === 'baseSalary'){
+      if (identifier === 'baseSalary') {
         setBaseSalaryPer(parseFloat(event.target.value));
-      }else if(identifier === 'positionAllowance'){
+      } else if (identifier === 'positionAllowance') {
         setPosAllowancePer(parseFloat(event.target.value));
-      }else{
+      } else {
         setLongevityBonusPer(parseFloat(event.target.value));
       }
-      
     }
   };
 
   const handleFixedChange = (event: React.ChangeEvent<HTMLInputElement>, identifier: string) => {
     const value = event.target.value;
-    if (value.trim() === "") {
+    if (value.trim() === '') {
       setBaseSalaryFixed(null);
       setPosAllowanceFixed(null);
       setLongevityBonusFixed(null);
@@ -102,15 +100,14 @@ const Modal = (props: { toggle: () => void; positionCode: string|undefined; appl
       event.target.value = '';
       return;
     } else {
-      if(identifier === 'baseSalary'){
+      if (identifier === 'baseSalary') {
         setBaseSalaryFixed(parseFloat(event.target.value));
-      }else if(identifier === 'positionAllowance'){
+      } else if (identifier === 'positionAllowance') {
         setPosAllowanceFixed(parseFloat(event.target.value));
-      }else{
+      } else {
         setLongevityBonusFixed(parseFloat(event.target.value));
       }
     }
-
   };
   return (
     <div>
@@ -150,25 +147,43 @@ const Modal = (props: { toggle: () => void; positionCode: string|undefined; appl
                           <TableRow>
                             <TableCell>정률</TableCell>
                             <TableCell>
-                              <TextField value={baseSalaryPer} onChange={(event: ChangeEvent<HTMLInputElement>) => handlePercentageChange(event, 'baseSalary')} />
+                              <TextField
+                                value={baseSalaryPer}
+                                onChange={(event: ChangeEvent<HTMLInputElement>) => handlePercentageChange(event, 'baseSalary')}
+                              />
                             </TableCell>
                             <TableCell>
-                              <TextField value={posAllowancePer} onChange={(event: ChangeEvent<HTMLInputElement>) =>  handlePercentageChange(event, 'positionAllowance')} />
+                              <TextField
+                                value={posAllowancePer}
+                                onChange={(event: ChangeEvent<HTMLInputElement>) => handlePercentageChange(event, 'positionAllowance')}
+                              />
                             </TableCell>
                             <TableCell>
-                              <TextField value={longevityBonusPer} onChange={(event: ChangeEvent<HTMLInputElement>) =>  handlePercentageChange(event, 'longevityBonus')} />
+                              <TextField
+                                value={longevityBonusPer}
+                                onChange={(event: ChangeEvent<HTMLInputElement>) => handlePercentageChange(event, 'longevityBonus')}
+                              />
                             </TableCell>
                           </TableRow>
                           <TableRow>
                             <TableCell>정액</TableCell>
                             <TableCell>
-                              <TextField value={baseSalaryFixed} onChange={(event: ChangeEvent<HTMLInputElement>) => handleFixedChange(event, 'baseSalary')} />
+                              <TextField
+                                value={baseSalaryFixed}
+                                onChange={(event: ChangeEvent<HTMLInputElement>) => handleFixedChange(event, 'baseSalary')}
+                              />
                             </TableCell>
                             <TableCell>
-                              <TextField value={posAllowanceFixed} onChange={(event: ChangeEvent<HTMLInputElement>) => handleFixedChange(event, 'positionAllowance')} />
+                              <TextField
+                                value={posAllowanceFixed}
+                                onChange={(event: ChangeEvent<HTMLInputElement>) => handleFixedChange(event, 'positionAllowance')}
+                              />
                             </TableCell>
                             <TableCell>
-                              <TextField value={longevityBonusFixed} onChange={(event: ChangeEvent<HTMLInputElement>) => handleFixedChange(event, 'longevityBonus')} />
+                              <TextField
+                                value={longevityBonusFixed}
+                                onChange={(event: ChangeEvent<HTMLInputElement>) => handleFixedChange(event, 'longevityBonus')}
+                              />
                             </TableCell>
                           </TableRow>
                         </TableBody>
@@ -194,6 +209,6 @@ const Modal = (props: { toggle: () => void; positionCode: string|undefined; appl
       </Dialog>
     </div>
   );
-}
+};
 
 export default React.memo(Modal);

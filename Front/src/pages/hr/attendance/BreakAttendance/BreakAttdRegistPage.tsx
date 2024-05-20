@@ -58,6 +58,7 @@ const BreakAttendancePage = () => {
   // 사원리스트
   const [empList, setEmpList] = useState<AnnualLeaveMgtTO[]>([]);
 
+  //사원조회하기위함
   useEffect(() => {
     dispatch(attdActions.getEmpListRequest());
   }, []);
@@ -116,7 +117,7 @@ const BreakAttendancePage = () => {
       endTime: endTime.replace(/:/g, ''),
       cause
     } as restAttdTO;
-
+    //연차 신청을 하기위해 restAttdTO에 데이터를 담아 api로 보냄
     dispatch(attdActions.registBreakAttdRequest(restAttdTO));
 
     alert('신청이 완료 되었습니다.');
@@ -126,17 +127,14 @@ const BreakAttendancePage = () => {
   /* 일수 계산 함수  */
   function calculateNumberOfDays() {
     const startMs = Number(new Date(startDate).getTime());
+    //startMs 구하면 밀리초(milliseconds)로 나오게됨.
+    console.log('startMs는 몇시', startMs);
     const endMs = Number(new Date(endDate).getTime());
     if (attdType === '오전반차' || attdType === '오후반차') setNumberOfDays(0.5);
+    //시간이 밀리초로 나오기 때문에  1000밀리초 * 60초 * 60분 * 24시로 구하게됨
+    // +1을 하는 이유는 첫날과 마지막 날을 포함하여 계산하기 때문
     else setNumberOfDays((endMs - startMs) / (1000 * 60 * 60 * 24) + 1);
   }
-
-  //사원코드 임시등록
-  // sessionStorage.setItem('empCodeInfo_token', 'A490073');
-  // sessionStorage.setItem('empNameInfo_token', '락창카이');
-
-  // const empCodeInfo = sessionStorage.getItem('empCodeInfo_token');
-  // const empNameInfo = sessionStorage.getItem('empNameInfo_token');
 
   return (
     <Page title="연차신청">

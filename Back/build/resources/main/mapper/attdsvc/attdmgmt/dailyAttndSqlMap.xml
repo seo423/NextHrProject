@@ -155,6 +155,8 @@
       {call P_INSERT_DAY_ATTD(?, DAY_ATTD_CODE_SEQ.NEXTVAL, ?, ?, TO_DATE(?, 'YYYY-MM-DD'), ?, ?, ?)}
       ]]>
 	</select>
+
+<!--	일근태마감-->
 	<update id="updateFinalizeStatus" parameterType="DailyAttdSearchResTO">
 	<![CDATA[
 		UPDATE DAY_ATTD

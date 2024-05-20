@@ -45,6 +45,7 @@ export default function DailyAttendModal(props: { toggle: () => void }) {
 
   const theme = useTheme();
 
+  //DAY_ATTD테이블의 DAY_ATTD_CODE의 코드를 유니크한값으로 넣기위한코드
   function generateUniqueSixDigitCode() {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let code;
@@ -65,7 +66,10 @@ export default function DailyAttendModal(props: { toggle: () => void }) {
   const [empCode, setEmpCode] = useState<number | string>(-1);
   const [deptCode, setDeptCode] = useState<number | string>(-1);
   const [latenessStatus, setLatenessStatus] = useState<number | string>(-1);
-  
+
+  //부서를 불러오기 위한 dispatch
+  //부서를 선택해도 다시랜더링 되지않게 하기위해 의존성배열은빈값으로 놔둠.
+  // 의존성배열 []
   useEffect(() => {
     console.log('dispatch호출됨');
     dispatch(dailyAttendAction.DEPT_LIST_SEARCH_FETCH_REQUESTED(''));
@@ -90,8 +94,6 @@ export default function DailyAttendModal(props: { toggle: () => void }) {
     console.log(value);
   };
 
-  
-
   //추가 버튼 누름
   const handleSave = () => {
     //const empName = empNameRef.current?.value;
@@ -115,14 +117,6 @@ export default function DailyAttendModal(props: { toggle: () => void }) {
     const workHour = workHourRef.current?.value;
     const overWorkHour = overWorkHourRef.current?.value;
     const nightWorkHour = nightWorkHourRef.current?.value;
-
-    // const info = {
-    //   empName: empName,
-    //   deptCode: dept
-    // }
-
-    // 여기서 사원명과 부서코드를 받아서 이 두 정보로 사원코드 받아오기
-    // dispatch(dailyAttendAction.DAILY_ATTEND_SEARCH_EMPCODE_FETCH_REQUESTED(info));
 
     //empCode, gender는 넘어온 값을 그대로 사용한다.
     const data = {
@@ -175,7 +169,7 @@ export default function DailyAttendModal(props: { toggle: () => void }) {
         {item.deptName}
       </MenuItem>
     );
-});
+  });
 
   return (
     <div>
@@ -195,7 +189,7 @@ export default function DailyAttendModal(props: { toggle: () => void }) {
                 <Grid container spacing="auto" item xs>
                   <Grid container spacing={gridSpacing}>
                     <Grid item xs={12} sm={6}>
-                     <InputLabel>부서</InputLabel>
+                      <InputLabel>부서</InputLabel>
                       <FormControl fullWidth>
                         <Select
                           defaultValue="-1"

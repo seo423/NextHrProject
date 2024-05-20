@@ -6,16 +6,16 @@ import kr.co.seoulit.insa.salarysvc.salaryinfomgmt.mapper.RetirementSalMapper;
 import kr.co.seoulit.insa.salarysvc.salaryinfomgmt.mapper.SalaryAwardMapper;
 import kr.co.seoulit.insa.salarysvc.salaryinfomgmt.mapper.SalaryBonusMapper;
 import kr.co.seoulit.insa.salarysvc.salaryinfomgmt.repository.FullTimeSalaryRepository;
-import kr.co.seoulit.insa.salarysvc.salaryinfomgmt.to.FullTimeSalTO;
-import kr.co.seoulit.insa.salarysvc.salaryinfomgmt.to.PayDayTO;
-import kr.co.seoulit.insa.salarysvc.salaryinfomgmt.to.RetirementSalaryTO;
-import kr.co.seoulit.insa.salarysvc.salaryinfomgmt.to.SalaryBonusTO;
+import kr.co.seoulit.insa.salarysvc.salaryinfomgmt.to.*;
+import kr.co.seoulit.insa.salarysvc.salarystdinfomgmt.to.SocialInsTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
+import kr.co.seoulit.insa.salarysvc.salarystdinfomgmt.mapper.BaseSalaryMapper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Service
@@ -28,16 +28,21 @@ public class SalaryInfoMgmtServiceImpl implements SalaryInfoMgmtService{
 	@Autowired
 	private SalaryBonusMapper salaryBonusMapper;
 	@Autowired
+	private BaseSalaryMapper baseSalaryMapper;
+	@Autowired
 	private SalaryAwardMapper salaryAwardMapper;
 	@Autowired
 	private FullTimeSalaryRepository fullTimeSalaryRepository;
 
 	@Override
-	public List<FullTimeSalaryEntity> findselectSalary(String empCode) {
-
-		List<FullTimeSalaryEntity> FullTimeSalList = fullTimeSalaryRepository.findAllByEmpCode(empCode);
-		System.out.println("서비스단"+empCode+FullTimeSalList);
-		return FullTimeSalList;
+	public List<FullTimeSalaryTO> findselectSalary(String empCode) {
+		System.out.println("서비스단"+empCode);
+		HashMap<String, Object> map = new LinkedHashMap<>();
+		map.put("empCode", empCode);
+		baseSalaryMapper.selectMonthSalary(map);
+		List<FullTimeSalaryTO> fullTimeSalaryTOList = (List<FullTimeSalaryTO>) map.get("result");
+		System.out.println("서비스단"+fullTimeSalaryTOList);
+		return fullTimeSalaryTOList;
 
 	}
 

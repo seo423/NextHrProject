@@ -25,6 +25,11 @@ public class EmpRegisterController {
 
 	@PostMapping("/employee")
 	public Map<String, Object> registEmployee(@RequestBody EmpTO empTO) {
+		System.out.println("empTo가 오냐ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ"+empTO.getFamilyInfo());
+		System.out.println("empTo가 오냐ㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴㄴ"+empTO.getEducationInfo());
+		System.out.println("empTo가 오냐wwwwwwwwwwwwwwwwwwww"+empTO.getWorkExper());
+		System.out.println("empTo가 오냐CCCCCCCCCCCCCCCCCCC"+empTO.getCertification());
+		System.out.println("empTo가 오냐llllllllllllllllllll"+empTO.getLanguageSkills());
 		System.out.println("<<<<<<<<<<< empTO = " + empTO);
 		Map<String, Object> map = new HashMap<>();
 

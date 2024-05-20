@@ -28,8 +28,6 @@ import Swal from 'sweetalert2';
 
 function DailyAttendRegist() {
   const [insertModal, setInsertModal] = useState<boolean>(false);
-  const [modifyModal, setModifyModal] = useState<boolean>(false);
-  const [selectedEmp, setSelectedEmp] = useState<dailyAttdEntity[]>([]);
   const selectRef = useRef<HTMLSelectElement>(null);
 
   const dispatch = useDispatch();
@@ -39,6 +37,7 @@ function DailyAttendRegist() {
 
   const [authCheck, setAuthCheck] = useState(false); // 페이지 접근 권한체크
 
+  //페이지 접근 권한 체크후 true일경우 화면 보여줌
   useEffect(() => {
     const level = localStorage.getItem('authLevel') as string;
     if (level && parseInt(level.slice(-1)) >= 3) {
@@ -57,31 +56,25 @@ function DailyAttendRegist() {
   // 종료일
   const [endDate, setEndDate] = useState('');
 
+  //onToggleInsertHandler이벤트는 setInsertModal의 값이 false일경우 true로 변경해줌
+  // 그렇게해서 setInsertModal 띄워줌
   const onToggleInsertHandler = () => {
     setInsertModal((data) => !data);
   };
 
+  //setInsertModal 창을 띄움
   const onClickHandler = (identifier: string) => {
-    if (identifier === 'mod') {
-      if (selectedEmp.length === 0) {
-        alert('사원을 선택해 주세요');
-        return;
-      } else if (selectedEmp.length > 1) {
-        alert('사원 수정은 한번에 한명씩 가능합니다.');
-        return;
-      }
-      setModifyModal(true);
-      return;
-    } else if (identifier === 'insert') {
+    if (identifier === 'insert') {
       setInsertModal(true);
       return;
     }
   };
-    //부서 선택함
+  //부서 선택함
   const deptChangeHandler = (value: string) => {
     setDeptCode(value);
   };
 
+  //일근태 조회 버튼 이벤트
   const onSearchClickHandler = () => {
     if (authCheck) {
       console.log('시작일: ' + startDate);
@@ -102,19 +95,19 @@ function DailyAttendRegist() {
     }
   };
 
-  
   const deptLists = deptList.map((item: any) => {
     return (
       <MenuItem value={item.deptCode} key={item.deptCode}>
         {item.deptName}
       </MenuItem>
     );
-});
+  });
 
-useEffect(() => {
-  console.log('dispatch호출됨');
-  dispatch(dailyAttendAction.DEPT_LIST_SEARCH_FETCH_REQUESTED(''));
-}, []);
+  //부서 list를 가져오는 액션생성함수
+  useEffect(() => {
+    console.log('dispatch호출됨');
+    dispatch(dailyAttendAction.DEPT_LIST_SEARCH_FETCH_REQUESTED(''));
+  }, []);
 
   return (
     <Page title="일근태 등록">
@@ -130,18 +123,18 @@ useEffect(() => {
                   전체 선택
                   </Button> */}
                   <Box sx={{ minWidth: 120, marginBottom: 1 }}>
-                  <InputLabel>부서</InputLabel>
-                      <FormControl fullWidth>
-                        <Select
-                          defaultValue="-1"
-                          ref={selectRef}
-                          onChange={(e) => {
-                            deptChangeHandler(String(e.target.value));
-                          }}
-                        >
-                          {deptLists}
-                        </Select>
-                      </FormControl>
+                    <InputLabel>부서</InputLabel>
+                    <FormControl fullWidth>
+                      <Select
+                        defaultValue="-1"
+                        ref={selectRef}
+                        onChange={(e) => {
+                          deptChangeHandler(String(e.target.value));
+                        }}
+                      >
+                        {deptLists}
+                      </Select>
+                    </FormControl>
                   </Box>
                 </Grid>
                 <Grid item xs={12} md={4}>

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.co.seoulit.insa.salarysvc.salaryinfomgmt.entity.FullTimeSalaryEntity;
+import kr.co.seoulit.insa.salarysvc.salaryinfomgmt.to.FullTimeSalaryTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -53,6 +54,7 @@ public class FullTimeSalaryController
 		return map;
 	}
 
+	//월급여조회
 	@GetMapping("/salary/empcode")
 	public ModelMap selectSalary(@RequestParam("empName") String empCode, HttpServletRequest request, HttpServletResponse response)
 	{
@@ -61,7 +63,7 @@ public class FullTimeSalaryController
 		try
 		{
 			System.out.println("컨트롤러"+empCode);
-			List<FullTimeSalaryEntity> fullTimeSalaryList = salaryInfoMgmtService.findselectSalary(empCode);
+			List<FullTimeSalaryTO> fullTimeSalaryList = salaryInfoMgmtService.findselectSalary(empCode);
 			System.out.println("!!!!!!!!!!!!!!"+fullTimeSalaryList);
 			map.put("fullTimeSalaryList", fullTimeSalaryList);
 			map.put("errorMsg", "success");
