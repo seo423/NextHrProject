@@ -48,11 +48,11 @@
 
 ## 📌 Key Approaches:
 
-> **Agile Scrum**: Facilitated iterative development and continuous feedback, ensuring alignment with stakeholder requirements and timely delivery.
+> ##### **Agile Scrum**: Facilitated iterative development and continuous feedback, ensuring alignment with stakeholder requirements and timely delivery.
 
-> **Microservice Architecture**: Enabled modularity, scalability, and ease of maintenance by decomposing the system into loosely coupled, independently deployable services.
+> ##### **Microservice Architecture**: Enabled modularity, scalability, and ease of maintenance by decomposing the system into loosely coupled, independently deployable services.
 
-> **Component-Based Development**: Promoted reusability and efficient management of code through well-defined, encapsulated components.
+> ##### **Component-Based Development**: Promoted reusability and efficient management of code through well-defined, encapsulated components.
 
 
 # Getting started
