@@ -10,13 +10,13 @@
     <div>
         <img src="https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=Java&logoColor=white"> 
         <img src="https://img.shields.io/badge/MyBatis-000000?style=for-the-badge&logo=MyBatis&logoColor=white">
-        <img src="https://img.shields.io/badge/Jpa-000000?style=for-the-badge&logo=Jpa&logoColor=yellow">
+        <img src="https://img.shields.io/badge/Jpa-83B81A?style=for-the-badge&logo=Jpa&logoColor=yellow">
     </div>
     <!-- Database -->
     <p><strong>Database</strong></p>
     <div>
         <img src="https://img.shields.io/badge/oracle-F80000?style=for-the-badge&logo=Oracle&logoColor=white">
-        <img src="https://img.shields.io/badge/PL/SQL-F80000?style=for-the-badge&logo=PL/SQL&logoColor=white"> 
+        <img src="https://img.shields.io/badge/PL/SQL-4B4B77?style=for-the-badge&logo=PL/SQL&logoColor=white"> 
     </div>
     <!-- Frontend -->
     <p><strong>Frontend</strong></p>
