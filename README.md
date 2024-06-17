@@ -4,11 +4,11 @@
 * This project involved the development of a Human Resources (HR) system, utilizing Agile Scrum methodologies, Microservice Architecture, and Component-Based Development principles.
 
 ### Technologies and Tools Used:
-
+<div>
 <img src="https://img.shields.io/badge/Java-007396?style=flat-square&logo=TypeScript&logoColor=white">
 <img src="https://img.shields.io/badge/typescript-3178C6?style=flat-square&logo=TypeScript&logoColor=white">
 <img src="https://img.shields.io/badge/Next.js-000000?style=flat&logo=CSS3&logoColor=white" />
-
+</div>
 
 > __Frontend__ : Implemented using Next.js and TypeScript to ensure a responsive and dynamic user experience.
 
