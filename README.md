@@ -1,11 +1,21 @@
-# Project Overview: Human Resources System
-### Duration: April 2024 - June 2024 (2 months)
+# Project Overview: Human Resource Management System
+### Duration: April 2024 - June 2024 
 
 ## ✔️ Key Features
 * Employee Management: Management of basic information, contact details, position, department, and hire date of employees.
 * Payroll Management: Calculation of salaries, tax deductions, bonus payments, and generation of salary statements.
 * Attendance Management: Recording of work hours, calculation of working hours, and management of leave (annual leave/sick leave).
 * Performance Evaluation: Setting performance evaluation criteria, defining evaluation periods, and recording and reporting evaluation results.
+  
+
+## 📌 Key Approaches:
+
+> ### **Agile Scrum**: Facilitated iterative development and continuous feedback, ensuring alignment with stakeholder requirements and timely delivery.
+
+> ### **Microservice Architecture**: Enabled modularity, scalability, and ease of maintenance by decomposing the system into loosely coupled, independently deployable services.
+
+> ### **Component-Based Development**: Promoted reusability and efficient management of code through well-defined, encapsulated components.
+
 
 ## 🖊️ Development Environment
 ![Generic badge](https://img.shields.io/badge/spring--boot-2.7.0-brightgreen.svg)
@@ -45,14 +55,6 @@
         <img src="https://img.shields.io/badge/Sourcetree-0052CC?style=for-the-badge&logo=Sourcetree&logoColor=white"> 
     </div>
 </div>
-
-## 📌 Key Approaches:
-
-> ### **Agile Scrum**: Facilitated iterative development and continuous feedback, ensuring alignment with stakeholder requirements and timely delivery.
-
-> ### **Microservice Architecture**: Enabled modularity, scalability, and ease of maintenance by decomposing the system into loosely coupled, independently deployable services.
-
-> ### **Component-Based Development**: Promoted reusability and efficient management of code through well-defined, encapsulated components.
 
 
 # Getting started
