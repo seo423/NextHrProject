@@ -10,7 +10,7 @@
 	<img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=CSS3&logoColor=white" />
   </div>
 
-  ![Badge](https://img.shields.io/badge/typescript-3178C6.svg?&logo={ typescript }&logoColor={ logo color(pink) })
+<img src="https://img.shields.io/badge/typescript-3178C6?style=flat-square&logo=TypeScript&logoColor=white">
 
 > __Frontend__ : Implemented using Next.js and TypeScript to ensure a responsive and dynamic user experience.
 
