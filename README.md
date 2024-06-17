@@ -10,7 +10,7 @@
     <div>
         <img src="https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=Java&logoColor=white"> 
         <img src="https://img.shields.io/badge/MyBatis-000000?style=for-the-badge&logo=MyBatis&logoColor=white">
-        <img src="https://img.shields.io/badge/Jpa-000000?style=for-the-badge&logo=MyBatis&logoColor=white">
+        <img src="https://img.shields.io/badge/Jpa-000000?style=for-the-badge&logo=Jpa&logoColor=yellow">
     </div>
     <!-- Database -->
     <p><strong>Database</strong></p>
