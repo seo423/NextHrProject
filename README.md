@@ -10,6 +10,8 @@
 	<img src="https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=CSS3&logoColor=white" />
   </div>
 
+  ![Badge](https://img.shields.io/badge/{ typescript }-{ typescript }.svg?{ style(optional) }&logo={ typescript }&logoColor={ logo color(pink) })
+
 > __Frontend__ : Implemented using Next.js and TypeScript to ensure a responsive and dynamic user experience.
 
 > **Backend** : Developed with a combination of MyBatis and JPA for robust data management and seamless database interactions.
