@@ -5,7 +5,7 @@
 
 ### Technologies and Tools Used:
 
-> **Frontend** : Implemented using Next.js and TypeScript to ensure a responsive and dynamic user experience.
+> <br>Frontend</br> : Implemented using Next.js and TypeScript to ensure a responsive and dynamic user experience.
 
 > **Backend** : Developed with a combination of MyBatis and JPA for robust data management and seamless database interactions.
 
