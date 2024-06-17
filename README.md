@@ -5,17 +5,17 @@
 
 ### Technologies and Tools Used:
 
-> ** Frontend ** : Implemented using Next.js and TypeScript to ensure a responsive and dynamic user experience.
+> **Frontend** : Implemented using Next.js and TypeScript to ensure a responsive and dynamic user experience.
 
-> ** Backend ** : Developed with a combination of MyBatis and JPA for robust data management and seamless database interactions.
+> **Backend** : Developed with a combination of MyBatis and JPA for robust data management and seamless database interactions.
 
 ### Key Approaches:
 
-> Agile Scrum: Facilitated iterative development and continuous feedback, ensuring alignment with stakeholder requirements and timely delivery.
+> **Agile Scrum**: Facilitated iterative development and continuous feedback, ensuring alignment with stakeholder requirements and timely delivery.
 
-> Microservice Architecture: Enabled modularity, scalability, and ease of maintenance by decomposing the system into loosely coupled, independently deployable services.
+> **Microservice Architecture**: Enabled modularity, scalability, and ease of maintenance by decomposing the system into loosely coupled, independently deployable services.
 
-> Component-Based Development: Promoted reusability and efficient management of code through well-defined, encapsulated components.
+> **Component-Based Development**: Promoted reusability and efficient management of code through well-defined, encapsulated components.
 
 
 This collaborative effort resulted in a comprehensive HR system designed to streamline and optimize HR processes.
