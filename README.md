@@ -2,19 +2,19 @@
 ### Duration: April 2024 - June 2024 
 
 ## ✔️ Key Features
-* Employee Management: Management of basic information, contact details, position, department, and hire date of employees.
-* Payroll Management: Calculation of salaries, tax deductions, bonus payments, and generation of salary statements.
-* Attendance Management: Recording of work hours, calculation of working hours, and management of leave (annual leave/sick leave).
-* Performance Evaluation: Setting performance evaluation criteria, defining evaluation periods, and recording and reporting evaluation results.
+*  **Employee Management**: Management of basic information, contact details, position, department, and hire date of employees.
+*  **Payroll Management** : Calculation of salaries, tax deductions, bonus payments, and generation of salary statements.
+* **Attendance Management** : Recording of work hours, calculation of working hours, and management of leave (annual leave/sick leave).
+* **Performance Evaluation** : Setting performance evaluation criteria, defining evaluation periods, and recording and reporting evaluation results.
   
 
 ## 📌 Key Approaches:
 
-> ### **Agile Scrum**: Facilitated iterative development and continuous feedback, ensuring alignment with stakeholder requirements and timely delivery.
+> **Agile Scrum**: Facilitated iterative development and continuous feedback, ensuring alignment with stakeholder requirements and timely delivery.
 
-> ### **Microservice Architecture**: Enabled modularity, scalability, and ease of maintenance by decomposing the system into loosely coupled, independently deployable services.
+> **Microservice Architecture**: Enabled modularity, scalability, and ease of maintenance by decomposing the system into loosely coupled, independently deployable services.
 
-> ### **Component-Based Development**: Promoted reusability and efficient management of code through well-defined, encapsulated components.
+> **Component-Based Development**: Promoted reusability and efficient management of code through well-defined, encapsulated components.
 
 
 ## 🖊️ Development Environment
