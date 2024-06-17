@@ -5,9 +5,9 @@ This project involved the development of a Human Resources (HR) system, utilizin
 
 ### Technologies and Tools Used:
 
-Frontend: Implemented using Next.js to ensure a responsive and dynamic user experience.
+> Frontend: Implemented using Next.js and TypeScript to ensure a responsive and dynamic user experience.
 
-Backend: Developed with a combination of MyBatis and JPA for robust data management and seamless database interactions.
+> Backend: Developed with a combination of MyBatis and JPA for robust data management and seamless database interactions.
 
 ### Key Approaches:
 
