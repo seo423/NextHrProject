@@ -1,5 +1,5 @@
 # Project Overview: Human Resource Management System
-### Duration: March 2024 - June 2024 
+### Duration: January 2023 - May 2023 
 
 ## ✔️ Key Features
 *  **Employee Management**: Management of basic information, contact details, position, department, and hire date of employees.
